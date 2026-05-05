@@ -181,41 +181,106 @@ function applyProductDefaults(type) {
 }
 
 
-/* Smart CN/Global Market Chart */
-async function detectChartCountry(){
-  try{const r=await fetch("https://ipapi.co/json/");const d=await r.json();return d.country_code||""}catch(e){return ""}
+
+/* ===== Right-side chart only: overseas TradingView + China fallback ===== */
+async function detectChartCountry() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    return data.country_code || "";
+  } catch (e) {
+    return "";
+  }
 }
-function renderChinaGoldChart(el){
-  el.innerHTML=`<div class="cn-market">
-    <div class="cn-market-head"><div><small>XAUUSD · Gold Spot</small><h3>黄金行情展示</h3></div><div class="cn-price"><b id="cnGoldPrice">2350.20</b><span id="cnGoldChange">+0.00 (0.00%)</span></div></div>
-    <div class="cn-stage"><div class="cn-grid"></div><div class="cn-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><svg viewBox="0 0 700 320"><defs><linearGradient id="cnLineG" x1="0" x2="1"><stop offset="0%" stop-color="#3fe8ff"/><stop offset="60%" stop-color="#0a65ff"/><stop offset="100%" stop-color="#fff"/></linearGradient></defs><path d="M30 260 C82 230 118 242 160 198 S240 170 292 138 S380 115 430 78 S540 62 670 30"/><circle cx="670" cy="30" r="8"/></svg><em>模拟行情展示</em><em class="right">MT4/MT5实时报价为准</em></div>
-    <div class="cn-note"><b>市场提示</b><p>国内网络环境可能影响 TradingView 加载。本模块用于行情展示，真实交易价格请以 MT4/MT5 平台为准。</p><a href="lead-form.html">获取开户链接 / 联系客户经理</a></div>
-  </div>`;
-  simulateCnGoldPrice();
+
+function renderChinaSidebarGoldChart(container) {
+  container.innerHTML = `
+    <div class="sidebar-cn-chart">
+      <div class="sidebar-cn-head">
+        <small>XAUUSD · GOLD</small>
+        <h3>黄金行情展示</h3>
+      </div>
+      <div class="sidebar-cn-price">
+        <b id="sidebarGoldPrice">2350.20</b>
+        <span id="sidebarGoldChange">+0.00 (0.00%)</span>
+      </div>
+      <div class="sidebar-cn-mini-chart">
+        <div class="sidebar-cn-grid"></div>
+        <div class="sidebar-cn-bars">
+          <i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <svg viewBox="0 0 420 190">
+          <defs>
+            <linearGradient id="sidebarGoldLine" x1="0" x2="1">
+              <stop offset="0%" stop-color="#3fe8ff"/>
+              <stop offset="65%" stop-color="#0a65ff"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </linearGradient>
+          </defs>
+          <path d="M20 155 C55 128 78 142 105 108 S165 92 198 72 S250 65 285 42 S350 38 405 20"/>
+          <circle cx="405" cy="20" r="5"/>
+        </svg>
+      </div>
+      <p class="sidebar-cn-note">行情展示可能因地区网络存在延迟，真实交易报价请以 MT4 / MT5 为准。</p>
+      <a class="sidebar-cn-cta" href="lead-form.html">获取开户链接</a>
+    </div>
+  `;
+  simulateSidebarGoldPrice();
 }
-function simulateCnGoldPrice(){
-  let price=2350.20,base=price;
-  const p=document.getElementById("cnGoldPrice"),c=document.getElementById("cnGoldChange");
-  if(!p||!c)return;
-  setInterval(()=>{price+=(Math.random()-.48)*1.65;let d=price-base,pct=d/base*100;p.textContent=price.toFixed(2);c.textContent=`${d>=0?"+":""}${d.toFixed(2)} (${d>=0?"+":""}${pct.toFixed(2)}%)`;c.className=d>=0?"up":"down"},1400);
+
+function simulateSidebarGoldPrice() {
+  let price = 2350.20;
+  const base = price;
+  const priceEl = document.getElementById("sidebarGoldPrice");
+  const changeEl = document.getElementById("sidebarGoldChange");
+  if (!priceEl || !changeEl) return;
+
+  if (window.sidebarGoldTimer) clearInterval(window.sidebarGoldTimer);
+
+  window.sidebarGoldTimer = setInterval(() => {
+    const move = (Math.random() - 0.48) * 1.45;
+    price += move;
+    const diff = price - base;
+    const pct = diff / base * 100;
+
+    priceEl.textContent = price.toFixed(2);
+    changeEl.textContent = `${diff >= 0 ? "+" : ""}${diff.toFixed(2)} (${diff >= 0 ? "+" : ""}${pct.toFixed(2)}%)`;
+    changeEl.className = diff >= 0 ? "up" : "down";
+  }, 1400);
 }
-function renderTVChart(el){
-  el.innerHTML='<div id="smartTradingViewChart" class="smart-tv-box"></div>';
-  if(typeof TradingView!=="undefined"){
-    new TradingView.widget({container_id:"smartTradingViewChart",width:"100%",height:"100%",symbol:"OANDA:XAUUSD",interval:"15",timezone:"Etc/UTC",theme:"light",style:"1",locale:"zh_CN",toolbar_bg:"#ffffff",enable_publishing:false,hide_side_toolbar:false,allow_symbol_change:true,studies:["MACD@tv-basicstudies","RSI@tv-basicstudies"]});
-  }else renderChinaGoldChart(el);
+
+async function initSmartSidebarChart() {
+  const container = document.getElementById("sidebarTradingView");
+  if (!container) return;
+
+  const country = await detectChartCountry();
+
+  if (country === "CN") {
+    renderChinaSidebarGoldChart(container);
+    chartLoaded = true;
+    return;
+  }
+
+  if (typeof TradingView !== "undefined") {
+    new TradingView.widget({
+      "container_id": "sidebarTradingView",
+      "width": "100%",
+      "height": "100%",
+      "symbol": "OANDA:XAUUSD",
+      "interval": "15",
+      "timezone": "Etc/UTC",
+      "theme": "light",
+      "style": "1",
+      "locale": "zh_CN",
+      "toolbar_bg": "#ffffff",
+      "enable_publishing": false,
+      "hide_side_toolbar": false,
+      "allow_symbol_change": true,
+      "studies": ["MACD@tv-basicstudies", "RSI@tv-basicstudies"]
+    });
+    chartLoaded = true;
+  } else {
+    renderChinaSidebarGoldChart(container);
+    chartLoaded = true;
+  }
 }
-async function loadSmartMarketChart(){
-  const boxes=document.querySelectorAll("[data-smart-chart='xauusd']");
-  if(!boxes.length)return;
-  const country=await detectChartCountry();
-  boxes.forEach(el=>country==="CN"?renderChinaGoldChart(el):renderTVChart(el));
-}
-async function initSmartSidebarChart(){
-  const holder=document.getElementById("sidebarTradingView");
-  if(!holder)return;
-  const country=await detectChartCountry();
-  if(country==="CN"){renderChinaGoldChart(holder);chartLoaded=true;return}
-  initSidebarTradingView();
-}
-document.addEventListener("DOMContentLoaded",loadSmartMarketChart);

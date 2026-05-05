@@ -44,3 +44,6 @@ https://globalmarketshub.github.io/trademax/crm-analytics.html
 - 澳洲IP降权到后面
 - 按客户意向评分排序
 - CRM表格居中清晰展示
+
+
+本次版本说明：右侧行情图表保留原位置；页面中间不新增图表。海外用户加载 TradingView，中国大陆用户右侧自动切换为可访问的黄金行情展示模块。
