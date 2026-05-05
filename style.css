@@ -12,3 +12,46 @@
 .smart-qa input{border:1px solid #c7d8ff;border-radius:14px;padding:12px;font-family:inherit;background:#fff}
 .smart-qa button{border:0;background:#075aff;color:#fff;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}
 @media(max-width:980px){.brand-sub{display:none}.tmgm-logo-text{font-size:18px}}
+
+/* Full score official-style homepage */
+.hero-official .lead{max-width:900px}
+.official-overview{padding:95px 6%;background:rgba(255,255,255,.94);color:#061d50}
+.official-overview h2{text-align:center;font-size:50px;margin:0 0 38px}
+.overview-grid{max-width:1280px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.overview-grid article{background:linear-gradient(180deg,#fff,#f4f9ff);border:1px solid rgba(9,91,225,.14);border-radius:30px;padding:30px;box-shadow:0 22px 60px rgba(23,96,205,.09)}
+.overview-grid span{font-size:42px}.overview-grid h3{font-size:22px;color:#061d50}.overview-grid p{color:#4d6485;line-height:1.7}
+.license-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:36px 6%;background:linear-gradient(135deg,#061d50,#075aff);color:#fff}
+.license-strip div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:22px;text-align:center}
+.license-strip b{display:block;font-size:30px}.license-strip span{color:#d9ecff}
+.mini-link{display:inline-flex;margin-top:16px;background:#075aff;color:#fff;border-radius:999px;padding:12px 18px;font-weight:900}
+
+/* 3D social footer */
+.social-footer{background:#fff;color:#061d50;border-top:1px solid rgba(7,90,255,.18);border-bottom:1px solid rgba(7,90,255,.18);padding:46px 6% 34px}
+.social-inner{max-width:1120px;margin:auto}.social-inner h2{font-size:36px;margin:0 0 26px;color:#061d50;font-weight:950}
+.social-icons-3d{display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding-bottom:34px}
+.social3d{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;position:relative;font-weight:950;font-size:34px;color:#fff;transform-style:preserve-3d;transition:.28s ease;box-shadow:inset 10px 10px 18px rgba(255,255,255,.32),inset -10px -12px 18px rgba(0,0,0,.18),0 14px 26px rgba(0,48,130,.22)}
+.social3d:before{content:"";position:absolute;inset:5px 8px auto 8px;height:22px;border-radius:999px;background:rgba(255,255,255,.42)}
+.social3d:hover{transform:translateY(-7px) rotateX(12deg) rotateY(-10deg) scale(1.05)}
+.social3d span{position:relative;z-index:1;text-shadow:0 2px 5px rgba(0,0,0,.18)}
+.social3d.fb{background:radial-gradient(circle at 30% 25%,#70a8ff,#1260e8 58%,#0a319a)}
+.social3d.ig{background:radial-gradient(circle at 30% 25%,#ff9edc,#db30df 38%,#ff7a00 72%,#7b2dff)}
+.social3d.yt{background:radial-gradient(circle at 30% 25%,#ff8a8a,#f3262d 58%,#ab0008)}
+.social3d.x{background:radial-gradient(circle at 30% 25%,#7d7d7d,#202020 62%,#000)}
+.social3d.in{background:radial-gradient(circle at 30% 25%,#8fe0ff,#217fc8 58%,#064778);font-size:28px}
+.social3d.tg{background:radial-gradient(circle at 30% 25%,#92e6ff,#2aa9e8 58%,#0870b7)}
+.footer-tmgm-logo{border-top:1px solid rgba(7,90,255,.22);padding-top:28px;display:flex;align-items:center;gap:14px}
+.footer-logo-mark{width:52px;height:38px;border-radius:16px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#061d50,#075aff 65%,#06d6ff);font-size:25px;font-weight:950;box-shadow:0 12px 28px rgba(7,90,255,.22)}
+.footer-logo-text{font-size:42px;line-height:1;color:#061d50;font-weight:950;letter-spacing:1px}
+
+/* Official footer */
+.footer-pro{background:#f5f7fb;padding:60px 6% 36px;color:#0b2b73;font-size:14px}
+.footer-top{display:grid;grid-template-columns:1.35fr repeat(5,1fr);gap:36px;max-width:1480px;margin:auto}
+.footer-col h3{font-size:18px;margin:0 0 18px;font-weight:950;color:#061d50}
+.footer-col p,.footer-col a{display:block;margin:10px 0;color:#0b2b73;line-height:1.45}
+.footer-col a:hover{color:#075aff}.footer-divider{height:1px;background:#cbd6e8;max-width:1480px;margin:44px auto 36px}
+.footer-risk{max-width:1480px;margin:auto;font-size:12px;color:#24416d;line-height:1.75}
+.footer-license{max-width:1480px;margin:34px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:34px;font-size:12px;color:#24416d;line-height:1.55}
+.footer-license b{color:#061d50}
+.footer-bottom{max-width:1480px;margin:42px auto 0;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #cbd6e8;padding-top:24px;color:#24416d}
+.footer-logo-pro{display:flex;align-items:center;gap:12px;color:#061d50;font-size:34px;font-weight:950}
+@media(max-width:980px){.overview-grid,.license-strip,.footer-top,.footer-license{grid-template-columns:1fr}.official-overview h2{font-size:34px}.social-icons-3d{gap:16px}.social3d{width:54px;height:54px;font-size:28px}.footer-bottom{display:block}}
