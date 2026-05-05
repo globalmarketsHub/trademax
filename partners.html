@@ -28,7 +28,7 @@
 
 
 <header class="site-header">
-  <a class="brand" href="index.html"><span class="logo-mark">↗</span><span>TRADEMAX</span></a>
+  <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
   <nav>
     <a href="products.html">产品</a>
     <a href="accounts.html">账户点差</a>
@@ -37,7 +37,7 @@
     <a href="partners.html">代理合作</a>
     <a href="contact.html">联系</a>
   </nav>
-  <button class="tool-open-top" onclick="openToolPanel('chart')">Live Chart</button>
+  <button class="tool-open-top" onclick="openToolPanel('chart')">行情图表</button>
   <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
 </header>
 
@@ -59,28 +59,28 @@
 
 
 <div class="right-tool-rail">
-  <button onclick="openToolPanel('chart')"><span>📈</span><b>Live Chart</b></button>
-  <button onclick="openToolPanel('chat')"><span>💬</span><b>Chatbot</b></button>
-  <a href="calculators.html"><span>🧮</span><b>Calculators</b></a>
+  <button onclick="openToolPanel('chart')"><span>📈</span><b>行情图表</b></button>
+  <button onclick="openToolPanel('chat')"><span>💬</span><b>在线客服</b></button>
+  <a href="calculators.html"><span>🧮</span><b>计算器</b></a>
 </div>
 
 <aside class="tool-panel" id="toolPanel">
   <div class="tool-panel-header">
-    <div><small>TRADEMAX TOOLS</small><h3 id="panelTitle">Live Chart</h3></div>
+    <div><small>TRADEMAX 工具</small><h3 id="panelTitle">行情图表</h3></div>
     <button onclick="closeToolPanel()">×</button>
   </div>
   <div class="tool-tabs two-tabs">
-    <button id="tabChart" onclick="switchTool('chart')">Live Chart</button>
-    <button id="tabChat" onclick="switchTool('chat')">Chatbot</button>
+    <button id="tabChart" onclick="switchTool('chart')">行情图表</button>
+    <button id="tabChat" onclick="switchTool('chat')">在线客服</button>
   </div>
   <div class="tool-content active" id="contentChart">
     <div class="sidebar-chart-wrap"><div id="sidebarTradingView"></div></div>
-    <p class="tool-note">可切换产品、周期和指标。默认显示黄金 XAUUSD。</p>
+    <p class="tool-note">TradingView 图表组件，可切换产品、周期和指标。默认显示黄金 XAUUSD。</p>
   </div>
   <div class="tool-content" id="contentChat">
     <div class="chat-body" id="chatBody">
       <div class="bot msg">您好 👋 请问您是已经完成开户，还是需要先开户注册？</div>
-      <div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div>
+      <div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div><div class="smart-qa"><input id="smartQuestion" placeholder="请输入问题：如ECN点差、MT4下载、保证金..." onkeydown="if(event.key==='Enter'){askSmartQuestion()}"><button onclick="askSmartQuestion()">发送</button></div>
     </div>
     <form class="lead-form" onsubmit="sendLead(event)">
       <input id="leadWechat" placeholder="微信号 / WeChat（必填）" required />

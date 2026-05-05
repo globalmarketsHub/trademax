@@ -40,7 +40,7 @@ function closeToolPanel() {
 }
 
 function switchTool(type) {
-  const titles = { chart: "Live Chart", chat: "Chatbot" };
+  const titles = { chart: "行情图表", chat: "在线客服" };
   document.getElementById("panelTitle").textContent = titles[type];
   ["Chart", "Chat"].forEach(name => {
     document.getElementById("content" + name).classList.remove("active");
@@ -122,3 +122,60 @@ function sendLead(e) {
 setTimeout(() => {
   if (document.getElementById("toolPanel")) openToolPanel("chat");
 }, 4500);
+
+
+function askSmartQuestion() {
+  const input = document.getElementById("smartQuestion");
+  if (!input) return;
+  const q = input.value.trim();
+  if (!q) return;
+  addMsg(q, "user");
+  input.value = "";
+  const answer = getSmartAnswer(q);
+  addMsg(answer, "bot");
+}
+
+function getSmartAnswer(q) {
+  const text = q.toLowerCase();
+  if (text.includes("ecn") || text.includes("裸点") || text.includes("0点差") || text.includes("点差")) {
+    return "ECN 裸点账户点差低至 0 pip 起，适合高频、短线、EA 和重视成本的客户。STD 点差参考 0.32，PM 0.27，PRO 0.22。实际交易条件以平台显示为准。您可以点击页面中的 ECN 链接开户注册。";
+  }
+  if (text.includes("开户") || text.includes("注册") || text.includes("开户链接")) {
+    return "您可以先通过页面中的开户链接自主注册。开户完成后，请留下注册邮箱和微信，我们会安排专属客户经理协助确认开户链接归属、账户激活、入金和平台设置。";
+  }
+  if (text.includes("mt4") || text.includes("mt5") || text.includes("下载") || text.includes("平台")) {
+    return "MT4 更适合经典外汇和黄金交易，MT5 更适合多资产和更多订单/周期需求。您可以在 MT4/MT5 页面下载平台，如不确定服务器或登录方式，可以留下微信安排协助。";
+  }
+  if (text.includes("保证金") || text.includes("杠杆") || text.includes("margin")) {
+    return "保证金通常按：合约大小 × 手数 × 产品价格 ÷ 杠杆 估算。网站的交易计算器页面已经加入黄金、外汇、BTC、ETH 等产品选项，可以直接输入参数计算。";
+  }
+  if (text.includes("黄金") || text.includes("xau") || text.includes("gold")) {
+    return "黄金 XAUUSD 是较热门的交易品种，适合关注美元、利率、避险情绪和重大数据行情的客户。交易前建议控制仓位，并可使用计算器估算保证金和风险。";
+  }
+  if (text.includes("入金") || text.includes("出金") || text.includes("充值") || text.includes("提现")) {
+    return "入金和出金方式需以客户后台显示为准。开户后请留下注册邮箱和微信，我们会安排客户经理协助您查看可用方式和注意事项。";
+  }
+  if (text.includes("代理") || text.includes("ib") || text.includes("返佣") || text.includes("合作")) {
+    return "如果您有客户资源、交易社群、财经内容或教育渠道，可以咨询代理合作。请留下微信和合作背景，我们会安排负责人对接返佣、活动和开户链接方案。";
+  }
+  if (text.includes("微信") || text.includes("联系") || text.includes("客服")) {
+    return "您可以直接在下方填写微信号；如果已经开户，也请填写注册邮箱。我们会尽快安排专属客户经理与您对接。";
+  }
+  return "我可以帮您解答开户、ECN点差、MT4/MT5下载、黄金交易、保证金计算、代理合作等问题。您也可以直接留下微信和注册邮箱，由专属客户经理为您一对一协助。";
+}
+
+function applyProductDefaults(type) {
+  if (type === "margin") {
+    const opt = document.getElementById("marginSymbol").selectedOptions[0];
+    document.getElementById("marginContract").value = opt.dataset.contract || 100000;
+    document.getElementById("marginPrice").value = opt.dataset.price || 1;
+  }
+  if (type === "profit") {
+    const opt = document.getElementById("profitSymbol").selectedOptions[0];
+    document.getElementById("profitPipValue").value = opt.dataset.pip || 10;
+  }
+  if (type === "position") {
+    const opt = document.getElementById("posSymbol").selectedOptions[0];
+    document.getElementById("posPipValue").value = opt.dataset.pip || 10;
+  }
+}
