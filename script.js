@@ -182,16 +182,39 @@ function applyProductDefaults(type) {
 
 
 
-/* ===== Final right-side chart: TradingView or gift fallback ===== */
+
+
+
+
+/* ===== Final robust right-side logic: China IP directly shows gift ===== */
 function showGiftFallback() {
   const fallback = document.getElementById("giftFallback");
+  const tvframe = document.getElementById("tvframe");
+  if (tvframe) tvframe.style.display = "none";
   if (fallback) fallback.style.display = "block";
 }
 
-function initSidebarTradingViewFinal() {
-  const container = document.getElementById("sidebarTradingView");
-  if (!container) return;
+async function detectChinaUser() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("china") === "1" || params.get("gift") === "1") return true;
+  if (params.get("tv") === "1") return false;
 
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    if (data && data.country_code === "CN") return true;
+  } catch (e) {}
+
+  try {
+    const lang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    if (lang.includes("zh-cn") || tz === "Asia/Shanghai") return true;
+  } catch (e) {}
+
+  return false;
+}
+
+function renderGiftShell(container) {
   container.innerHTML = `
     <div class="final-tv-gift-wrap">
       <iframe
@@ -222,7 +245,22 @@ function initSidebarTradingViewFinal() {
       </div>
     </div>
   `;
+}
 
+async function initSidebarTradingViewFinal() {
+  const container = document.getElementById("sidebarTradingView");
+  if (!container) return;
+
+  renderGiftShell(container);
+
+  const isChina = await detectChinaUser();
+
+  if (isChina) {
+    showGiftFallback();
+    return;
+  }
+
+  // 非中国用户先显示TradingView；如果加载异常，再展示福利兜底
   setTimeout(() => {
     try {
       const iframe = document.getElementById("tvframe");
@@ -231,4 +269,9 @@ function initSidebarTradingViewFinal() {
       showGiftFallback();
     }
   }, 4500);
+}
+
+// 兼容旧调用：即使原代码调用 initSidebarTradingView，也会走最终逻辑
+function initSidebarTradingView() {
+  return initSidebarTradingViewFinal();
 }

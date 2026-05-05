@@ -47,3 +47,9 @@ https://globalmarketshub.github.io/trademax/crm-analytics.html
 
 
 最终版本说明：右侧行情优先加载 TradingView；如网络无法加载，自动展示 `assets/may-gift.png` 入金活动图。每月更新活动时替换该图片即可，文件名保持 `may-gift.png`。
+
+
+强制中国福利版测试：在网址后加 `?china=1` 或 `?gift=1`，例如 `https://globalmarketshub.github.io/trademax/?china=1`。
+
+
+修复说明：本版本中国大陆IP会直接显示入金礼物，不再等待TradingView失败检测。测试福利版用 `?china=1`；测试TV版用 `?tv=1`。
