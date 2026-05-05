@@ -182,7 +182,11 @@ function applyProductDefaults(type) {
 
 
 
-/* ===== Right-side chart only: REAL sources, no simulated market data ===== */
+
+
+
+
+/* ===== Right-side chart only: clean real API data, no ads, no fake prices ===== */
 async function detectChartCountry() {
   try {
     const res = await fetch("https://ipapi.co/json/");
@@ -193,33 +197,181 @@ async function detectChartCountry() {
   }
 }
 
-function renderChinaRealGoldChart(container) {
+let goldApiPoints = [];
+let goldApiTimer = null;
+
+function renderGoldApiShell(container) {
   container.innerHTML = `
-    <div class="real-cn-chart">
-      <div class="real-cn-head">
+    <div class="api-gold-chart">
+      <div class="api-gold-head">
         <div>
-          <small>真实第三方行情源</small>
-          <h3>伦敦金 XAU</h3>
+          <small>REAL API DATA · NO ADS</small>
+          <h3>XAUUSD 黄金行情</h3>
         </div>
-        <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank" rel="noopener">打开原页面</a>
+        <span id="apiGoldStatus">连接中</span>
       </div>
 
-      <iframe
-        class="real-cn-iframe"
-        src="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-
-      <div class="real-cn-footer">
-        <p>行情来源：新浪财经伦敦金 XAU 页面。交易报价、点差及成交请以 MT4 / MT5 实际显示为准。</p>
-        <div class="real-cn-actions">
-          <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank" rel="noopener">查看新浪行情</a>
-          <a href="lead-form.html">联系客户经理</a>
-        </div>
+      <div class="api-gold-quote">
+        <b id="apiGoldPrice">--</b>
+        <em id="apiGoldChange">等待真实行情API</em>
       </div>
+
+      <div class="api-gold-canvas-wrap">
+        <canvas id="apiGoldCanvas" width="520" height="260"></canvas>
+      </div>
+
+      <p class="api-gold-note">
+        数据来自第三方真实行情API。交易报价、点差与成交请以 MT4 / MT5 实际显示为准。
+      </p>
+      <a class="api-gold-cta" href="lead-form.html">联系客户经理 / 获取开户链接</a>
     </div>
   `;
+}
+
+async function fetchGoldApiQuote() {
+  const key = CRM_CONFIG && CRM_CONFIG.GOLD_API_KEY;
+  if (!key || key.includes("PASTE_")) {
+    throw new Error("GOLD_API_KEY_NOT_CONFIGURED");
+  }
+
+  const res = await fetch("https://www.goldapi.io/api/XAU/USD", {
+    method: "GET",
+    headers: {
+      "x-access-token": key,
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (!res.ok) throw new Error("GoldAPI request failed");
+  const data = await res.json();
+  const price = Number(data.price || data.ask || data.bid);
+  if (!isFinite(price)) throw new Error("Invalid GoldAPI price");
+  return {
+    price,
+    timestamp: data.timestamp || Math.floor(Date.now() / 1000),
+    ch: Number(data.ch || 0),
+    chp: Number(data.chp || 0)
+  };
+}
+
+function drawGoldApiChart() {
+  const canvas = document.getElementById("apiGoldCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  // background grid
+  ctx.strokeStyle = "rgba(255,255,255,.12)";
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= w; x += 52) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+  }
+  for (let y = 0; y <= h; y += 43) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+  }
+
+  if (goldApiPoints.length < 2) {
+    ctx.fillStyle = "rgba(255,255,255,.75)";
+    ctx.font = "18px Arial";
+    ctx.fillText("等待更多真实报价数据...", 26, 42);
+    return;
+  }
+
+  const prices = goldApiPoints.map(p => p.price);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const pad = Math.max((max - min) * 0.2, 1);
+  const lo = min - pad, hi = max + pad;
+
+  const toX = (i) => 24 + i * ((w - 48) / Math.max(goldApiPoints.length - 1, 1));
+  const toY = (v) => 24 + (hi - v) * ((h - 48) / (hi - lo));
+
+  // area
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, "rgba(63,232,255,.34)");
+  grad.addColorStop(1, "rgba(7,90,255,0)");
+  ctx.beginPath();
+  goldApiPoints.forEach((p, i) => {
+    const x = toX(i), y = toY(p.price);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.lineTo(toX(goldApiPoints.length - 1), h - 24);
+  ctx.lineTo(toX(0), h - 24);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // line
+  const lineGrad = ctx.createLinearGradient(0, 0, w, 0);
+  lineGrad.addColorStop(0, "#3fe8ff");
+  lineGrad.addColorStop(0.65, "#ffffff");
+  lineGrad.addColorStop(1, "#9fefff");
+  ctx.strokeStyle = lineGrad;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  goldApiPoints.forEach((p, i) => {
+    const x = toX(i), y = toY(p.price);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // last dot
+  const last = goldApiPoints[goldApiPoints.length - 1];
+  ctx.fillStyle = "#fff";
+  ctx.beginPath();
+  ctx.arc(toX(goldApiPoints.length - 1), toY(last.price), 6, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+async function updateGoldApiQuote() {
+  const status = document.getElementById("apiGoldStatus");
+  const priceEl = document.getElementById("apiGoldPrice");
+  const changeEl = document.getElementById("apiGoldChange");
+  try {
+    const q = await fetchGoldApiQuote();
+    goldApiPoints.push({ price: q.price, ts: Date.now() });
+    if (goldApiPoints.length > 48) goldApiPoints.shift();
+
+    if (priceEl) priceEl.textContent = q.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (changeEl) {
+      const first = goldApiPoints[0]?.price || q.price;
+      const diff = q.price - first;
+      const pct = diff / first * 100;
+      changeEl.textContent = `${diff >= 0 ? "+" : ""}${diff.toFixed(2)} (${diff >= 0 ? "+" : ""}${pct.toFixed(2)}%)`;
+      changeEl.className = diff >= 0 ? "up" : "down";
+    }
+    if (status) {
+      status.textContent = "真实API";
+      status.className = "ok";
+    }
+    drawGoldApiChart();
+  } catch (e) {
+    if (status) {
+      status.textContent = "需配置API";
+      status.className = "warn";
+    }
+    if (priceEl) priceEl.textContent = "--";
+    if (changeEl) {
+      if (String(e.message).includes("GOLD_API_KEY")) {
+        changeEl.innerHTML = `请在 <b>crm-config.js</b> 填入 GOLD_API_KEY`;
+      } else {
+        changeEl.textContent = "行情暂不可用，请稍后重试";
+      }
+      changeEl.className = "warn";
+    }
+    drawGoldApiChart();
+  }
+}
+
+function renderCleanApiGoldChart(container) {
+  renderGoldApiShell(container);
+  goldApiPoints = [];
+  updateGoldApiQuote();
+  if (goldApiTimer) clearInterval(goldApiTimer);
+  goldApiTimer = setInterval(updateGoldApiQuote, 30000);
   chartLoaded = true;
 }
 
@@ -228,14 +380,16 @@ async function initSmartSidebarChart() {
   if (!container) return;
 
   const url = new URL(window.location.href);
-  const forceChina = url.searchParams.get("chart") === "cn";
-  const country = forceChina ? "CN" : await detectChartCountry();
+  const forceApi = url.searchParams.get("chart") === "api";
+  const country = forceApi ? "CN" : await detectChartCountry();
 
+  // China/domestic users: clean API chart, no ads.
   if (country === "CN") {
-    renderChinaRealGoldChart(container);
+    renderCleanApiGoldChart(container);
     return;
   }
 
+  // Overseas users: TradingView.
   if (typeof TradingView !== "undefined") {
     new TradingView.widget({
       "container_id": "sidebarTradingView",
@@ -255,6 +409,6 @@ async function initSmartSidebarChart() {
     });
     chartLoaded = true;
   } else {
-    renderChinaRealGoldChart(container);
+    renderCleanApiGoldChart(container);
   }
 }

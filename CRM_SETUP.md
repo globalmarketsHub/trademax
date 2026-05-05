@@ -47,3 +47,12 @@ https://globalmarketshub.github.io/trademax/crm-analytics.html
 
 
 行情说明：本版本右侧行情没有任何模拟价格或假K线。中国大陆用户加载新浪财经伦敦金XAU真实第三方页面；海外用户加载TradingView。测试国内行情可在网址后加 `?chart=cn`。
+
+
+
+行情API说明：
+- 本版本国内右侧行情不再使用新浪网页 iframe，因此没有网页广告。
+- 国内行情使用 GoldAPI.io 的真实 XAU/USD API 自绘干净图表。
+- 你需要在 `crm-config.js` 里填写 `GOLD_API_KEY`。
+- 未填写 API Key 时，不显示假价格，只提示需要配置API。
+- 测试API行情可在网址后加 `?chart=api`。

@@ -824,66 +824,95 @@
 
 
 
-/* ===== Right-side real third-party chart only: no fake prices, no fake K-lines ===== */
-.real-cn-chart {
+
+
+
+
+/* ===== Right-side clean real API chart: no ads, no simulated price ===== */
+.api-gold-chart {
   height: 100%;
   min-height: 540px;
-  padding: 14px;
+  padding: 16px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #061d50, #075aff);
   color: #fff;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.18), transparent 28%),
+    linear-gradient(135deg, #061d50 0%, #075aff 68%, #12c8ff 100%);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
-.real-cn-head {
+.api-gold-head {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 12px;
+  align-items: flex-start;
 }
-.real-cn-head small {
+.api-gold-head small {
   display: block;
   color: #bfe8ff;
-  font-weight: 900;
   letter-spacing: 1.4px;
+  font-weight: 900;
 }
-.real-cn-head h3 {
+.api-gold-head h3 {
   margin: 6px 0 0;
   font-size: 22px;
 }
-.real-cn-head a,
-.real-cn-actions a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+#apiGoldStatus {
   border-radius: 999px;
-  padding: 9px 13px;
-  background: #fff;
-  color: #075aff;
-  font-size: 13px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.22);
+  font-size: 12px;
   font-weight: 950;
   white-space: nowrap;
 }
-.real-cn-iframe {
+#apiGoldStatus.ok { background: rgba(57,255,157,.18); color: #caffdf; }
+#apiGoldStatus.warn { background: rgba(255,220,120,.18); color: #fff0bf; }
+.api-gold-quote {
+  text-align: center;
+  padding: 10px 0 2px;
+}
+.api-gold-quote b {
+  display: block;
+  font-size: 42px;
+  line-height: 1;
+}
+.api-gold-quote em {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 900;
+  color: #eaf6ff;
+}
+.api-gold-quote em.up { color: #39ff9d; }
+.api-gold-quote em.down { color: #ffb3b3; }
+.api-gold-quote em.warn { color: #fff0bf; font-size: 13px; line-height: 1.6; }
+.api-gold-canvas-wrap {
+  height: 260px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+}
+#apiGoldCanvas {
   width: 100%;
-  flex: 1;
-  min-height: 390px;
-  border: 0;
-  border-radius: 16px;
-  background: #fff;
+  height: 100%;
+  display: block;
 }
-.real-cn-footer {
+.api-gold-note {
   margin: 0;
-}
-.real-cn-footer p {
-  margin: 0 0 10px;
   color: #eaf6ff;
   line-height: 1.55;
   font-size: 12px;
 }
-.real-cn-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.api-gold-cta {
+  align-self: flex-start;
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 10px 15px;
+  background: #fff;
+  color: #075aff;
+  font-size: 14px;
+  font-weight: 950;
 }
