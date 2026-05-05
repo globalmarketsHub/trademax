@@ -46,4 +46,4 @@ https://globalmarketshub.github.io/trademax/crm-analytics.html
 - CRM表格居中清晰展示
 
 
-本次版本说明：右侧行情图表保留原位置；页面中间不新增图表。海外用户加载 TradingView，中国大陆用户右侧自动切换为可访问的黄金行情展示模块。
+本版本行情说明：右侧行情图表位置不变；海外加载 TradingView；中国大陆加载新浪财经伦敦金 XAU 第三方真实行情页面，不使用模拟价格。

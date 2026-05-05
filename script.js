@@ -182,7 +182,7 @@ function applyProductDefaults(type) {
 
 
 
-/* ===== Right-side chart only: overseas TradingView + China fallback ===== */
+/* ===== Right-side chart only: overseas TradingView + China real third-party source ===== */
 async function detectChartCountry() {
   try {
     const res = await fetch("https://ipapi.co/json/");
@@ -193,60 +193,29 @@ async function detectChartCountry() {
   }
 }
 
-function renderChinaSidebarGoldChart(container) {
+function renderSinaGoldChart(container) {
   container.innerHTML = `
-    <div class="sidebar-cn-chart">
-      <div class="sidebar-cn-head">
-        <small>XAUUSD · GOLD</small>
-        <h3>黄金行情展示</h3>
-      </div>
-      <div class="sidebar-cn-price">
-        <b id="sidebarGoldPrice">2350.20</b>
-        <span id="sidebarGoldChange">+0.00 (0.00%)</span>
-      </div>
-      <div class="sidebar-cn-mini-chart">
-        <div class="sidebar-cn-grid"></div>
-        <div class="sidebar-cn-bars">
-          <i></i><i></i><i></i><i></i><i></i><i></i>
+    <div class="sina-real-chart">
+      <div class="sina-real-head">
+        <div>
+          <small>REAL THIRD-PARTY DATA</small>
+          <h3>伦敦金 XAU 行情</h3>
         </div>
-        <svg viewBox="0 0 420 190">
-          <defs>
-            <linearGradient id="sidebarGoldLine" x1="0" x2="1">
-              <stop offset="0%" stop-color="#3fe8ff"/>
-              <stop offset="65%" stop-color="#0a65ff"/>
-              <stop offset="100%" stop-color="#ffffff"/>
-            </linearGradient>
-          </defs>
-          <path d="M20 155 C55 128 78 142 105 108 S165 92 198 72 S250 65 285 42 S350 38 405 20"/>
-          <circle cx="405" cy="20" r="5"/>
-        </svg>
+        <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank">新浪财经</a>
       </div>
-      <p class="sidebar-cn-note">行情展示可能因地区网络存在延迟，真实交易报价请以 MT4 / MT5 为准。</p>
-      <a class="sidebar-cn-cta" href="lead-form.html">获取开户链接</a>
+      <iframe
+        class="sina-real-iframe"
+        src="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <p class="sina-real-note">
+        行情来源：新浪财经伦敦金页面。交易报价、成交和点差请以 MT4 / MT5 平台实际显示为准。
+      </p>
+      <a class="sina-real-cta" href="lead-form.html">获取开户链接 / 联系客户经理</a>
     </div>
   `;
-  simulateSidebarGoldPrice();
-}
-
-function simulateSidebarGoldPrice() {
-  let price = 2350.20;
-  const base = price;
-  const priceEl = document.getElementById("sidebarGoldPrice");
-  const changeEl = document.getElementById("sidebarGoldChange");
-  if (!priceEl || !changeEl) return;
-
-  if (window.sidebarGoldTimer) clearInterval(window.sidebarGoldTimer);
-
-  window.sidebarGoldTimer = setInterval(() => {
-    const move = (Math.random() - 0.48) * 1.45;
-    price += move;
-    const diff = price - base;
-    const pct = diff / base * 100;
-
-    priceEl.textContent = price.toFixed(2);
-    changeEl.textContent = `${diff >= 0 ? "+" : ""}${diff.toFixed(2)} (${diff >= 0 ? "+" : ""}${pct.toFixed(2)}%)`;
-    changeEl.className = diff >= 0 ? "up" : "down";
-  }, 1400);
+  chartLoaded = true;
 }
 
 async function initSmartSidebarChart() {
@@ -256,8 +225,7 @@ async function initSmartSidebarChart() {
   const country = await detectChartCountry();
 
   if (country === "CN") {
-    renderChinaSidebarGoldChart(container);
-    chartLoaded = true;
+    renderSinaGoldChart(container);
     return;
   }
 
@@ -280,7 +248,6 @@ async function initSmartSidebarChart() {
     });
     chartLoaded = true;
   } else {
-    renderChinaSidebarGoldChart(container);
-    chartLoaded = true;
+    renderSinaGoldChart(container);
   }
 }
