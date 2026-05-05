@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TradeMax | 首页</title>
+  <title>TradeMax | 账户点差</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -42,49 +42,26 @@
 </header>
 
 
-<main>
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">TMGM 独立合作伙伴入口 · Premium Trading Access</p>
-      <h1>蓝白科技交易空间<br><span>ECN 0点差起</span></h1>
-      <p class="lead">通过合作伙伴开户链接开通 TMGM 支持的交易账户。网站已拆分为多个专业页面：产品、账户点差、MT4/MT5、交易计算器、代理合作与联系方式。</p>
-      <div class="cta-row">
-        <a class="primary-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">立即开通 ECN 裸点账户</a>
-        <a class="ghost-btn" href="accounts.html">查看账户点差</a>
-        <a class="ghost-btn" href="calculators.html">交易计算器</a>
-      </div>
-      <div class="trust-row">
-        <span>ECN 0 pip</span><span>STD 0.32</span><span>PM 0.27</span><span>PRO 0.22</span><span>多页面网站</span>
-      </div>
-      <p class="risk-mini">差价合约及杠杆产品交易存在风险。本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。</p>
-    </div>
-    <div class="hero-terminal">
-      <div class="terminal-top"><span></span><span></span><span></span><b>MARKET BREAKOUT ENGINE</b></div>
-      <div class="breakout-panel">
-        <div class="mini-candle mc1"></div><div class="mini-candle mc2"></div><div class="mini-candle mc3"></div><div class="mini-candle mc4"></div><div class="mini-candle mc5"></div>
-        <svg viewBox="0 0 560 280" class="breakout-svg">
-          <defs><linearGradient id="premiumLine" x1="0" x2="1"><stop offset="0%" stop-color="#0b63ff"/><stop offset="55%" stop-color="#3fe8ff"/><stop offset="100%" stop-color="#ffffff"/></linearGradient></defs>
-          <path d="M20 230 C85 205 100 220 150 182 S240 160 280 120 S370 105 420 70 S500 40 545 22" />
-          <circle cx="545" cy="22" r="9"/>
-        </svg>
-        <div class="breakout-label">INDEX BREAKOUT</div>
-      </div>
-      <div class="quote-cards">
-        <div><small>XAUUSD</small><b>Gold</b><em>Active</em></div>
-        <div><small>ECN</small><b>0.0</b><em>pip</em></div>
-        <div><small>Pages</small><b>Multi</b><em>Site</em></div>
-      </div>
-    </div>
+<main class="subpage">
+  <section class="page-hero">
+    <p class="eyebrow center">ACCOUNT TYPES & SPREADS</p>
+    <h1>账户类型与点差</h1>
+    <p class="section-lead">根据不同交易风格选择账户组别，重点推荐 ECN 裸点账户。</p>
   </section>
-
-  <section class="premium-card-section">
-    <p class="eyebrow center">SITE MAP</p>
-    <h2>专业页面导航</h2>
-    <div class="product-grid">
-      <article><span>🌐</span><h3>产品页面</h3><p>展示外汇、贵金属、指数、能源、加密货币 CFD、美股等。</p><a class="mini-link" href="products.html">进入产品页</a></article>
-      <article><span>📉</span><h3>账户点差页面</h3><p>展示 ECN、STD、PM、PRO 账户和开户链接。</p><a class="mini-link" href="accounts.html">进入账户页</a></article>
-      <article><span>🧮</span><h3>交易计算器页面</h3><p>保证金、盈亏、仓位三个独立工具。</p><a class="mini-link" href="calculators.html">进入计算器</a></article>
+  <section class="premium-dark">
+    <div class="account-grid">
+      <article class="account featured">
+        <label>Recommended</label>
+        <h3>ECN 裸点账户</h3>
+        <div class="spread"><small>点差低至</small><b>0</b><em>pip</em></div>
+        <p>适合高频、短线、EA和对交易成本敏感的客户。</p>
+        <a class="primary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+      </article>
+      <article class="account"><h3>STD 标准账户</h3><div class="spread small-spread"><small>点差参考</small><b>0.32</b></div><p>适合常规交易客户，账户结构清晰。</p><a class="ghost-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank">开通 STD</a></article>
+      <article class="account"><h3>PM 高级账户</h3><div class="spread small-spread"><small>点差参考</small><b>0.27</b></div><p>适合希望获得更优账户条件的客户。</p><a class="ghost-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank">开通 PM</a></article>
+      <article class="account"><h3>PRO 专业账户</h3><div class="spread small-spread"><small>点差参考</small><b>0.22</b></div><p>适合更专业、更重视成本的交易者。</p><a class="ghost-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank">开通 PRO</a></article>
     </div>
+    <p class="note">以上点差信息仅用于页面展示，实际交易条件、费用、产品可用性以 TMGM 最新官方规则及交易平台显示为准。</p>
   </section>
 </main>
 

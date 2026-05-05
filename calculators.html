@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | 交易计算器</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="premium-bg">
+  <div class="blue-white-gradient"></div>
+  <div class="glass-grid"></div>
+  <div class="kline-scene">
+    <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div><div class="candle c4"></div>
+    <div class="candle c5"></div><div class="candle c6"></div><div class="break-line"></div><div class="break-flare"></div>
+  </div>
+  <div class="bull-stage">
+    <div class="bull">
+      <div class="bull-body"></div><div class="bull-head"></div>
+      <div class="horn horn-left"></div><div class="horn horn-right"></div>
+      <div class="leg l1"></div><div class="leg l2"></div><div class="leg l3"></div><div class="leg l4"></div>
+      <div class="tail"></div>
+    </div>
+    <div class="bull-shadow"></div>
+  </div>
+</div>
+
+
+<header class="site-header">
+  <a class="brand" href="index.html"><span class="logo-mark">↗</span><span>TRADEMAX</span></a>
+  <nav>
+    <a href="products.html">产品</a>
+    <a href="accounts.html">账户点差</a>
+    <a href="platforms.html">MT4/MT5</a>
+    <a href="calculators.html">交易计算器</a>
+    <a href="partners.html">代理合作</a>
+    <a href="contact.html">联系</a>
+  </nav>
+  <button class="tool-open-top" onclick="openToolPanel('chart')">Live Chart</button>
+  <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+</header>
+
+
+<main class="calculator-page">
+  <p class="eyebrow center">TRADING CALCULATORS</p>
+  <h1>交易计算器</h1>
+  <p class="section-lead">以下工具用于快速估算保证金、利润/亏损和仓位风险。计算结果仅供参考，实际结果以交易平台、合约规格、实时价格和账户币种为准。</p>
+  <div class="calc-grid">
+    <article class="calc-card">
+      <h3>保证金计算器</h3>
+      <label>合约大小 Contract Size<input id="marginContract" type="number" value="100000"></label>
+      <label>交易手数 Lots<input id="marginLots" type="number" value="1" step="0.01"></label>
+      <label>产品价格 Price<input id="marginPrice" type="number" value="1" step="0.0001"></label>
+      <label>杠杆 Leverage<input id="marginLev" type="number" value="500"></label>
+      <button onclick="calcMargin()">计算保证金</button>
+      <div class="result" id="marginResult">结果：--</div>
+    </article>
+    <article class="calc-card">
+      <h3>利润 / 亏损计算器</h3>
+      <label>点数 Pips<input id="profitPips" type="number" value="10" step="0.1"></label>
+      <label>交易手数 Lots<input id="profitLots" type="number" value="1" step="0.01"></label>
+      <label>每点价值 Pip Value<input id="profitPipValue" type="number" value="10" step="0.01"></label>
+      <button onclick="calcProfit()">计算盈亏</button>
+      <div class="result" id="profitResult">结果：--</div>
+    </article>
+    <article class="calc-card">
+      <h3>仓位计算器</h3>
+      <label>账户资金 Balance<input id="posBalance" type="number" value="10000"></label>
+      <label>风险比例 Risk %<input id="posRisk" type="number" value="2" step="0.1"></label>
+      <label>止损点数 Stop Loss Pips<input id="posSL" type="number" value="50" step="0.1"></label>
+      <label>每标准手每点价值 Pip Value<input id="posPipValue" type="number" value="10" step="0.01"></label>
+      <button onclick="calcPosition()">计算建议手数</button>
+      <div class="result" id="posResult">结果：--</div>
+    </article>
+  </div>
+  <div class="formula-note">
+    <b>常用公式：</b><br>
+    保证金 ≈ 合约大小 × 手数 × 产品价格 ÷ 杠杆<br>
+    盈亏 ≈ 点数 × 手数 × 每点价值<br>
+    建议仓位 ≈ 账户资金 × 风险比例 ÷（止损点数 × 每点价值）
+  </div>
+</main>
+
+
+
+<footer>
+  <div class="footer-grid">
+    <div><h3>TRADEMAX</h3><p>TMGM 独立合作伙伴信息入口。开户通过页面内合作伙伴注册链接完成。</p></div>
+    <div><h4>账户入口</h4><a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">ECN 裸点账户</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank">STD 0.32</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank">PM 0.27</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank">PRO 0.22</a></div>
+    <div><h4>联系渠道</h4><a href="tencent://message/?uin=1911310053&Site=&Menu=yes">QQ：1911310053</a><a href="https://wa.me/61424456407" target="_blank">WhatsApp：+61 0424456407</a><a href="mailto:1911310053@qq.com">Email：1911310053@qq.com</a></div>
+  </div>
+  <p class="disclaimer"><b>重要声明：</b>本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。所有开户链接均为合作伙伴注册链接。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则为准。</p>
+  <p class="disclaimer"><b>风险提示：</b>差价合约及杠杆产品交易存在较高风险，可能并不适合所有投资者。交易前请充分了解相关风险。</p>
+</footer>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
