@@ -824,8 +824,8 @@
 
 
 
-/* ===== Right-side China real third-party chart only ===== */
-.sina-real-chart {
+/* ===== Right-side real third-party chart only: no fake prices, no fake K-lines ===== */
+.real-cn-chart {
   height: 100%;
   min-height: 540px;
   padding: 14px;
@@ -836,24 +836,24 @@
   flex-direction: column;
   gap: 12px;
 }
-.sina-real-head {
+.real-cn-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
-.sina-real-head small {
+.real-cn-head small {
   display: block;
   color: #bfe8ff;
   font-weight: 900;
   letter-spacing: 1.4px;
 }
-.sina-real-head h3 {
+.real-cn-head h3 {
   margin: 6px 0 0;
   font-size: 22px;
 }
-.sina-real-head a,
-.sina-real-cta {
+.real-cn-head a,
+.real-cn-actions a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -865,7 +865,7 @@
   font-weight: 950;
   white-space: nowrap;
 }
-.sina-real-iframe {
+.real-cn-iframe {
   width: 100%;
   flex: 1;
   min-height: 390px;
@@ -873,13 +873,17 @@
   border-radius: 16px;
   background: #fff;
 }
-.sina-real-note {
+.real-cn-footer {
   margin: 0;
+}
+.real-cn-footer p {
+  margin: 0 0 10px;
   color: #eaf6ff;
   line-height: 1.55;
   font-size: 12px;
 }
-.sina-real-cta {
-  align-self: flex-start;
-  font-size: 14px;
+.real-cn-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }

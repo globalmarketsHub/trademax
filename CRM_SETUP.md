@@ -46,4 +46,4 @@ https://globalmarketshub.github.io/trademax/crm-analytics.html
 - CRM表格居中清晰展示
 
 
-本版本行情说明：右侧行情图表位置不变；海外加载 TradingView；中国大陆加载新浪财经伦敦金 XAU 第三方真实行情页面，不使用模拟价格。
+行情说明：本版本右侧行情没有任何模拟价格或假K线。中国大陆用户加载新浪财经伦敦金XAU真实第三方页面；海外用户加载TradingView。测试国内行情可在网址后加 `?chart=cn`。

@@ -182,7 +182,7 @@ function applyProductDefaults(type) {
 
 
 
-/* ===== Right-side chart only: overseas TradingView + China real third-party source ===== */
+/* ===== Right-side chart only: REAL sources, no simulated market data ===== */
 async function detectChartCountry() {
   try {
     const res = await fetch("https://ipapi.co/json/");
@@ -193,26 +193,31 @@ async function detectChartCountry() {
   }
 }
 
-function renderSinaGoldChart(container) {
+function renderChinaRealGoldChart(container) {
   container.innerHTML = `
-    <div class="sina-real-chart">
-      <div class="sina-real-head">
+    <div class="real-cn-chart">
+      <div class="real-cn-head">
         <div>
-          <small>REAL THIRD-PARTY DATA</small>
-          <h3>伦敦金 XAU 行情</h3>
+          <small>真实第三方行情源</small>
+          <h3>伦敦金 XAU</h3>
         </div>
-        <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank">新浪财经</a>
+        <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank" rel="noopener">打开原页面</a>
       </div>
+
       <iframe
-        class="sina-real-iframe"
+        class="real-cn-iframe"
         src="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <p class="sina-real-note">
-        行情来源：新浪财经伦敦金页面。交易报价、成交和点差请以 MT4 / MT5 平台实际显示为准。
-      </p>
-      <a class="sina-real-cta" href="lead-form.html">获取开户链接 / 联系客户经理</a>
+
+      <div class="real-cn-footer">
+        <p>行情来源：新浪财经伦敦金 XAU 页面。交易报价、点差及成交请以 MT4 / MT5 实际显示为准。</p>
+        <div class="real-cn-actions">
+          <a href="https://gu.sina.cn/ft/hq/hf.php?symbol=XAU" target="_blank" rel="noopener">查看新浪行情</a>
+          <a href="lead-form.html">联系客户经理</a>
+        </div>
+      </div>
     </div>
   `;
   chartLoaded = true;
@@ -222,10 +227,12 @@ async function initSmartSidebarChart() {
   const container = document.getElementById("sidebarTradingView");
   if (!container) return;
 
-  const country = await detectChartCountry();
+  const url = new URL(window.location.href);
+  const forceChina = url.searchParams.get("chart") === "cn";
+  const country = forceChina ? "CN" : await detectChartCountry();
 
   if (country === "CN") {
-    renderSinaGoldChart(container);
+    renderChinaRealGoldChart(container);
     return;
   }
 
@@ -248,6 +255,6 @@ async function initSmartSidebarChart() {
     });
     chartLoaded = true;
   } else {
-    renderSinaGoldChart(container);
+    renderChinaRealGoldChart(container);
   }
 }
