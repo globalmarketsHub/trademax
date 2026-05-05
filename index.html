@@ -3,225 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TradeMax Global Markets Hub | TMGM Partner Access</title>
-  <meta name="description" content="TradeMax Global Markets Hub - Independent TMGM partner access page for ECN account, FX, gold, indices, commodities and US stocks." />
+  <title>TradeMax | TMGM Partner ECN Access</title>
+  <meta name="description" content="TradeMax independent TMGM partner access page with live chart, ECN account, MT4/MT5, calculators and client manager support." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="animated-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="grid-glow"></div>
-  </div>
-
-  <header class="site-header">
-    <a class="brand" href="#">
-      <span class="logo-icon">↗</span>
-      <span>TRADEMAX</span>
-    </a>
-    <nav>
-      <a href="#why" data-cn="核心优势" data-en="Advantages">核心优势</a>
-      <a href="#products" data-cn="产品" data-en="Products">产品</a>
-      <a href="#accounts" data-cn="ECN账户" data-en="ECN Account">ECN账户</a>
-      <a href="#partners" data-cn="代理合作" data-en="Partners">代理合作</a>
-      <a href="#contact" data-cn="联系" data-en="Contact">联系</a>
-    </nav>
-    <div class="header-actions">
-      <button class="lang-btn" onclick="toggleLang()">EN</button>
-      <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank" data-cn="立即开户" data-en="Open Account">立即开户</a>
-    </div>
-  </header>
-
+  <div class="market-bg"><div class="bg-grid"></div><div class="blue-wave wave-a"></div><div class="blue-wave wave-b"></div><div class="floating-symbols"><span>EURUSD</span><span>XAUUSD</span><span>NAS100</span><span>US30</span><span>BTCUSD</span><span>USDJPY</span></div></div>
+  <header class="site-header"><a class="brand" href="#"><span class="logo-icon">↗</span><span>TRADEMAX</span></a><nav><a href="#markets">产品</a><a href="#livechart">Live Chart</a><a href="#tools">计算器</a><a href="#platforms">MT4/MT5</a><a href="#partners">代理合作</a><a href="#contact">联系</a></nav><a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a></header>
   <main>
-    <section class="hero">
-      <div class="hero-text">
-        <p class="eyebrow" data-cn="TMGM 独立合作伙伴 · ECN交易入口" data-en="INDEPENDENT TMGM PARTNER · ECN ACCESS">TMGM 独立合作伙伴 · ECN交易入口</p>
-        <h1 data-cn="专属客户经理对接<br>连接全球多资产市场" data-en="Dedicated Account Manager Support<br>Access Global Multi-Asset Markets">专属客户经理对接<br>连接全球多资产市场</h1>
-        <p class="lead" data-cn="通过合作伙伴注册链接开通 TMGM 支持的交易账户，重点推荐 ECN 裸点账户，覆盖外汇、黄金、指数、大宗商品、能源、加密货币差价合约及美股等产品。" data-en="Register through partner links for TMGM-supported trading accounts, with ECN raw spread account access for FX, gold, indices, commodities, energy, crypto CFDs and US stocks.">通过合作伙伴注册链接开通 TMGM 支持的交易账户，重点推荐 ECN 裸点账户，覆盖外汇、黄金、指数、大宗商品、能源、加密货币差价合约及美股等产品。</p>
-        <div class="cta-row">
-          <a class="primary-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank" data-cn="开通 ECN 裸点账户" data-en="Open ECN Raw Spread Account">开通 ECN 裸点账户</a>
-          <a class="secondary-btn" href="#contact" data-cn="联系客户经理" data-en="Contact Manager">联系客户经理</a>
-        </div>
-        <div class="trust-strip">
-          <span>MT4 / MT5</span>
-          <span data-cn="0点差起" data-en="From 0 pip">0点差起</span>
-          <span data-cn="专属客户经理" data-en="Dedicated Manager">专属客户经理</span>
-          <span data-cn="多资产产品" data-en="Multi-Asset Products">多资产产品</span>
-        </div>
-        <p class="risk-mini" data-cn="差价合约交易存在风险。本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。" data-en="Trading CFDs involves risk. This website is operated by an independent partner and is not the official TMGM website.">差价合约交易存在风险。本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。</p>
-      </div>
-
-      <div class="terminal-card">
-        <div class="card-top">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="chart-area">
-          <svg viewBox="0 0 520 300" aria-label="Trading chart">
-            <defs>
-              <linearGradient id="lineGrad" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stop-color="#54a6ff"/>
-                <stop offset="50%" stop-color="#78f4ff"/>
-                <stop offset="100%" stop-color="#f8c65a"/>
-              </linearGradient>
-            </defs>
-            <g class="chart-grid">
-              <line x1="0" y1="60" x2="520" y2="60"/><line x1="0" y1="120" x2="520" y2="120"/>
-              <line x1="0" y1="180" x2="520" y2="180"/><line x1="0" y1="240" x2="520" y2="240"/>
-            </g>
-            <polyline class="chart-line" points="12,235 65,205 105,215 148,170 190,185 245,125 298,145 340,92 385,115 430,70 500,45"/>
-            <g class="candles">
-              <rect x="58" y="130" width="12" height="58"/><line x1="64" y1="110" x2="64" y2="205"/>
-              <rect x="128" y="95" width="12" height="62"/><line x1="134" y1="75" x2="134" y2="178"/>
-              <rect x="220" y="105" width="12" height="74"/><line x1="226" y1="82" x2="226" y2="205"/>
-              <rect x="312" y="62" width="12" height="80"/><line x1="318" y1="42" x2="318" y2="160"/>
-              <rect x="440" y="35" width="12" height="65"/><line x1="446" y1="18" x2="446" y2="128"/>
-            </g>
-          </svg>
-        </div>
-        <div class="quote-grid">
-          <div><small>ECN</small><b>0.0</b><em>pip</em></div>
-          <div><small>XAUUSD</small><b>Gold</b><em>Access</em></div>
-          <div><small>US Stocks</small><b>CFD</b><em>Markets</em></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="features" id="why">
-      <article class="feature">
-        <div class="icon">📈</div>
-        <h3 data-cn="ECN裸点交易环境" data-en="ECN Raw Spread Environment">ECN裸点交易环境</h3>
-        <p data-cn="ECN账户点差低至0点起，适合短线、高频和重视交易成本的客户。" data-en="ECN account spreads from 0 pip, suitable for active traders focused on trading costs.">ECN账户点差低至0点起，适合短线、高频和重视交易成本的客户。</p>
-      </article>
-      <article class="feature">
-        <div class="icon">🧑‍💼</div>
-        <h3 data-cn="专属客户经理对接" data-en="Dedicated Account Manager">专属客户经理对接</h3>
-        <p data-cn="提供开户引导、账户组别选择、平台使用说明和后续服务协助。" data-en="Support for registration, account type selection, platform usage and ongoing service assistance.">提供开户引导、账户组别选择、平台使用说明和后续服务协助。</p>
-      </article>
-      <article class="feature">
-        <div class="icon">🌐</div>
-        <h3 data-cn="全球多资产产品" data-en="Global Multi-Asset Products">全球多资产产品</h3>
-        <p data-cn="覆盖外汇、黄金、指数、商品、能源、加密货币CFD及美股等产品。" data-en="Access FX, gold, indices, commodities, energy, crypto CFDs and US stocks.">覆盖外汇、黄金、指数、商品、能源、加密货币CFD及美股等产品。</p>
-      </article>
-      <article class="feature">
-        <div class="icon">⚡</div>
-        <h3 data-cn="MT4 / MT5 支持" data-en="MT4 / MT5 Supported">MT4 / MT5 支持</h3>
-        <p data-cn="支持桌面端、移动端、EA自动化交易和专业图表分析。" data-en="Desktop, mobile, EA automated trading and professional charting tools.">支持桌面端、移动端、EA自动化交易和专业图表分析。</p>
-      </article>
-    </section>
-
-    <section class="section" id="products">
-      <p class="eyebrow center" data-cn="产品范围" data-en="PRODUCT RANGE">产品范围</p>
-      <h2 data-cn="一站式连接全球热门交易品种" data-en="One Portal for Global Market Products">一站式连接全球热门交易品种</h2>
-      <div class="product-grid">
-        <div><span class="product-icon">💱</span><b data-cn="外汇 Forex" data-en="Forex">外汇 Forex</b><p data-cn="主要货币对、交叉盘及热门货币对。" data-en="Major, minor and popular currency pairs.">主要货币对、交叉盘及热门货币对。</p></div>
-        <div><span class="product-icon">🥇</span><b data-cn="贵金属 Metals" data-en="Metals">贵金属 Metals</b><p data-cn="黄金、白银等热门贵金属产品。" data-en="Gold, silver and other popular metals.">黄金、白银等热门贵金属产品。</p></div>
-        <div><span class="product-icon">📊</span><b data-cn="指数 Indices" data-en="Indices">指数 Indices</b><p data-cn="美股、欧洲、亚洲主要指数 CFD。" data-en="US, European and Asian index CFDs.">美股、欧洲、亚洲主要指数 CFD。</p></div>
-        <div><span class="product-icon">🛢️</span><b data-cn="大宗商品 Commodities" data-en="Commodities">大宗商品 Commodities</b><p data-cn="能源、商品及相关 CFD 产品。" data-en="Energy, commodities and related CFD products.">能源、商品及相关 CFD 产品。</p></div>
-        <div><span class="product-icon">₿</span><b data-cn="加密货币 CFD" data-en="Crypto CFDs">加密货币 CFD</b><p data-cn="热门数字资产差价合约产品。" data-en="Popular digital asset CFD products.">热门数字资产差价合约产品。</p></div>
-        <div><span class="product-icon">🏛️</span><b data-cn="美股 US Stocks" data-en="US Stocks">美股 US Stocks</b><p data-cn="接入热门美国股票交易机会。" data-en="Access popular US stock opportunities.">接入热门美国股票交易机会。</p></div>
-      </div>
-    </section>
-
-    <section class="section account-section" id="accounts">
-      <p class="eyebrow center" data-cn="账户类型与点差" data-en="ACCOUNT TYPES & SPREADS">账户类型与点差</p>
-      <h2 data-cn="重点推荐 ECN 裸点账户" data-en="ECN Raw Spread Account Recommended">重点推荐 ECN 裸点账户</h2>
-      <div class="account-grid">
-        <article class="account featured">
-          <label>ECN</label>
-          <h3 data-cn="ECN 裸点账户" data-en="ECN Raw Spread Account">ECN 裸点账户</h3>
-          <div class="spread"><small data-cn="点差低至" data-en="Spreads from">点差低至</small><b>0</b><em>pip</em></div>
-          <p data-cn="适合高频、短线、EA和对交易成本敏感的客户。通过专属客户经理协助开户注册与账户组别选择。" data-en="Suitable for active traders, short-term strategies, EA users and clients focused on lower trading costs. Dedicated account manager support is available.">适合高频、短线、EA和对交易成本敏感的客户。通过专属客户经理协助开户注册与账户组别选择。</p>
-          <a class="primary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank" data-cn="立即开通 ECN" data-en="Open ECN Now">立即开通 ECN</a>
-        </article>
-        <article class="account">
-          <h3>STD <span data-cn="标准账户" data-en="Standard Account">标准账户</span></h3>
-          <div class="spread small-spread"><small data-cn="点差低至" data-en="Spreads from">点差低至</small><b>1.0</b><em>pip</em></div>
-          <p data-cn="适合新手和常规交易者，账户结构简单直观。" data-en="For new and regular traders with a simple account structure.">适合新手和常规交易者，账户结构简单直观。</p>
-          <a class="secondary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank" data-cn="开通标准账户" data-en="Open Standard">开通标准账户</a>
-        </article>
-        <article class="account">
-          <h3>PRO <span data-cn="专业账户" data-en="Professional Account">专业账户</span></h3>
-          <div class="spread small-spread"><small data-cn="点差低至" data-en="Spreads from">点差低至</small><b>0.6</b><em>pip</em></div>
-          <p data-cn="适合有经验交易者，兼顾账户条件与灵活性。" data-en="For experienced traders seeking account flexibility.">适合有经验交易者，兼顾账户条件与灵活性。</p>
-          <a class="secondary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank" data-cn="开通专业账户" data-en="Open Pro">开通专业账户</a>
-        </article>
-        <article class="account">
-          <h3>PM <span data-cn="高级账户" data-en="Premium Account">高级账户</span></h3>
-          <div class="spread small-spread"><small data-cn="点差低至" data-en="Spreads from">点差低至</small><b>0.8</b><em>pip</em></div>
-          <p data-cn="适合资金规模较高、希望获得更优账户条件的客户。" data-en="For higher-volume clients seeking optimized account conditions.">适合资金规模较高、希望获得更优账户条件的客户。</p>
-          <a class="secondary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank" data-cn="开通高级账户" data-en="Open Premium">开通高级账户</a>
-        </article>
-      </div>
-      <p class="note" data-cn="以上点差信息为页面展示用途，实际交易条件、费用、产品可用性以 TMGM 最新官方规则和交易平台显示为准。" data-en="The spread information above is for page display only. Actual conditions, fees and product availability are subject to TMGM's latest official rules and platform display.">以上点差信息为页面展示用途，实际交易条件、费用、产品可用性以 TMGM 最新官方规则和交易平台显示为准。</p>
-    </section>
-
-    <section class="section partner-section" id="partners">
-      <p class="eyebrow center" data-cn="专业代理合作" data-en="PROFESSIONAL PARTNER COOPERATION">专业代理合作</p>
-      <h2 data-cn="邀请优质代理与合作伙伴" data-en="Invite Quality Agents and Partners">邀请优质代理与合作伙伴</h2>
-      <p class="section-lead" data-cn="如果你拥有交易客户资源、财经社群、教育渠道、内容流量或本地市场资源，欢迎咨询代理合作方案。可支持开户链接、账户组别、活动方案及客户服务对接。" data-en="If you have client resources, trading communities, education channels, content traffic or local market resources, contact us for partner cooperation. Partner links, account groups, campaigns and service support are available.">如果你拥有交易客户资源、财经社群、教育渠道、内容流量或本地市场资源，欢迎咨询代理合作方案。可支持开户链接、账户组别、活动方案及客户服务对接。</p>
-      <div class="partner-grid">
-        <div><h3 data-cn="专属开户链接" data-en="Dedicated Partner Links">专属开户链接</h3><p data-cn="支持不同账户组别注册，便于客户选择 STD、PM、PRO 或 ECN。" data-en="Support registrations for STD, PM, PRO and ECN accounts.">支持不同账户组别注册，便于客户选择 STD、PM、PRO 或 ECN。</p></div>
-        <div><h3 data-cn="返佣与活动支持" data-en="Rebate & Campaign Support">返佣与活动支持</h3><p data-cn="根据合作规模沟通返佣、活动、客户维护及市场支持。" data-en="Discuss rebates, campaigns, client maintenance and market support based on partner scale.">根据合作规模沟通返佣、活动、客户维护及市场支持。</p></div>
-        <div><h3 data-cn="客户经理协助" data-en="Account Manager Support">客户经理协助</h3><p data-cn="协助开户注册、平台教学、账户组别推荐及后续服务。" data-en="Support for onboarding, platform guidance, account recommendations and ongoing service.">协助开户注册、平台教学、账户组别推荐及后续服务。</p></div>
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-      <div>
-        <p class="eyebrow" data-cn="联系我们" data-en="CONTACT">联系我们</p>
-        <h2 data-cn="开户或代理合作咨询" data-en="Account Opening or Partner Enquiry">开户或代理合作咨询</h2>
-        <p data-cn="如需开户指引、ECN账户说明、代理合作政策或平台使用支持，可通过以下方式联系专属客户经理。" data-en="For account opening, ECN account details, partner cooperation or platform support, contact the dedicated account manager below.">如需开户指引、ECN账户说明、代理合作政策或平台使用支持，可通过以下方式联系专属客户经理。</p>
-      </div>
-      <div class="contact-card">
-        <a href="tencent://message/?uin=1911310053&Site=&Menu=yes"><span>QQ</span><b>1911310053</b></a>
-        <a href="https://wa.me/61424456407" target="_blank"><span>WhatsApp</span><b>+61 0424456407</b></a>
-        <a href="mailto:1911310053@qq.com"><span>Email</span><b>1911310053@qq.com</b></a>
-      </div>
-    </section>
-
-    <section class="cta">
-      <h2 data-cn="准备开通 ECN 裸点账户？" data-en="Ready to open an ECN raw spread account?">准备开通 ECN 裸点账户？</h2>
-      <p data-cn="点击下方按钮，通过合作伙伴开户链接注册。" data-en="Click below to register through the partner link.">点击下方按钮，通过合作伙伴开户链接注册。</p>
-      <a class="white-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank" data-cn="立即创建账户" data-en="Create Account Now">立即创建账户</a>
-    </section>
+    <section class="hero"><div class="hero-copy"><p class="eyebrow">TMGM 独立合作伙伴入口 · ECN 裸点账户</p><h1>连接全球市场<br>体验专业交易环境</h1><p class="lead">通过合作伙伴注册链接开通 TMGM 支持的交易账户，重点推荐 ECN 裸点账户。支持 MT4 / MT5 平台，覆盖外汇、贵金属、指数、能源、大宗商品、加密货币 CFD 及美股等产品。</p><div class="cta-row"><a class="primary-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">立即开通 ECN 裸点账户</a><a class="ghost-btn" href="#livechart">查看实时图表</a></div><div class="contact-strip"><span>专属客户经理</span><span>QQ：1911310053</span><span>WhatsApp：+61 0424456407</span><span>Email：1911310053@qq.com</span></div><p class="risk-mini">差价合约及杠杆产品交易存在风险。本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。</p></div>
+    <div class="live-board"><div class="tabs"><button class="active">Forex</button><button>Metals</button><button>Crypto</button><button>Oil</button><button>Shares</button><button>Indices</button></div><div class="quote-table"><div class="table-head"><span></span><span>Bid</span><span>Ask</span><span>Spread</span><span></span></div><div><b>EURUSD <i>↗</i></b><span>1.17228</span><span>1.17230</span><span>0.2</span><em>Buy</em></div><div><b>USDJPY <i>↗</i></b><span>156.89</span><span>156.892</span><span>0.2</span><em>Buy</em></div><div><b>GBPUSD <i>↗</i></b><span>1.35710</span><span>1.35713</span><span>0.3</span><em>Buy</em></div><div><b>XAUUSD <i>↗</i></b><span>2335.20</span><span>2335.32</span><span>0.12</span><em>Buy</em></div><div><b>NAS100 <i>↗</i></b><span>18420.5</span><span>18421.1</span><span>0.6</span><em>Buy</em></div></div><div class="visual-card"><div class="planet">€</div><div><h3>Multi-Asset Access</h3><p>外汇、黄金、指数、商品、美股与加密货币 CFD，一站式连接全球热门市场。</p><a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">Trade with ECN</a></div></div></div></section>
+    <section class="market-section" id="markets"><h2>多元产品交易入口</h2><p class="section-lead">从主要货币对到黄金、指数、美股与加密货币 CFD，为不同策略提供更灵活的市场选择。</p><div class="market-carousel"><article><span>💱</span><h3>Forex 外汇</h3><p>交易主要货币对、交叉盘及热门货币对，适合日内、波段和趋势策略。</p></article><article><span>🥇</span><h3>Precious Metals 贵金属</h3><p>黄金、白银等热门品种，适合关注避险资产与宏观行情的客户。</p></article><article><span>₿</span><h3>Cryptocurrencies CFD</h3><p>热门数字资产差价合约产品，满足更灵活的市场交易需求。</p></article><article><span>🛢️</span><h3>Oil 能源</h3><p>原油及能源相关 CFD 产品，适合跟踪供需和宏观周期的交易者。</p></article><article><span>🏛️</span><h3>Shares 美股</h3><p>接入热门美国股票交易机会，适合关注科技股和全球股票市场的客户。</p></article><article><span>📊</span><h3>Indices 指数</h3><p>覆盖美股、欧洲、亚洲主要指数 CFD，适合宏观和组合交易策略。</p></article></div></section>
+    <section class="livechart-section" id="livechart"><p class="eyebrow center">LIVE CHART</p><h2>实时行情图表</h2><p class="section-lead light">查看主要交易产品走势。默认显示黄金 XAUUSD，可在图表内切换产品、周期和指标。</p><div class="chart-shell"><div class="tradingview-widget-container"><div id="tradingview_chart"></div></div></div></section>
+    <section class="accounts" id="accounts"><p class="eyebrow center">账户类型与点差</p><h2>重点推荐 ECN 裸点账户</h2><div class="account-layout"><article class="ecn-card"><label>Recommended</label><h3>ECN 裸点账户</h3><div class="spread"><small>点差低至</small><b>0</b><em>pip</em></div><p>适合高频、短线、EA和对交易成本敏感的客户。通过专属客户经理协助开户、入金流程、平台安装与账户组别选择。</p><a class="primary-btn full" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN 裸点账户</a></article><div class="mini-accounts"><a href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank"><b>STD 标准账户</b><span>点差低至 1.0 pip</span></a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank"><b>PRO 专业账户</b><span>点差低至 0.6 pip</span></a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank"><b>PM 高级账户</b><span>点差低至 0.8 pip</span></a></div></div><p class="note">以上点差信息仅用于页面展示，实际交易条件、费用、产品可用性以 TMGM 最新官方规则及交易平台显示为准。</p></section>
+    <section class="tools" id="tools"><p class="eyebrow center">TRADING TOOLS</p><h2>交易计算工具</h2><p class="section-lead">输入账户、杠杆、手数和点数，快速估算保证金、盈亏和仓位。结果仅供参考，实际以交易平台为准。</p><div class="calc-grid"><article class="calc-card"><h3>保证金计算器</h3><label>合约大小 Contract Size<input id="marginContract" type="number" value="100000"></label><label>手数 Lots<input id="marginLots" type="number" value="1" step="0.01"></label><label>杠杆 Leverage<input id="marginLev" type="number" value="500"></label><button onclick="calcMargin()">计算保证金</button><div class="result" id="marginResult">结果：--</div></article><article class="calc-card"><h3>利润 / 亏损计算器</h3><label>点数 / 点差 Pips<input id="profitPips" type="number" value="10" step="0.1"></label><label>手数 Lots<input id="profitLots" type="number" value="1" step="0.01"></label><label>每点价值 Pip Value<input id="profitPipValue" type="number" value="10" step="0.01"></label><button onclick="calcProfit()">计算盈亏</button><div class="result" id="profitResult">结果：--</div></article><article class="calc-card"><h3>仓位计算器</h3><label>账户资金 Balance<input id="posBalance" type="number" value="10000"></label><label>风险比例 Risk %<input id="posRisk" type="number" value="2" step="0.1"></label><label>止损点数 Stop Loss Pips<input id="posSL" type="number" value="50" step="0.1"></label><label>每标准手每点价值 Pip Value<input id="posPipValue" type="number" value="10" step="0.01"></label><button onclick="calcPosition()">计算建议手数</button><div class="result" id="posResult">结果：--</div></article></div></section>
+    <section class="platforms" id="platforms"><p class="eyebrow center">MT4 / MT5 平台介绍与下载</p><h2>专业交易平台支持</h2><p class="section-lead">根据交易习惯选择 MetaTrader 4 或 MetaTrader 5。开户、下载、服务器选择及登录流程可联系专属客户经理协助。</p><div class="platform-grid"><article class="platform-card"><div class="platform-visual mt4">MT4</div><h3>MetaTrader 4</h3><p>经典外汇和差价合约交易平台，支持EA自动化交易、技术指标、图表分析、移动端交易和桌面端操作。</p><ul><li>适合外汇、黄金和常规 CFD 交易</li><li>支持EA、脚本和自定义指标</li><li>手机、电脑均可使用</li></ul><div class="download-buttons"><a href="https://www.metatrader4.com/en/download" target="_blank">MT4 官方下载</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">先开通 ECN 账户</a></div><div class="manager-box"><b>下载 / 登录协助</b><span>QQ：1911310053</span><span>WhatsApp：+61 0424456407</span><span>Email：1911310053@qq.com</span></div></article><article class="platform-card"><div class="platform-visual mt5">MT5</div><h3>MetaTrader 5</h3><p>新一代多资产交易平台，适合需要更多周期、更多挂单类型、市场深度和多产品交易功能的客户。</p><ul><li>适合多资产、多品种交易</li><li>更丰富的图表周期和订单类型</li><li>支持桌面端、网页端和移动端</li></ul><div class="download-buttons"><a href="https://www.metatrader5.com/en/download" target="_blank">MT5 官方下载</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">先开通 ECN 账户</a></div><div class="manager-box"><b>下载 / 登录协助</b><span>QQ：1911310053</span><span>WhatsApp：+61 0424456407</span><span>Email：1911310053@qq.com</span></div></article></div></section>
+    <section class="partners" id="partners"><p class="eyebrow center">专业代理合作</p><h2>邀请优质代理与合作伙伴</h2><p class="section-lead light">如果你拥有客户资源、交易社群、财经内容、教育渠道或本地市场资源，欢迎咨询代理合作方案。</p><div class="partner-grid"><article><h3>专属开户链接</h3><p>支持 STD、PM、PRO、ECN 不同账户组别注册。</p></article><article><h3>返佣与活动支持</h3><p>根据合作规模沟通返佣、市场活动、客户维护与转化支持。</p></article><article><h3>客户经理协助</h3><p>协助平台开户、资料审核、平台下载、账户选择和后续服务。</p></article></div></section>
+    <section class="contact" id="contact"><div><p class="eyebrow">联系专属客户经理</p><h2>开户、平台下载或代理合作咨询</h2><p>如需 ECN 账户说明、MT4/MT5 下载、服务器登录、开户链接或代理合作政策，可通过以下方式联系。</p></div><div class="contact-card"><a href="tencent://message/?uin=1911310053&Site=&Menu=yes"><span>QQ</span><b>1911310053</b></a><a href="https://wa.me/61424456407" target="_blank"><span>WhatsApp</span><b>+61 0424456407</b></a><a href="mailto:1911310053@qq.com"><span>Email</span><b>1911310053@qq.com</b></a></div></section>
+    <section class="cta"><h2>准备开通 ECN 裸点账户？</h2><p>点击下方按钮，通过合作伙伴开户链接注册。</p><a class="white-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">立即创建账户</a></section>
   </main>
-
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h3>TRADEMAX</h3>
-        <p data-cn="TMGM 独立合作伙伴信息入口。开户通过页面内合作伙伴注册链接完成。" data-en="Independent TMGM partner information portal. Account opening is completed through partner links on this page.">TMGM 独立合作伙伴信息入口。开户通过页面内合作伙伴注册链接完成。</p>
-      </div>
-      <div>
-        <h4 data-cn="开户入口" data-en="Account Links">开户链接</h4>
-        <a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">ECN Raw Spread</a>
-        <a href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank">STD Standard</a>
-        <a href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank">PRO Professional</a>
-        <a href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank">PM Premium</a>
-      </div>
-      <div>
-        <h4 data-cn="联系渠道" data-en="Contact">联系渠道</h4>
-        <a href="tencent://message/?uin=1911310053&Site=&Menu=yes">QQ: 1911310053</a>
-        <a href="https://wa.me/61424456407" target="_blank">WhatsApp: +61 0424456407</a>
-        <a href="mailto:1911310053@qq.com">Email: 1911310053@qq.com</a>
-      </div>
-    </div>
-    <p class="disclaimer"><b data-cn="重要声明：" data-en="Important Notice:">重要声明：</b><span data-cn="本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。所有开户链接均为合作伙伴注册链接。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则为准。" data-en="This website is operated by an independent partner of TMGM and is not the official TMGM website. All account opening is completed through partner registration links. Product conditions, account availability, campaign terms and compliance requirements are subject to TMGM's latest official rules.">本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。所有开户链接均为合作伙伴注册链接。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则为准。</span></p>
-    <p class="disclaimer"><b data-cn="风险提示：" data-en="Risk Warning:">风险提示：</b><span data-cn="差价合约及杠杆产品交易存在较高风险，可能并不适合所有投资者。交易前请充分了解相关风险。" data-en="Trading CFDs and leveraged products involves significant risk and may not be suitable for all investors. Please understand the risks before trading.">差价合约及杠杆产品交易存在较高风险，可能并不适合所有投资者。交易前请充分了解相关风险。</span></p>
-  </footer>
-
-<script>
-let currentLang = "cn";
-function toggleLang(){
-  currentLang = currentLang === "cn" ? "en" : "cn";
-  document.documentElement.lang = currentLang === "cn" ? "zh-CN" : "en";
-  document.querySelector(".lang-btn").textContent = currentLang === "cn" ? "EN" : "中文";
-  document.querySelectorAll("[data-cn]").forEach(el => {
-    const text = el.getAttribute(currentLang === "cn" ? "data-cn" : "data-en");
-    if(text.includes("<br>")) el.innerHTML = text; else el.textContent = text;
-  });
-}
-</script>
-</body>
-</html>
+  <div class="chatbot"><button class="chat-toggle" onclick="toggleChat()">💬</button><div class="chat-window" id="chatWindow"><div class="chat-header"><b>TradeMax Assistant</b><button onclick="toggleChat()">×</button></div><div class="chat-body" id="chatBody"><div class="bot msg">您好 👋 请问您是已经完成开户，还是需要先开户注册？</div><div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div></div><form class="lead-form" id="leadForm" onsubmit="sendLead(event)"><input id="leadWechat" placeholder="微信号 / WeChat（必填）" required /><input id="leadEmail" placeholder="注册邮箱 / Email（已开户客户填写）" /><textarea id="leadNote" placeholder="备注：例如想开ECN、需要下载MT4/MT5、开户失败等"></textarea><button type="submit">提交给客户经理</button></form><p class="chat-tip">提交后会自动打开 WhatsApp 发送信息；静态网站不会单独存储客户资料。</p></div></div>
+  <footer><div class="footer-grid"><div><h3>TRADEMAX</h3><p>TMGM 独立合作伙伴信息入口。开户通过页面内合作伙伴注册链接完成。</p></div><div><h4>账户入口</h4><a href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">ECN 裸点账户</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI3&language=zh-Hans" target="_blank">STD 标准账户</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI1&language=zh-Hans" target="_blank">PRO 专业账户</a><a href="https://portal.cnfxhero.com/register?node=MjE4NjI2&language=zh-Hans" target="_blank">PM 高级账户</a></div><div><h4>联系渠道</h4><a href="tencent://message/?uin=1911310053&Site=&Menu=yes">QQ：1911310053</a><a href="https://wa.me/61424456407" target="_blank">WhatsApp：+61 0424456407</a><a href="mailto:1911310053@qq.com">Email：1911310053@qq.com</a></div></div><p class="disclaimer"><b>重要声明：</b>本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。所有开户链接均为合作伙伴注册链接。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则为准。</p><p class="disclaimer"><b>风险提示：</b>差价合约及杠杆产品交易存在较高风险，可能并不适合所有投资者。交易前请充分了解相关风险。</p></footer>
+  <script src="https://s3.tradingview.com/tv.js"></script><script src="script.js"></script>
+</body></html>
