@@ -1,1 +1,98 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TradeMax | 客户登记</title><link rel="stylesheet" href="style.css"></head><body><main class="crm-public-page"><section class="crm-form-panel"><div class="crm-form-copy"><p class="eyebrow">CLIENT REGISTRATION</p><h1>客户信息登记</h1><p>已开户客户请留下注册邮箱和微信；未开户客户可直接留下微信，由客户经理协助开户链接、账户类型、MT4/MT5下载及后续流程。</p></div><form class="crm-lead-form" id="publicLeadForm" onsubmit="submitLeadForm(event)"><div class="form-row"><label>姓名 / Name<input name="name" placeholder="可选"></label><label>微信 / WeChat<input name="wechat" placeholder="必填" required></label></div><div class="form-row"><label>WhatsApp<input name="whatsapp" placeholder="+61 ..."></label><label>注册邮箱 / Email<input name="email" type="email" placeholder="已开户客户填写"></label></div><div class="form-row"><label>是否已开户<select name="registered"><option value="未开户">未开户</option><option value="已开户">已开户</option><option value="开户中">开户中</option></select></label><label>意向账户<select name="account_type"><option value="ECN">ECN 裸点账户</option><option value="STD">STD 标准账户</option><option value="PM">PM 高级账户</option><option value="PRO">PRO 专业账户</option><option value="不确定">不确定</option></select></label></div><div class="form-row"><label>感兴趣产品<select name="interest"><option value="黄金">黄金 XAUUSD</option><option value="外汇">外汇 Forex</option><option value="指数">指数 Indices</option><option value="BTC/ETH">BTC / ETH</option><option value="美股">美股 Shares</option><option value="代理合作">代理合作</option></select></label><label>来源页面<input name="source_page" id="sourcePageInput" readonly></label></div><label>备注 / Notes<textarea name="notes" placeholder="例如：想开ECN、需要MT5下载、开户失败、想做代理等"></textarea></label><label class="privacy-check"><input type="checkbox" required>我同意提交联系方式用于开户链接协助、账户服务及客户经理后续对接。</label><button class="primary-btn full" type="submit">提交给客户经理</button><div class="form-message" id="leadFormMessage"></div></form></section></main><script src="crm-config.js"></script><script src="crm.js"></script><script>document.getElementById("sourcePageInput").value=document.referrer||"direct / lead-form";trackPageView();</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | 客户登记</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="premium-bg">
+    <div class="blue-white-gradient"></div>
+    <div class="glass-grid"></div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
+    <nav>
+      <a href="products.html">产品</a>
+      <a href="accounts.html">账户点差</a>
+      <a href="platforms.html">MT4/MT5</a>
+      <a href="calculators.html">交易计算器</a>
+      <a href="partners.html">代理合作</a>
+      <a href="contact.html">联系</a>
+      <a href="lead-form.html">客户登记</a>
+    </nav>
+    <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+  </header>
+
+  <main class="crm-public-page">
+    <section class="crm-form-panel">
+      <div class="crm-form-copy">
+        <p class="eyebrow">CLIENT REGISTRATION</p>
+        <h1>客户信息登记</h1>
+        <p>提交后信息会直接进入 CRM 后台，不会强制跳转 WhatsApp。中国大陆客户可直接留下微信；已开户客户建议填写注册邮箱，方便确认开户链接归属。</p>
+      </div>
+
+      <form class="crm-lead-form" id="publicLeadForm" onsubmit="submitLeadForm(event)">
+        <div class="form-row">
+          <label>姓名 / Name<input name="name" placeholder="可选"></label>
+          <label>微信 / WeChat<input name="wechat" placeholder="中国大陆客户建议填写" required></label>
+        </div>
+        <div class="form-row">
+          <label>WhatsApp<input name="whatsapp" placeholder="可选"></label>
+          <label>注册邮箱 / Email<input name="email" type="email" placeholder="已开户客户填写"></label>
+        </div>
+        <div class="form-row">
+          <label>是否已开户
+            <select name="registered">
+              <option value="未开户">未开户</option>
+              <option value="已开户">已开户</option>
+              <option value="开户中">开户中</option>
+            </select>
+          </label>
+          <label>意向账户
+            <select name="account_type">
+              <option value="ECN">ECN 裸点账户</option>
+              <option value="STD">STD 标准账户</option>
+              <option value="PM">PM 高级账户</option>
+              <option value="PRO">PRO 专业账户</option>
+              <option value="不确定">不确定，需要客户经理建议</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>感兴趣产品
+            <select name="interest">
+              <option value="黄金">黄金 XAUUSD</option>
+              <option value="外汇">外汇 Forex</option>
+              <option value="指数">指数 Indices</option>
+              <option value="BTC/ETH">BTC / ETH</option>
+              <option value="美股">美股 Shares</option>
+              <option value="代理合作">代理合作</option>
+            </select>
+          </label>
+          <label>来源页面<input name="source_page" id="sourcePageInput" readonly></label>
+        </div>
+        <label>备注 / Notes<textarea name="notes" placeholder="例如：想开ECN、需要MT5下载、开户失败、想做代理等"></textarea></label>
+
+        <label class="privacy-check">
+          <input type="checkbox" required>
+          我同意提交联系方式用于开户链接协助、账户服务及客户经理后续对接。
+        </label>
+
+        <button class="primary-btn full" type="submit">提交给客户经理</button>
+        <div class="form-message" id="leadFormMessage"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="crm-config.js"></script>
+  <script src="crm.js"></script>
+  <script>
+    document.getElementById("sourcePageInput").value = document.referrer || "direct / lead-form";
+    trackPageView();
+  </script>
+</body>
+</html>

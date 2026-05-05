@@ -1,1 +1,75 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>CRM后台 | 客户管理</title><link rel="stylesheet" href="style.css"></head><body class="admin-body"><main class="admin-shell"><aside class="admin-sidebar"><h2>TMGM CRM</h2><a class="active" href="crm-leads.html">客户CRM</a><a href="crm-analytics.html">浏览统计</a><a href="index.html">返回网站</a><button onclick="adminLogout()">退出登录</button></aside><section class="admin-main"><div class="admin-header"><div><p class="eyebrow">CRM DASHBOARD</p><h1>客户信息后台</h1></div><button class="primary-btn" onclick="loadLeads()">刷新数据</button></div><div class="admin-cards"><div><b id="statTotalLeads">--</b><span>总客户</span></div><div><b id="statTodayLeads">--</b><span>今日新增</span></div><div><b id="statECNLeads">--</b><span>ECN意向</span></div><div><b id="statPendingLeads">--</b><span>待联系</span></div></div><div class="admin-filter"><input id="leadSearch" placeholder="搜索微信 / 邮箱 / IP / 备注" oninput="renderLeadTable()"><select id="leadStatusFilter" onchange="renderLeadTable()"><option value="">全部状态</option><option value="新客户">新客户</option><option value="已联系">已联系</option><option value="已开户">已开户</option><option value="已入金">已入金</option><option value="已激活">已激活</option><option value="无效客户">无效客户</option></select></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>时间</th><th>微信</th><th>邮箱</th><th>WhatsApp</th><th>账户</th><th>兴趣</th><th>状态</th><th>IP</th><th>来源</th><th>备注</th></tr></thead><tbody id="leadTableBody"></tbody></table></div></section></main><script src="crm-config.js"></script><script src="crm.js"></script><script>requireAdminLogin();loadLeads();</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM后台 | 客户意向管理</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="admin-body">
+  <main class="admin-shell final-admin-shell">
+    <aside class="admin-sidebar">
+      <h2>TMGM CRM</h2>
+      <a class="active" href="crm-leads.html">客户意向表</a>
+      <a href="crm-analytics.html">浏览统计</a>
+      <a href="index.html">返回网站</a>
+      <button onclick="adminLogout()">退出登录</button>
+    </aside>
+
+    <section class="admin-main final-admin-main">
+      <div class="admin-header">
+        <div>
+          <p class="eyebrow">LEADS INTELLIGENCE</p>
+          <h1>客户意向评分与跟进</h1>
+        </div>
+        <button class="primary-btn" onclick="loadEnterpriseLeads()">刷新数据</button>
+      </div>
+
+      <div class="admin-cards final-admin-cards">
+        <div><b id="statTotalLeads">--</b><span>总客户</span></div>
+        <div><b id="statTodayLeads">--</b><span>今日新增</span></div>
+        <div><b id="statHotLeads">--</b><span>高意向</span></div>
+        <div><b id="statChinaLeads">--</b><span>中国大陆</span></div>
+      </div>
+
+      <div class="admin-filter final-admin-filter">
+        <input id="leadSearch" placeholder="搜索微信 / 邮箱 / IP / 国家 / 备注" oninput="renderEnterpriseTable()">
+        <select id="leadStatusFilter" onchange="renderEnterpriseTable()">
+          <option value="">全部状态</option>
+          <option value="新客户">新客户</option>
+          <option value="已联系">已联系</option>
+          <option value="已开户">已开户</option>
+          <option value="已入金">已入金</option>
+          <option value="已激活">已激活</option>
+          <option value="无效客户">无效客户</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap final-table-wrap">
+        <table class="admin-table final-leads-table">
+          <thead>
+            <tr>
+              <th>优先级</th>
+              <th>时间</th>
+              <th>微信</th>
+              <th>邮箱</th>
+              <th>WhatsApp</th>
+              <th>国家/IP</th>
+              <th>开户/账户</th>
+              <th>兴趣</th>
+              <th>访问</th>
+              <th>咨询</th>
+              <th>状态</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody id="leadTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="crm-config.js"></script>
+  <script src="crm.js"></script>
+  <script>requireAdminLogin();loadEnterpriseLeads();</script>
+</body>
+</html>
