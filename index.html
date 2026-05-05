@@ -1,76 +1,340 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>TMGM Chart</title>
-<style>
-body{margin:0;font-family:Arial;}
-#sidebarTradingView{width:400px;height:600px;margin:50px auto;border:1px solid #ddd;border-radius:12px;overflow:hidden;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | 首页</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div id="sidebarTradingView"></div>
+<div class="premium-bg">
+  <div class="blue-white-gradient"></div>
+  <div class="glass-grid"></div>
+  <div class="kline-scene">
+    <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div><div class="candle c4"></div>
+    <div class="candle c5"></div><div class="candle c6"></div><div class="break-line"></div><div class="break-flare"></div>
+  </div>
+  <div class="bull-stage">
+    <div class="bull">
+      <div class="bull-body"></div><div class="bull-head"></div>
+      <div class="horn horn-left"></div><div class="horn horn-right"></div>
+      <div class="leg l1"></div><div class="leg l2"></div><div class="leg l3"></div><div class="leg l4"></div>
+      <div class="tail"></div>
+    </div>
+    <div class="bull-shadow"></div>
+  </div>
+</div>
 
-<script>
-function initSidebarTradingViewFinal() {
-  const container = document.getElementById("sidebarTradingView");
-  if (!container) return;
 
-  container.innerHTML = `
-    <div style="width:100%;height:100%;position:relative;">
-      <iframe 
-        id="tvframe"
-        src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=15&theme=light"
-        width="100%" 
-        height="100%" 
-        frameborder="0"
-        style="border-radius:12px;">
-      </iframe>
+<header class="site-header">
+  <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
+  <nav>
+    <a href="products.html">产品</a>
+    <a href="accounts.html">账户点差</a>
+    <a href="platforms.html">MT4/MT5</a>
+    <a href="calculators.html">交易计算器</a>
+    <a href="partners.html">代理合作</a>
+    <a href="contact.html">联系</a><a href="lead-form.html">客户登记</a>
+  </nav>
+  <button class="tool-open-top" onclick="openToolPanel('chart')">行情图表</button>
+  <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+</header>
 
-      <div id="fallback" style="
-        display:none;
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:#fff;
-        align-items:center;
-        justify-content:center;
-        flex-direction:column;
-        text-align:center;
-      ">
-        <p style="margin-bottom:10px;">行情加载失败</p>
-        <a href="https://cn.tradingview.com/symbols/XAUUSD/" 
-           target="_blank"
-           style="
-             padding:10px 16px;
-             background:#075aff;
-             color:#fff;
-             border-radius:8px;
-             text-decoration:none;
-           ">
-           点击查看实时金价
-        </a>
+
+
+<main>
+  <section class="hero hero-official">
+    <div class="hero-copy">
+      <p class="eyebrow">TMGM 独立合作伙伴入口 · Premium Trading Access</p>
+      <h1>通过 TMGM 接入全球市场<br><span>ECN 0点差起</span></h1>
+      <p class="lead">TMGM 为交易者提供外汇、贵金属、指数、能源、大宗商品、加密货币 CFD 及美股等多元化产品，并支持 MT4 / MT5 专业交易平台。通过本页面开户链接开户注册后，可获得专属客户经理协助。</p>
+      <div class="cta-row">
+        <a class="primary-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">立即开通 ECN 裸点账户</a>
+        <a class="ghost-btn" href="accounts.html">查看账户点差</a>
+        <a class="ghost-btn" href="calculators.html">交易计算器</a>
+      </div>
+      <div class="trust-row">
+        <span>ECN 0 pip</span><span>STD 0.32</span><span>PM 0.27</span><span>PRO 0.22</span><span>MT4 / MT5</span>
+      </div>
+      <p class="risk-mini">差价合约及杠杆产品交易存在风险。本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。</p>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-top"><span></span><span></span><span></span><b>MARKET BREAKOUT ENGINE</b></div>
+      <div class="breakout-panel">
+        <div class="mini-candle mc1"></div><div class="mini-candle mc2"></div><div class="mini-candle mc3"></div><div class="mini-candle mc4"></div><div class="mini-candle mc5"></div>
+        <svg viewBox="0 0 560 280" class="breakout-svg">
+          <defs><linearGradient id="premiumLine" x1="0" x2="1"><stop offset="0%" stop-color="#0b63ff"/><stop offset="55%" stop-color="#3fe8ff"/><stop offset="100%" stop-color="#ffffff"/></linearGradient></defs>
+          <path d="M20 230 C85 205 100 220 150 182 S240 160 280 120 S370 105 420 70 S500 40 545 22" />
+          <circle cx="545" cy="22" r="9"/>
+        </svg>
+        <div class="breakout-label">INDEX BREAKOUT</div>
+      </div>
+      <div class="quote-cards">
+        <div><small>XAUUSD</small><b>Gold</b><em>Active</em></div>
+        <div><small>ECN</small><b>0.0</b><em>pip</em></div>
+        <div><small>Platforms</small><b>MT4/5</b><em>Ready</em></div>
       </div>
     </div>
-  `;
+  </section>
 
-  setTimeout(() => {
-    try {
-      const iframe = document.getElementById("tvframe");
-      if (!iframe || iframe.contentWindow.length === 0) {
-        document.getElementById("fallback").style.display = "flex";
-      }
-    } catch (e) {
-      document.getElementById("fallback").style.display = "flex";
-    }
-  }, 4000);
-}
+  
 
-initSidebarTradingViewFinal();
-</script>
+<section class="master-why">
+  <div class="master-bg-orb orb-one"></div>
+  <div class="master-bg-orb orb-two"></div>
 
+  <div class="master-heading">
+    <p class="eyebrow center">WHY TMGM</p>
+    <h2>为什么选择 TMGM 交易环境？</h2>
+    <p>围绕交易成本、产品覆盖、平台体验和专属服务，帮助不同类型的交易者更高效地接入全球市场。</p>
+  </div>
+
+  <div class="master-layout">
+    <div class="master-column left-stack">
+      <article class="master-card">
+        <span class="card-index">01</span>
+        <div class="card-icon">📉</div>
+        <h3>更具竞争力的交易成本</h3>
+        <p>ECN 裸点账户点差低至 0 pip 起，STD / PM / PRO 账户结构覆盖不同交易策略。</p>
+      </article>
+
+      <article class="master-card compact-card">
+        <span class="card-index">02</span>
+        <div class="card-icon">🌐</div>
+        <h3>多元全球市场产品</h3>
+        <p>外汇、黄金、指数、原油、加密货币 CFD 与美股等热门市场一站式接入。</p>
+      </article>
+    </div>
+
+    <div class="master-center">
+      <div class="chart-glass">
+        <div class="chart-header">
+          <span></span><span></span><span></span>
+          <b>XAUUSD · Market Momentum</b>
+        </div>
+        <div class="chart-stage">
+          <div class="grid-layer"></div>
+          <div class="candle-row">
+            <i class="bar b1"></i><i class="bar b2"></i><i class="bar b3"></i><i class="bar b4"></i><i class="bar b5"></i><i class="bar b6"></i>
+          </div>
+          <svg viewBox="0 0 720 360" class="momentum-svg">
+            <defs>
+              <linearGradient id="masterGradient" x1="0" x2="1">
+                <stop offset="0%" stop-color="#0b63ff"/>
+                <stop offset="50%" stop-color="#22d7ff"/>
+                <stop offset="100%" stop-color="#ffffff"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path d="M30 290 C90 260 120 272 168 226 C225 170 260 220 318 160 C385 88 420 145 478 98 C540 48 608 68 688 34"/>
+            <circle cx="688" cy="34" r="10"/>
+          </svg>
+          <div class="price-chip chip-one">ECN 0.0 pip</div>
+          <div class="price-chip chip-two">MT4 / MT5</div>
+          <div class="price-chip chip-three">Multi-Asset</div>
+        </div>
+      </div>
+
+      <div class="master-stats">
+        <div><b>0</b><span>ECN 点差低至</span></div>
+        <div><b>MT4/5</b><span>专业平台支持</span></div>
+        <div><b>24/5</b><span>市场交易时段</span></div>
+      </div>
+    </div>
+
+    <div class="master-column right-stack">
+      <article class="master-card highlight-card">
+        <span class="card-index">03</span>
+        <div class="card-icon">⚡</div>
+        <h3>MT4 / MT5 专业平台</h3>
+        <p>支持桌面端、移动端、EA、技术指标和多产品交易体验，适合不同交易习惯。</p>
+      </article>
+
+      <article class="master-card compact-card">
+        <span class="card-index">04</span>
+        <div class="card-icon">🧑‍💼</div>
+        <h3>专属客户经理支持</h3>
+        <p>协助开户注册、平台下载、服务器登录、账户组别选择与代理合作咨询。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+  <section class="license-strip">
+    <div><b>ASIC</b><span>Australia</span></div>
+    <div><b>VFSC</b><span>Vanuatu</span></div>
+    <div><b>FSA</b><span>Seychelles</span></div>
+    <div><b>FSC</b><span>Mauritius</span></div>
+  </section>
+
+  <section class="premium-card-section">
+    <p class="eyebrow center">CORE ENTRANCE</p>
+    <h2>核心功能入口</h2>
+    <div class="product-grid">
+      <article><span>🌐</span><h3>产品页面</h3><p>了解外汇、黄金、指数、商品、美股和加密货币 CFD 等产品。</p><a class="mini-link" href="products.html">进入产品页</a></article>
+      <article><span>📉</span><h3>账户点差页面</h3><p>查看 ECN、STD、PM、PRO 账户条件与开户链接。</p><a class="mini-link" href="accounts.html">进入账户页</a></article>
+      <article><span>🧮</span><h3>交易计算器页面</h3><p>保证金、盈亏、仓位计算，支持黄金、外汇、BTC、ETH。</p><a class="mini-link" href="calculators.html">进入计算器</a></article>
+    </div>
+  </section>
+</main>
+
+
+
+<div class="right-tool-rail">
+  <button onclick="openToolPanel('chart')"><span>📈</span><b>行情图表</b></button>
+  <button onclick="openToolPanel('chat')"><span>💬</span><b>在线客服</b></button>
+  <a href="calculators.html"><span>🧮</span><b>计算器</b></a>
+</div>
+
+<aside class="tool-panel" id="toolPanel">
+  <div class="tool-panel-header">
+    <div><small>TRADEMAX 工具</small><h3 id="panelTitle">行情图表</h3></div>
+    <button onclick="closeToolPanel()">×</button>
+  </div>
+  <div class="tool-tabs two-tabs">
+    <button id="tabChart" onclick="switchTool('chart')">行情图表</button>
+    <button id="tabChat" onclick="switchTool('chat')">在线客服</button>
+  </div>
+  <div class="tool-content active" id="contentChart">
+    <div class="sidebar-chart-wrap"><div id="sidebarTradingView"></div></div>
+    <p class="tool-note">TradingView 图表组件，可切换产品、周期和指标。默认显示黄金 XAUUSD。</p>
+  </div>
+  <div class="tool-content" id="contentChat">
+    <div class="chat-body" id="chatBody">
+      <div class="bot msg">您好 👋 请问您是已经完成开户，还是需要先开户注册？</div>
+      <div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div><div class="smart-qa"><input id="smartQuestion" placeholder="请输入问题：如ECN点差、MT4下载、保证金..." onkeydown="if(event.key==='Enter'){askSmartQuestion()}"><button onclick="askSmartQuestion()">发送</button></div>
+    </div>
+    <form class="lead-form" onsubmit="sendLead(event)">
+      <input id="leadWechat" placeholder="微信号 / WeChat（必填）" required />
+      <input id="leadEmail" placeholder="注册邮箱 / Email（已开户客户填写）" />
+      <textarea id="leadNote" placeholder="备注：如ECN、MT4/MT5下载、开户失败等"></textarea>
+      <button type="submit">提交给客户经理</button>
+    </form>
+    <p class="tool-note">提交后会自动打开 WhatsApp 发送信息；静态网站不会单独存储客户资料。</p>
+  </div>
+</aside>
+<div class="panel-overlay" id="panelOverlay" onclick="closeToolPanel()"></div>
+
+
+
+
+<section class="footer-premium-social">
+  <div class="footer-premium-inner">
+    <div>
+      <p class="eyebrow">CONNECT WITH TMGM</p>
+      <h2>关注我们</h2>
+    </div>
+    <div class="social-orbs">
+      <a class="orb-icon fb" href="https://www.facebook.com/TMGM" target="_blank"><span>f</span></a>
+      <a class="orb-icon ig" href="https://www.instagram.com/tmgmgroup/" target="_blank"><span>◎</span></a>
+      <a class="orb-icon yt" href="https://www.youtube.com/@TMGM" target="_blank"><span>▶</span></a>
+      <a class="orb-icon x" href="https://x.com/TMGMGroup" target="_blank"><span>𝕏</span></a>
+      <a class="orb-icon in" href="https://www.linkedin.com/company/tmgm/" target="_blank"><span>in</span></a>
+      <a class="orb-icon tg" href="https://t.me/" target="_blank"><span>✈</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-premium">
+  <div class="footer-brand-row">
+    <div class="footer-brand-logo">
+      <span class="tm-icon">
+        <i></i>
+      </span>
+      <span class="tm-word">TMGM</span>
+    </div>
+    <p>TradeMax Partner Access · Independent TMGM Partner Information Portal</p>
+  </div>
+
+  <div class="footer-premium-grid">
+    <div class="footer-col">
+      <h3>联系方式</h3>
+      <p>电话：+61 2 8036 8388</p>
+      <p>传真：+61 2 8036 8388</p>
+      <p>邮箱：support@tmgm.com</p>
+      <p>官网：www.tmgm.com</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>市场</h3>
+      <a href="products.html">CFD交易</a>
+      <a href="products.html">外汇货币对</a>
+      <a href="products.html">贵金属</a>
+      <a href="products.html">加密货币 CFD</a>
+      <a href="products.html">股票 / 指数 / 原油</a>
+    </div>
+
+    <div class="footer-col">
+      <h3>交易平台</h3>
+      <a href="platforms.html">MetaTrader 4</a>
+      <a href="platforms.html">MetaTrader 5</a>
+      <a href="platforms.html">TMGM APP</a>
+      <a href="calculators.html">交易计算器</a>
+    </div>
+
+    <div class="footer-col">
+      <h3>开始交易</h3>
+      <a href="accounts.html">账户类型</a>
+      <a href="accounts.html">交易条件</a>
+      <a href="accounts.html">活动与奖励</a>
+      <a href="contact.html">帮助中心</a>
+    </div>
+
+    <div class="footer-col">
+      <h3>学院与分析</h3>
+      <a href="products.html">市场概览</a>
+      <a href="products.html">市场新闻</a>
+      <a href="products.html">市场洞察</a>
+      <a href="platforms.html">交易工具</a>
+    </div>
+
+    <div class="footer-col">
+      <h3>为什么选择 TMGM</h3>
+      <a href="index.html">关于 TMGM</a>
+      <a href="index.html">监管与安全</a>
+      <a href="partners.html">代理合作</a>
+      <a href="contact.html">联系我们</a>
+    </div>
+  </div>
+
+  <div class="footer-risk-card">
+    <p>
+      本网站所提供的信息仅为一般性参考信息，并不构成任何个人财务建议。保证金外汇和差价合约交易涉及高风险，未必适合所有投资者。您可能会在交易时遇到损失超过初始入金金额的情况。请在交易前充分了解相关风险，并结合自身财务状况谨慎决策。
+    </p>
+    <p>
+      本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。所有开户链接均为合作伙伴注册链接。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则和交易平台显示为准。
+    </p>
+  </div>
+
+  <div class="footer-license-premium">
+    <div><b>ASIC</b><span>Australia · AFSL 436416</span></div>
+    <div><b>VFSC</b><span>Vanuatu · License 40356</span></div>
+    <div><b>FSA</b><span>Seychelles · License SD224</span></div>
+    <div><b>FSC</b><span>Mauritius · License GB22201012</span></div>
+  </div>
+
+  <div class="footer-bottom-premium">
+    <span>© 2026 TMGM Partner Access. All Rights Reserved.</span>
+    <span>Risk Warning · Independent Partner Site</span>
+  </div>
+</footer>
+
+
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="crm-config.js"></script>
+<script src="crm.js"></script>
+<script>trackPageView();</script>
 </body>
 </html>

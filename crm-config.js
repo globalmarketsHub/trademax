@@ -6,10 +6,6 @@ const CRM_CONFIG = {
   OWNER_WHATSAPP: "61424456407",
   OWNER_EMAIL: "1911310053@qq.com",
 
-  // 真实行情API：国内无广告行情模块使用。推荐 GoldAPI.io。
-  MARKET_DATA_PROVIDER: "goldapi",
-  GOLD_API_KEY: "PASTE_YOUR_GOLDAPI_KEY_HERE",
-
   // 可选：EmailJS邮件提醒。不配置也能正常存CRM。
   EMAILJS_PUBLIC_KEY: "",
   EMAILJS_SERVICE_ID: "",
