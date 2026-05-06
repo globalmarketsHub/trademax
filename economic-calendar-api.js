@@ -1,4 +1,6 @@
 (function connectTradingEconomicsCalendar(){
+  if (window.__economicCalendarApiLoaded) return;
+  window.__economicCalendarApiLoaded = true;
   if (typeof events === 'undefined' || typeof renderEvents !== 'function') return;
 
   const TE_CLIENT = 'guest:guest';
@@ -14,14 +16,19 @@
   events.splice(0, events.length);
   renderEvents();
 
-  function isoDate(offset){
-    const d = new Date();
-    d.setDate(d.getDate()+offset);
-    return d.toISOString().slice(0,10);
+  function isoDateFromDate(date){ return date.toISOString().slice(0,10); }
+  function addDays(date, days){ const next = new Date(date); next.setDate(next.getDate()+days); return next; }
+  function weekStartDate(){
+    if (window.calendarStartDate) return new Date(`${window.calendarStartDate}T00:00:00`);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const daysSinceMonday = (today.getDay()+6)%7;
+    return addDays(today, -daysSinceMonday);
   }
+  function weekEndDate(){ return addDays(weekStartDate(), 13); }
   function dayOffset(dateText){
     const eventDate = new Date(dateText);
-    const start = new Date(); start.setHours(0,0,0,0);
+    const start = weekStartDate();
     const eventStart = new Date(eventDate); eventStart.setHours(0,0,0,0);
     return Math.round((eventStart-start)/86400000);
   }
@@ -47,9 +54,7 @@
     if (num === 2) return 'medium';
     return 'low';
   }
-  function clean(value){
-    return value === null || value === undefined || value === '' ? '--' : String(value);
-  }
+  function clean(value){ return value === null || value === undefined || value === '' ? '--' : String(value); }
   function showStatus(text, ok){
     const toolbar = document.querySelector('.event-toolbar');
     if (!toolbar) return;
@@ -69,27 +74,30 @@
     renderEvents();
     showStatus(message, false);
   }
+  function refreshDates(){ if (typeof initDates === 'function') initDates(); }
   function applyEvents(mapped, statusText){
     const usable = mapped
       .map(item => ({...item, d: Number.isInteger(item.d) ? item.d : dayOffset(item.date)}))
-      .filter(item=>item.d>=0 && item.d<=6)
+      .filter(item=>item.d>=0 && item.d<=13)
       .sort((a,b)=>a.d-b.d||String(a.t).localeCompare(String(b.t)));
     if (!usable.length) throw new Error('no usable events in selected range');
     events.splice(0, events.length, ...usable);
+    refreshDates();
     renderEvents();
     showStatus(statusText.replace('{count}', usable.length), true);
   }
   async function loadSyncedCalendar(){
-    showStatus('正在读取官方 API 同步数据...', true);
+    showStatus('正在读取本周和下周官方 API 同步数据...', true);
     const response = await fetch(`${API_CACHE_URL}?v=${Date.now()}`, {cache:'no-store'});
     if (!response.ok) throw new Error(`calendar cache ${response.status}`);
     const payload = await response.json();
     if (!payload || !Array.isArray(payload.events) || !payload.events.length) throw new Error('empty synced calendar');
-    applyEvents(payload.events, `真实 API 数据：${payload.source || '官方日历'} · {count} 条`);
+    if (payload.range && payload.range.start) window.calendarStartDate = payload.range.start;
+    applyEvents(payload.events, `真实 API 数据：${payload.source || '官方日历'} · 本周和下周 · {count} 条`);
   }
   async function loadDirectCalendar(){
     showStatus('正在尝试直连 Trading Economics API...', true);
-    const start = isoDate(0), end = isoDate(6);
+    const start = isoDateFromDate(weekStartDate()), end = isoDateFromDate(weekEndDate());
     const url = encodeURI(`https://api.tradingeconomics.com/calendar/country/${COUNTRY_QUERY}/${start}/${end}?c=${TE_CLIENT}&f=json`);
     const response = await fetch(url, {headers:{Accept:'application/json'}});
     if (!response.ok) throw new Error(`Trading Economics API ${response.status}`);
@@ -97,21 +105,9 @@
     if (!Array.isArray(data) || !data.length) throw new Error('empty calendar response');
     const mapped = data.map(item=>{
       const c = countryCodes[item.Country] || (item.Currency || item.Country || 'GLB').slice(0,3).toUpperCase();
-      return {
-        date: item.Date,
-        t: timeText(item.Date),
-        c,
-        flag: flags[c] || c,
-        type: typeFromCategory(item.Category,item.Event),
-        i: impactFromImportance(item.Importance),
-        n: clean(item.Event || item.Category),
-        desc: clean([item.Category,item.Reference].filter(Boolean).join(' · ')),
-        actual: clean(item.Actual),
-        forecast: clean(item.Forecast || item.TEForecast),
-        previous: clean(item.Previous)
-      };
+      return {date:item.Date,t:timeText(item.Date),c,flag:flags[c]||c,type:typeFromCategory(item.Category,item.Event),i:impactFromImportance(item.Importance),n:clean(item.Event||item.Category),desc:clean([item.Category,item.Reference].filter(Boolean).join(' · ')),actual:clean(item.Actual),forecast:clean(item.Forecast||item.TEForecast),previous:clean(item.Previous)};
     });
-    applyEvents(mapped, `实时 API 数据：Trading Economics · {count} 条`);
+    applyEvents(mapped, `实时 API 数据：Trading Economics · 本周和下周 · {count} 条`);
   }
 
   loadSyncedCalendar()
