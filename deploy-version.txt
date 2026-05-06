@@ -1,0 +1,2 @@
+Redeploy triggered at 2026-05-06 for GitHub Pages cache refresh.
+Latest home hero layout commit: 029437a952187de23aaa4f156830e9f35f0905d8
