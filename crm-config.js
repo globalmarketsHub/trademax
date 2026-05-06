@@ -226,3 +226,14 @@ const CRM_CONFIG = {
     dockHeroStats();
   }
 })();
+
+(function loadEconomicCalendarApi() {
+  var page = location.pathname.split('/').pop();
+  if (page !== 'economic-calendar.html') return;
+  if (document.getElementById('te-calendar-api-loader')) return;
+
+  var script = document.createElement('script');
+  script.id = 'te-calendar-api-loader';
+  script.src = 'economic-calendar-api.js?v=20260506';
+  document.body.appendChild(script);
+})();
