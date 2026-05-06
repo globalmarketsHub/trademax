@@ -50,11 +50,7 @@
         <h1>全球<span>财经日历</span><br>掌握关键波动时刻</h1>
         <p>跟踪主要经济数据、央行讲话、就业、通胀和 GDP 等事件。你可以按日期、国家、重要性和关键词筛选，快速判断当天可能影响外汇、黄金、指数和能源市场的重点消息。</p>
       </div>
-      <aside class="calendar-clock">
-        <small>当前显示时区</small>
-        <b id="clockTime">--:--</b>
-        <span id="clockZone">Local Time</span>
-      </aside>
+      <aside class="calendar-clock"><small>当前显示时区</small><b id="clockTime">--:--</b><span id="clockZone">Local Time</span></aside>
     </div>
   </section>
   <section class="calendar-shell">
@@ -62,7 +58,7 @@
       <aside class="filter-panel">
         <h2>筛选事件</h2>
         <label class="field">关键词搜索<input id="searchInput" placeholder="例如 CPI、利率、非农"></label>
-        <label class="field">事件类型<select id="typeFilter"><option value="all">全部类型</option><option>通胀</option><option>就业</option><option>央行</option><option>增长</option><option>消费</option><option>能源</option></select></label>
+        <label class="field">事件类型<select id="typeFilter"><option value="all">全部类型</option><option>通胀</option><option>就业</option><option>央行</option><option>增长</option><option>消费</option><option>能源</option><option>贸易</option><option>债券</option><option>外汇</option></select></label>
         <label class="field">重要性<select id="impactSelect"><option value="all">全部重要性</option><option value="high">高影响</option><option value="medium">中影响</option><option value="low">低影响</option></select></label>
         <div class="field"><span>国家 / 地区</span><div class="country-buttons" id="countryButtons"></div></div>
       </aside>
@@ -84,29 +80,16 @@
 <script>
 const countries=[['all','全部'],['US','美国'],['CN','中国'],['EU','欧元区'],['UK','英国'],['JP','日本'],['AU','澳大利亚'],['CA','加拿大']];
 const events=[
- {d:0,t:'08:30',c:'AU',flag:'🇦🇺',type:'增长',i:'medium',n:'零售销售月率',desc:'衡量消费者支出变化',actual:'--',forecast:'0.3%',previous:'0.2%'},
- {d:0,t:'09:45',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'财新服务业 PMI',desc:'服务业景气度指标',actual:'--',forecast:'52.4',previous:'52.7'},
- {d:0,t:'17:00',c:'EU',flag:'🇪🇺',type:'消费',i:'low',n:'零售销售年率',desc:'欧元区消费活动',actual:'--',forecast:'1.8%',previous:'2.3%'},
- {d:0,t:'22:15',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'ADP 就业人数变化',desc:'美国私营部门就业变化',actual:'--',forecast:'145K',previous:'155K'},
- {d:0,t:'23:00',c:'US',flag:'🇺🇸',type:'央行',i:'high',n:'美联储官员讲话',desc:'关注利率路径和通胀表述',actual:'--',forecast:'--',previous:'--'},
- {d:1,t:'02:30',c:'US',flag:'🇺🇸',type:'能源',i:'medium',n:'EIA 原油库存',desc:'影响原油和能源相关资产',actual:'--',forecast:'-1.2M',previous:'-0.8M'},
- {d:1,t:'09:50',c:'JP',flag:'🇯🇵',type:'央行',i:'medium',n:'日本央行会议纪要',desc:'货币政策讨论细节',actual:'--',forecast:'--',previous:'--'},
- {d:1,t:'19:00',c:'UK',flag:'🇬🇧',type:'央行',i:'high',n:'英国央行利率决议',desc:'英镑和英国指数重点事件',actual:'--',forecast:'4.25%',previous:'4.25%'},
- {d:1,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'初请失业金人数',desc:'美国劳动力市场高频数据',actual:'--',forecast:'221K',previous:'219K'},
- {d:2,t:'10:30',c:'AU',flag:'🇦🇺',type:'通胀',i:'high',n:'澳洲 CPI 年率',desc:'影响澳元和澳洲利率预期',actual:'--',forecast:'3.4%',previous:'3.5%'},
- {d:2,t:'18:00',c:'EU',flag:'🇪🇺',type:'增长',i:'medium',n:'工业产出月率',desc:'制造业和工业活动变化',actual:'--',forecast:'0.2%',previous:'-0.1%'},
- {d:2,t:'22:30',c:'US',flag:'🇺🇸',type:'通胀',i:'high',n:'核心 CPI 月率',desc:'剔除食品和能源的通胀指标',actual:'--',forecast:'0.3%',previous:'0.3%'},
- {d:3,t:'16:00',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'贸易帐',desc:'进出口变化和外需表现',actual:'--',forecast:'$72.0B',previous:'$68.6B'},
- {d:3,t:'22:30',c:'CA',flag:'🇨🇦',type:'就业',i:'high',n:'加拿大就业人数变化',desc:'影响加元波动',actual:'--',forecast:'18K',previous:'22K'},
- {d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'非农就业人数变化',desc:'每月最受关注的美国就业数据',actual:'--',forecast:'185K',previous:'177K'},
- {d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'失业率',desc:'美国劳动力市场核心指标',actual:'--',forecast:'3.9%',previous:'3.9%'},
- {d:5,t:'11:00',c:'CN',flag:'🇨🇳',type:'通胀',i:'medium',n:'CPI 年率',desc:'中国居民消费价格指数',actual:'--',forecast:'0.4%',previous:'0.3%'},
- {d:6,t:'20:00',c:'EU',flag:'🇪🇺',type:'央行',i:'medium',n:'欧洲央行行长讲话',desc:'关注欧元区货币政策线索',actual:'--',forecast:'--',previous:'--'}
+ {d:0,t:'08:30',c:'AU',flag:'🇦🇺',type:'增长',i:'medium',n:'零售销售月率',desc:'衡量消费者支出变化',actual:'--',forecast:'0.3%',previous:'0.2%'},{d:0,t:'09:45',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'财新服务业 PMI',desc:'服务业景气度指标',actual:'--',forecast:'52.4',previous:'52.7'},{d:0,t:'17:00',c:'EU',flag:'🇪🇺',type:'消费',i:'low',n:'零售销售年率',desc:'欧元区消费活动',actual:'--',forecast:'1.8%',previous:'2.3%'},{d:0,t:'22:15',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'ADP 就业人数变化',desc:'美国私营部门就业变化',actual:'--',forecast:'145K',previous:'155K'},{d:0,t:'23:00',c:'US',flag:'🇺🇸',type:'央行',i:'high',n:'美联储官员讲话',desc:'关注利率路径和通胀表述',actual:'--',forecast:'--',previous:'--'},
+ {d:1,t:'02:30',c:'US',flag:'🇺🇸',type:'能源',i:'medium',n:'EIA 原油库存',desc:'影响原油和能源相关资产',actual:'--',forecast:'-1.2M',previous:'-0.8M'},{d:1,t:'09:50',c:'JP',flag:'🇯🇵',type:'央行',i:'medium',n:'日本央行会议纪要',desc:'货币政策讨论细节',actual:'--',forecast:'--',previous:'--'},{d:1,t:'19:00',c:'UK',flag:'🇬🇧',type:'央行',i:'high',n:'英国央行利率决议',desc:'英镑和英国指数重点事件',actual:'--',forecast:'4.25%',previous:'4.25%'},{d:1,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'初请失业金人数',desc:'美国劳动力市场高频数据',actual:'--',forecast:'221K',previous:'219K'},
+ {d:2,t:'10:30',c:'AU',flag:'🇦🇺',type:'通胀',i:'high',n:'澳洲 CPI 年率',desc:'影响澳元和澳洲利率预期',actual:'--',forecast:'3.4%',previous:'3.5%'},{d:2,t:'18:00',c:'EU',flag:'🇪🇺',type:'增长',i:'medium',n:'工业产出月率',desc:'制造业和工业活动变化',actual:'--',forecast:'0.2%',previous:'-0.1%'},{d:2,t:'22:30',c:'US',flag:'🇺🇸',type:'通胀',i:'high',n:'核心 CPI 月率',desc:'剔除食品和能源的通胀指标',actual:'--',forecast:'0.3%',previous:'0.3%'},
+ {d:3,t:'16:00',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'贸易帐',desc:'进出口变化和外需表现',actual:'--',forecast:'$72.0B',previous:'$68.6B'},{d:3,t:'22:30',c:'CA',flag:'🇨🇦',type:'就业',i:'high',n:'加拿大就业人数变化',desc:'影响加元波动',actual:'--',forecast:'18K',previous:'22K'},
+ {d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'非农就业人数变化',desc:'每月最受关注的美国就业数据',actual:'--',forecast:'185K',previous:'177K'},{d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'失业率',desc:'美国劳动力市场核心指标',actual:'--',forecast:'3.9%',previous:'3.9%'},
+ {d:5,t:'11:00',c:'CN',flag:'🇨🇳',type:'通胀',i:'medium',n:'CPI 年率',desc:'中国居民消费价格指数',actual:'--',forecast:'0.4%',previous:'0.3%'},{d:6,t:'20:00',c:'EU',flag:'🇪🇺',type:'央行',i:'medium',n:'欧洲央行行长讲话',desc:'关注欧元区货币政策线索',actual:'--',forecast:'--',previous:'--'}
 ];
 let selectedDay=0,selectedCountry='all';
 const fmtDate=(offset)=>{const d=new Date();d.setDate(d.getDate()+offset);return d};
-const dateLabel=(d)=>d.toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'});
-const weekLabel=(d)=>d.toLocaleDateString('zh-CN',{weekday:'short'});
+const dateLabel=(d)=>d.toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'});const weekLabel=(d)=>d.toLocaleDateString('zh-CN',{weekday:'short'});
 function initDates(){const box=document.getElementById('dateStrip');box.innerHTML='';for(let i=0;i<7;i++){const d=fmtDate(i),btn=document.createElement('button');btn.className='date-tab'+(i===selectedDay?' active':'');btn.innerHTML=`<b>${i===0?'今天':weekLabel(d)}</b><small>${dateLabel(d)}</small>`;btn.onclick=()=>{selectedDay=i;initDates();renderEvents()};box.appendChild(btn)}}
 function initCountries(){const box=document.getElementById('countryButtons');box.innerHTML='';countries.forEach(([code,name])=>{const b=document.createElement('button');b.className='filter-chip'+(code===selectedCountry?' active':'');b.textContent=name;b.onclick=()=>{selectedCountry=code;initCountries();renderEvents()};box.appendChild(b)})}
 function impactText(i){return i==='high'?'高影响':i==='medium'?'中影响':'低影响'}
@@ -114,6 +97,7 @@ function renderEvents(){const search=document.getElementById('searchInput').valu
 function tickClock(){const now=new Date();document.getElementById('clockTime').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('clockZone').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone||'Local Time'}
 ['searchInput','typeFilter','impactSelect'].forEach(id=>document.getElementById(id).addEventListener('input',renderEvents));initDates();initCountries();renderEvents();tickClock();setInterval(tickClock,1000);
 </script>
+<script src="economic-calendar-data.js?v=20260506"></script>
 <script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="crm-config.js"></script>
