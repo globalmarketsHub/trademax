@@ -9,7 +9,21 @@ const countryCodes = {'United States':'US',China:'CN','Euro Area':'EU','United K
 const currencyCountries = {USD:'US',CNY:'CN',EUR:'EU',GBP:'UK',JPY:'JP',AUD:'AU',CAD:'CA',CHF:'CH',NZD:'NZ'};
 const flags = {US:'US',CN:'CN',EU:'EU',UK:'UK',JP:'JP',AU:'AU',CA:'CA',DE:'DE',FR:'FR',IT:'IT',ES:'ES',CH:'CH',NZ:'NZ'};
 
-function isoDate(offset) { const d = new Date(); d.setUTCDate(d.getUTCDate() + offset); return d.toISOString().slice(0, 10); }
+function sydneyToday() {
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+  return new Date(`${value.year}-${value.month}-${value.day}T00:00:00+10:00`);
+}
+function isoDateFromDate(date) { return date.toISOString().slice(0, 10); }
+function addDays(date, days) { const next = new Date(date); next.setUTCDate(next.getUTCDate() + days); return next; }
+function currentAndNextWeekRange() {
+  const today = sydneyToday();
+  const day = today.getUTCDay();
+  const daysSinceMonday = (day + 6) % 7;
+  const monday = addDays(today, -daysSinceMonday);
+  const nextSunday = addDays(monday, 13);
+  return { start: isoDateFromDate(monday), end: isoDateFromDate(nextSunday) };
+}
 function clean(value) { return value === null || value === undefined || value === '' ? '--' : String(value); }
 function timeText(dateText) {
   const d = new Date(dateText);
@@ -75,15 +89,15 @@ async function fetchFmp(start, end) {
   throw lastError;
 }
 async function main() {
-  const start = isoDate(0), end = isoDate(6);
+  const { start, end } = currentAndNextWeekRange();
   let payload;
   try { payload = await fetchTradingEconomics(start, end); }
   catch (error) { console.warn(error.message); payload = await fetchFmp(start, end); }
   const events = payload.events.filter((event) => event.date && event.n !== '--').sort((a, b) => new Date(a.date) - new Date(b.date) || a.t.localeCompare(b.t));
   if (!events.length) throw new Error('No usable calendar events');
   await mkdir('data', { recursive: true });
-  await writeFile(path.join('data', 'economic-calendar-live.json'), `${JSON.stringify({...payload, generatedAt:new Date().toISOString(), timezone:'Australia/Sydney', range:{start,end}, events}, null, 2)}\n`, 'utf8');
-  console.log(`Saved ${events.length} economic calendar events from ${payload.source}.`);
+  await writeFile(path.join('data', 'economic-calendar-live.json'), `${JSON.stringify({...payload, generatedAt:new Date().toISOString(), timezone:'Australia/Sydney', range:{start,end}, cadence:'weekly-current-and-next-week', events}, null, 2)}\n`, 'utf8');
+  console.log(`Saved ${events.length} economic calendar events from ${payload.source} for ${start} to ${end}.`);
 }
 main().catch(async (error) => {
   console.error(error);
