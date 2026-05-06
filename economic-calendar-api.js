@@ -8,7 +8,7 @@
   const countryCodes = {
     'United States':'US','China':'CN','Euro Area':'EU','United Kingdom':'UK','Japan':'JP','Australia':'AU','Canada':'CA','Germany':'DE','France':'FR','Italy':'IT','Spain':'ES','Switzerland':'CH','New Zealand':'NZ'
   };
-  const flags = {US:'🇺🇸',CN:'🇨🇳',EU:'🇪🇺',UK:'🇬🇧',JP:'🇯🇵',AU:'🇦🇺',CA:'🇨🇦',DE:'🇩🇪',FR:'🇫🇷',IT:'🇮🇹',ES:'🇪🇸',CH:'🇨🇭',NZ:'🇳🇿'};
+  const flags = {US:'US',CN:'CN',EU:'EU',UK:'UK',JP:'JP',AU:'AU',CA:'CA',DE:'DE',FR:'FR',IT:'IT',ES:'ES',CH:'CH',NZ:'NZ'};
 
   function isoDate(offset){
     const d = new Date();
@@ -60,10 +60,28 @@
     badge.style.color = ok ? '#075aff' : '#92400e';
     badge.style.background = ok ? '#eef7ff' : '#fff7ed';
   }
-  async function loadRealCalendar(){
-    showStatus('正在连接 Trading Economics API...', true);
+  function applyEvents(mapped, statusText){
+    const usable = mapped
+      .map(item => ({...item, d: Number.isInteger(item.d) ? item.d : dayOffset(item.date)}))
+      .filter(item=>item.d>=0 && item.d<=6)
+      .sort((a,b)=>a.d-b.d||String(a.t).localeCompare(String(b.t)));
+    if (!usable.length) throw new Error('no usable events in selected range');
+    events.splice(0, events.length, ...usable);
+    renderEvents();
+    showStatus(statusText.replace('{count}', usable.length), true);
+  }
+  async function loadSyncedCalendar(){
+    showStatus('正在读取官方 API 同步数据...', true);
+    const response = await fetch(`data/economic-calendar-live.json?v=${Date.now()}`, {cache:'no-store'});
+    if (!response.ok) throw new Error(`calendar cache ${response.status}`);
+    const payload = await response.json();
+    if (!payload || !Array.isArray(payload.events) || !payload.events.length) throw new Error('empty synced calendar');
+    applyEvents(payload.events, `真实 API 数据：Trading Economics · {count} 条`);
+  }
+  async function loadDirectCalendar(){
+    showStatus('正在尝试直连 Trading Economics API...', true);
     const start = isoDate(0), end = isoDate(6);
-    const url = `https://api.tradingeconomics.com/calendar/country/${encodeURIComponent(COUNTRY_QUERY)}/${start}/${end}?c=${encodeURIComponent(TE_CLIENT)}&f=json`;
+    const url = encodeURI(`https://api.tradingeconomics.com/calendar/country/${COUNTRY_QUERY}/${start}/${end}?c=${TE_CLIENT}&f=json`);
     const response = await fetch(url, {headers:{Accept:'application/json'}});
     if (!response.ok) throw new Error(`Trading Economics API ${response.status}`);
     const data = await response.json();
@@ -71,10 +89,10 @@
     const mapped = data.map(item=>{
       const c = countryCodes[item.Country] || (item.Currency || item.Country || 'GLB').slice(0,3).toUpperCase();
       return {
-        d: dayOffset(item.Date),
+        date: item.Date,
         t: timeText(item.Date),
         c,
-        flag: flags[c] || '🌐',
+        flag: flags[c] || c,
         type: typeFromCategory(item.Category,item.Event),
         i: impactFromImportance(item.Importance),
         n: clean(item.Event || item.Category),
@@ -83,15 +101,15 @@
         forecast: clean(item.Forecast || item.TEForecast),
         previous: clean(item.Previous)
       };
-    }).filter(item=>item.d>=0 && item.d<=6);
-    if (!mapped.length) throw new Error('no events in selected range');
-    events.splice(0, events.length, ...mapped.sort((a,b)=>a.d-b.d||a.t.localeCompare(b.t)));
-    renderEvents();
-    showStatus(`实时数据：Trading Economics · ${mapped.length} 条`, true);
+    });
+    applyEvents(mapped, `实时直连：Trading Economics · {count} 条`);
   }
-  loadRealCalendar().catch(error=>{
-    console.warn('Trading Economics calendar fallback:', error);
-    showStatus('实时 API 暂不可用，正在显示备用事件池', false);
-    renderEvents();
-  });
+
+  loadSyncedCalendar()
+    .catch(() => loadDirectCalendar())
+    .catch(error=>{
+      console.warn('Trading Economics calendar fallback:', error);
+      showStatus('真实 API 数据暂未生成，正在显示备用事件池', false);
+      renderEvents();
+    });
 })();
