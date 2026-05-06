@@ -237,3 +237,14 @@ const CRM_CONFIG = {
   script.src = 'economic-calendar-api.js?v=real-api-only-20260506-2';
   document.body.appendChild(script);
 })();
+
+(function loadPartnerActivitySection() {
+  var page = location.pathname.split('/').pop();
+  if (page !== 'partners.html') return;
+  if (document.getElementById('partner-activity-loader')) return;
+
+  var script = document.createElement('script');
+  script.id = 'partner-activity-loader';
+  script.src = 'partner-activity.js?v=agent-activity-20260507';
+  document.body.appendChild(script);
+})();
