@@ -1,0 +1,32 @@
+name: Update economic calendar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7 */3 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Trading Economics calendar
+        env:
+          TRADING_ECONOMICS_API_KEY: ${{ secrets.TRADING_ECONOMICS_API_KEY }}
+        run: node scripts/update-economic-calendar.mjs
+
+      - name: Commit updated calendar data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update economic calendar data
+          file_pattern: data/economic-calendar-live.json
