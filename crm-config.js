@@ -230,10 +230,10 @@ const CRM_CONFIG = {
 (function loadEconomicCalendarApi() {
   var page = location.pathname.split('/').pop();
   if (page !== 'economic-calendar.html') return;
-  if (document.getElementById('te-calendar-api-loader')) return;
+  if (document.getElementById('real-calendar-api-loader')) return;
 
   var script = document.createElement('script');
-  script.id = 'te-calendar-api-loader';
-  script.src = 'economic-calendar-api.js?v=20260506';
+  script.id = 'real-calendar-api-loader';
+  script.src = 'economic-calendar-api.js?v=real-api-only-20260506-2';
   document.body.appendChild(script);
 })();
