@@ -9,6 +9,7 @@
     'United States':'US','China':'CN','Euro Area':'EU','United Kingdom':'UK','Japan':'JP','Australia':'AU','Canada':'CA','Germany':'DE','France':'FR','Italy':'IT','Spain':'ES','Switzerland':'CH','New Zealand':'NZ'
   };
   const flags = {US:'US',CN:'CN',EU:'EU',UK:'UK',JP:'JP',AU:'AU',CA:'CA',DE:'DE',FR:'FR',IT:'IT',ES:'ES',CH:'CH',NZ:'NZ'};
+  const API_CACHE_URL = 'data/economic-calendar-live.json';
 
   function isoDate(offset){
     const d = new Date();
@@ -72,7 +73,7 @@
   }
   async function loadSyncedCalendar(){
     showStatus('正在读取官方 API 同步数据...', true);
-    const response = await fetch(`data/economic-calendar-live.json?v=${Date.now()}`, {cache:'no-store'});
+    const response = await fetch(`${API_CACHE_URL}?v=${Date.now()}`, {cache:'no-store'});
     if (!response.ok) throw new Error(`calendar cache ${response.status}`);
     const payload = await response.json();
     if (!payload || !Array.isArray(payload.events) || !payload.events.length) throw new Error('empty synced calendar');
