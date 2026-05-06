@@ -20,9 +20,12 @@ const CRM_CONFIG = {
   var css = `
     .hero-official{
       position:relative!important;
-      display:block!important;
-      min-height:720px!important;
-      padding:0 6%!important;
+      display:grid!important;
+      grid-template-columns:minmax(0,760px) minmax(420px,560px)!important;
+      gap:clamp(32px,5vw,92px)!important;
+      align-items:center!important;
+      min-height:760px!important;
+      padding:84px 7% 72px!important;
       overflow:hidden!important;
       isolation:isolate!important;
       background:#dcecff!important;
@@ -38,7 +41,7 @@ const CRM_CONFIG = {
       width:100%!important;
       height:100%!important;
       object-fit:cover!important;
-      object-position:60% center!important;
+      object-position:63% center!important;
       filter:brightness(1.18) saturate(1.08)!important;
       opacity:.96!important;
     }
@@ -46,18 +49,19 @@ const CRM_CONFIG = {
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(90deg,rgba(7,25,58,.58) 0%,rgba(12,50,99,.30) 42%,rgba(255,255,255,.06) 82%);
+      background:linear-gradient(90deg,rgba(7,25,58,.60) 0%,rgba(12,50,99,.30) 42%,rgba(255,255,255,.08) 82%);
       pointer-events:none;
     }
     .hero-official .hero-copy{
       position:relative!important;
       z-index:2!important;
+      grid-column:1!important;
       display:flex!important;
       flex-direction:column!important;
       align-items:flex-start!important;
-      width:min(760px,100%)!important;
+      width:100%!important;
       max-width:760px!important;
-      padding:104px 0 72px!important;
+      padding:0!important;
       color:#fff!important;
     }
     .hero-official .eyebrow,
@@ -70,8 +74,8 @@ const CRM_CONFIG = {
     .hero-official h1{
       width:100%!important;
       max-width:720px!important;
-      font-size:clamp(46px,5vw,76px)!important;
-      line-height:1.06!important;
+      font-size:clamp(48px,5vw,82px)!important;
+      line-height:1.05!important;
       margin:18px 0 24px!important;
       letter-spacing:0!important;
     }
@@ -89,7 +93,7 @@ const CRM_CONFIG = {
       margin:0!important;
     }
     .hero-official .cta-row{
-      position:static!important;
+      position:relative!important;
       z-index:4!important;
       display:flex!important;
       flex-wrap:wrap!important;
@@ -103,7 +107,7 @@ const CRM_CONFIG = {
       transform:none!important;
     }
     .hero-official .cta-row a{
-      position:static!important;
+      position:relative!important;
       transform:none!important;
       min-height:50px!important;
       white-space:nowrap!important;
@@ -119,8 +123,59 @@ const CRM_CONFIG = {
       color:#fff!important;
       backdrop-filter:blur(10px)!important;
     }
+    .hero-official .trust-row{
+      position:relative!important;
+      inset:auto!important;
+      transform:none!important;
+      grid-column:2!important;
+      z-index:3!important;
+      display:grid!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      gap:16px!important;
+      width:100%!important;
+      max-width:560px!important;
+      margin:0!important;
+      padding:0!important;
+      align-self:center!important;
+      justify-self:end!important;
+    }
+    .hero-official .trust-row span{
+      position:relative!important;
+      inset:auto!important;
+      transform:none!important;
+      display:grid!important;
+      width:auto!important;
+      height:auto!important;
+      min-width:0!important;
+      min-height:108px!important;
+      align-content:center!important;
+      justify-items:center!important;
+      border-radius:20px!important;
+      padding:18px 14px!important;
+      background:rgba(13,34,72,.38)!important;
+      border:1px solid rgba(255,255,255,.34)!important;
+      box-shadow:0 18px 42px rgba(0,30,80,.18)!important;
+      color:#fff!important;
+      font-size:28px!important;
+      font-weight:950!important;
+      line-height:1.08!important;
+      text-align:center!important;
+      backdrop-filter:blur(14px)!important;
+      white-space:normal!important;
+    }
+    .hero-official .trust-row img{
+      display:none!important;
+    }
+    .hero-official .trust-row small{
+      display:block!important;
+      margin-top:9px!important;
+      color:rgba(255,255,255,.84)!important;
+      font-size:13px!important;
+      line-height:1.25!important;
+      font-weight:850!important;
+    }
     .hero-official .risk-mini{
-      position:static!important;
+      position:relative!important;
       width:100%!important;
       max-width:760px!important;
       margin:24px 0 0!important;
@@ -131,61 +186,24 @@ const CRM_CONFIG = {
     .hero-official .hero-terminal{
       display:none!important;
     }
-    .home-stat-strip{
-      position:relative!important;
-      z-index:5!important;
-      display:grid!important;
-      grid-template-columns:repeat(4,minmax(150px,1fr))!important;
-      gap:16px!important;
-      width:min(1440px,88%)!important;
-      margin:-48px auto 0!important;
-      padding:22px!important;
-      background:#fff!important;
-      border:1px solid #dfe8f5!important;
-      border-radius:26px!important;
-      box-shadow:0 28px 80px rgba(7,28,66,.16)!important;
-    }
-    .home-stat-strip span{
-      display:grid!important;
-      min-height:96px!important;
-      align-content:center!important;
-      justify-items:center!important;
-      border-radius:18px!important;
-      padding:16px 14px!important;
-      background:linear-gradient(180deg,#f7fbff,#eef5ff)!important;
-      border:1px solid #dbe6f4!important;
-      color:#071428!important;
-      font-size:26px!important;
-      font-weight:950!important;
-      line-height:1.1!important;
-      text-align:center!important;
-      white-space:normal!important;
-    }
-    .home-stat-strip img{
-      display:none!important;
-    }
-    .home-stat-strip small{
-      display:block!important;
-      margin-top:8px!important;
-      color:#68758b!important;
-      font-size:13px!important;
-      line-height:1.25!important;
-      font-weight:850!important;
-    }
-    @media(max-width:980px){
-      .hero-official{min-height:auto!important;padding:0 5%!important;}
-      .hero-official .hero-copy{width:100%!important;max-width:720px!important;padding:86px 0 64px!important;}
+    @media(max-width:1280px){
+      .hero-official{grid-template-columns:minmax(0,1fr)!important;min-height:auto!important;padding:86px 5% 64px!important;}
+      .hero-official .hero-copy{grid-column:1!important;max-width:760px!important;}
+      .hero-official .trust-row{grid-column:1!important;justify-self:start!important;max-width:760px!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;margin-top:34px!important;}
       .hero-official .lead{font-size:18px!important;}
+      .hero-official .trust-row span{min-height:92px!important;font-size:23px!important;}
       .hero-official .hero-video-bg video{object-position:64% center!important;}
       .hero-official .hero-video-bg:after{background:linear-gradient(90deg,rgba(7,25,58,.66),rgba(7,25,58,.26))!important;}
-      .home-stat-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:90%!important;margin:24px auto 0!important;}
     }
-    @media(max-width:560px){
-      .hero-official .hero-copy{padding:72px 0 48px!important;}
+    @media(max-width:760px){
+      .hero-official{padding:72px 5% 48px!important;}
       .hero-official h1{font-size:42px!important;}
       .hero-official .cta-row{display:grid!important;}
       .hero-official .cta-row a{width:100%!important;white-space:normal!important;}
-      .home-stat-strip{grid-template-columns:1fr!important;padding:16px!important;border-radius:20px!important;}
+      .hero-official .trust-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
+    }
+    @media(max-width:480px){
+      .hero-official .trust-row{grid-template-columns:1fr!important;}
     }
   `;
 
@@ -194,17 +212,17 @@ const CRM_CONFIG = {
   style.textContent = css;
   document.head.appendChild(style);
 
-  function moveHeroStats() {
+  function dockHeroStats() {
     var hero = document.querySelector('.hero-official');
-    var stats = document.querySelector('.hero-official .trust-row');
-    if (!hero || !stats || stats.classList.contains('home-stat-strip')) return;
-    stats.classList.add('home-stat-strip');
-    hero.insertAdjacentElement('afterend', stats);
+    var stats = document.querySelector('.trust-row');
+    if (!hero || !stats) return;
+    stats.classList.remove('home-stat-strip');
+    if (stats.parentElement !== hero) hero.appendChild(stats);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', moveHeroStats);
+    document.addEventListener('DOMContentLoaded', dockHeroStats);
   } else {
-    moveHeroStats();
+    dockHeroStats();
   }
 })();
