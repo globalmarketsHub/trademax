@@ -2,16 +2,17 @@
   if (typeof events === 'undefined' || typeof renderEvents !== 'function') return;
 
   const TE_CLIENT = 'guest:guest';
-  const FMP_CLIENT = 'demo';
   const COUNTRY_QUERY = [
     'united states','china','euro area','united kingdom','japan','australia','canada','germany','france','italy','spain','switzerland','new zealand'
   ].join(',');
   const countryCodes = {
     'United States':'US','China':'CN','Euro Area':'EU','United Kingdom':'UK','Japan':'JP','Australia':'AU','Canada':'CA','Germany':'DE','France':'FR','Italy':'IT','Spain':'ES','Switzerland':'CH','New Zealand':'NZ'
   };
-  const currencyCountries = {USD:'US',CNY:'CN',EUR:'EU',GBP:'UK',JPY:'JP',AUD:'AU',CAD:'CA',CHF:'CH',NZD:'NZ'};
   const flags = {US:'US',CN:'CN',EU:'EU',UK:'UK',JP:'JP',AU:'AU',CA:'CA',DE:'DE',FR:'FR',IT:'IT',ES:'ES',CH:'CH',NZ:'NZ'};
   const API_CACHE_URL = 'data/economic-calendar-live.json';
+
+  events.splice(0, events.length);
+  renderEvents();
 
   function isoDate(offset){
     const d = new Date();
@@ -41,9 +42,6 @@
     return '增长';
   }
   function impactFromImportance(value){
-    const text = String(value || '').toLowerCase();
-    if (text.includes('high')) return 'high';
-    if (text.includes('medium')) return 'medium';
     const num = Number(value);
     if (num >= 3) return 'high';
     if (num === 2) return 'medium';
@@ -66,6 +64,11 @@
     badge.style.color = ok ? '#075aff' : '#92400e';
     badge.style.background = ok ? '#eef7ff' : '#fff7ed';
   }
+  function showNoRealData(message){
+    events.splice(0, events.length);
+    renderEvents();
+    showStatus(message, false);
+  }
   function applyEvents(mapped, statusText){
     const usable = mapped
       .map(item => ({...item, d: Number.isInteger(item.d) ? item.d : dayOffset(item.date)}))
@@ -82,44 +85,7 @@
     if (!response.ok) throw new Error(`calendar cache ${response.status}`);
     const payload = await response.json();
     if (!payload || !Array.isArray(payload.events) || !payload.events.length) throw new Error('empty synced calendar');
-    applyEvents(payload.events, `真实 API 数据：Trading Economics · {count} 条`);
-  }
-  async function loadFmpCalendar(){
-    showStatus('正在连接 FMP 官方经济日历 API...', true);
-    const start = isoDate(0), end = isoDate(6);
-    const urls = [
-      `https://financialmodelingprep.com/stable/economic-calendar?from=${start}&to=${end}&apikey=${FMP_CLIENT}`,
-      `https://financialmodelingprep.com/api/v3/economic_calendar?from=${start}&to=${end}&apikey=${FMP_CLIENT}`
-    ];
-    let data = [];
-    for (const url of urls) {
-      const response = await fetch(url, {headers:{Accept:'application/json'}});
-      if (!response.ok) continue;
-      const payload = await response.json();
-      if (Array.isArray(payload) && payload.length) { data = payload; break; }
-    }
-    if (!data.length) throw new Error('empty FMP calendar response');
-    const mapped = data.map(item=>{
-      const currency = String(item.currency || item.Currency || '').toUpperCase();
-      const country = clean(item.country || item.Country);
-      const c = countryCodes[country] || currencyCountries[currency] || country.slice(0,3).toUpperCase();
-      const name = item.event || item.Event || item.name || item.title;
-      const category = item.category || item.Category || item.type || '';
-      return {
-        date: item.date || item.Date,
-        t: timeText(item.date || item.Date),
-        c,
-        flag: flags[c] || c,
-        type: typeFromCategory(category, name),
-        i: impactFromImportance(item.impact || item.Importance || item.importance),
-        n: clean(name),
-        desc: clean([country, category].filter(Boolean).join(' · ')),
-        actual: clean(item.actual || item.Actual),
-        forecast: clean(item.estimate || item.forecast || item.Forecast || item.consensus),
-        previous: clean(item.previous || item.Previous)
-      };
-    });
-    applyEvents(mapped, `实时 API 数据：FMP · {count} 条`);
+    applyEvents(payload.events, `真实 API 数据：${payload.source || '官方日历'} · {count} 条`);
   }
   async function loadDirectCalendar(){
     showStatus('正在尝试直连 Trading Economics API...', true);
@@ -149,11 +115,9 @@
   }
 
   loadSyncedCalendar()
-    .catch(() => loadFmpCalendar())
     .catch(() => loadDirectCalendar())
     .catch(error=>{
-      console.warn('Economic calendar API fallback:', error);
-      showStatus('真实 API 暂时无法访问，正在显示备用事件池', false);
-      renderEvents();
+      console.warn('Economic calendar API unavailable:', error);
+      showNoRealData('真实 API 尚未连通，请配置 Trading Economics API key 后显示');
     });
 })();
