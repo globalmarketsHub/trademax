@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | 经济日历</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root{--ink:#061d50;--muted:#5b6f91;--blue:#075aff;--cyan:#14cfff;--line:#dce8f7;--soft:#f4f9ff;--red:#ef4444;--gold:#f59e0b;--green:#16a34a}
+    body{background:#f7fbff;color:var(--ink)}
+    .calendar-page{min-height:100vh;background:linear-gradient(180deg,#f7fbff 0%,#eef7ff 42%,#fff 100%)}
+    .calendar-hero{position:relative;padding:96px 6% 54px;overflow:hidden;background:radial-gradient(circle at 16% 18%,rgba(7,90,255,.18),transparent 34%),radial-gradient(circle at 86% 14%,rgba(20,207,255,.18),transparent 30%),linear-gradient(135deg,#fff,#eef7ff)}
+    .calendar-hero:after{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;border-radius:50%;border:44px solid rgba(7,90,255,.08)}
+    .calendar-hero-inner{position:relative;z-index:1;max-width:1480px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:42px;align-items:center}
+    .calendar-hero h1{font-size:64px;line-height:1.06;margin:14px 0 16px;color:var(--ink);letter-spacing:0}.calendar-hero h1 span{color:var(--blue)}
+    .calendar-hero p{font-size:20px;line-height:1.75;color:var(--muted);max-width:860px}.calendar-clock{border:1px solid rgba(7,90,255,.14);border-radius:30px;padding:28px;background:rgba(255,255,255,.78);box-shadow:0 28px 80px rgba(23,96,205,.12);backdrop-filter:blur(14px)}
+    .calendar-clock small{display:block;color:var(--muted);font-weight:900}.calendar-clock b{display:block;font-size:42px;margin:10px 0;color:var(--ink)}.calendar-clock span{color:var(--blue);font-weight:950}
+    .calendar-shell{padding:34px 6% 96px}.calendar-wrap{max-width:1480px;margin:auto;display:grid;grid-template-columns:310px minmax(0,1fr);gap:24px;align-items:start}
+    .filter-panel,.event-panel,.market-panel{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 22px 70px rgba(23,96,205,.09)}.filter-panel{position:sticky;top:108px;padding:24px}.filter-panel h2,.event-panel h2,.market-panel h2{font-size:24px;margin:0 0 18px;color:var(--ink)}
+    .field{display:grid;gap:8px;margin-bottom:16px;font-weight:900;color:#25406d}.field input,.field select{width:100%;border:1px solid #c8d8ef;border-radius:14px;padding:13px 14px;font-family:inherit;color:var(--ink);background:#fff}.impact-buttons,.country-buttons{display:grid;gap:10px}.filter-chip{border:1px solid #c8d8ef;background:#fff;color:#25406d;border-radius:14px;padding:12px 14px;text-align:left;font-weight:900;cursor:pointer}.filter-chip.active{background:#e8f2ff;border-color:#75aaff;color:#075aff}.impact-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}.dot-high{background:var(--red)}.dot-medium{background:var(--gold)}.dot-low{background:var(--green)}
+    .event-panel{overflow:hidden}.date-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;padding:22px;border-bottom:1px solid var(--line);background:#fbfdff}.date-tab{border:1px solid #d8e6f7;background:#fff;border-radius:18px;min-height:76px;display:grid;place-items:center;cursor:pointer;color:#25406d;font-weight:950}.date-tab small{color:var(--muted)}.date-tab.active{background:linear-gradient(135deg,#075aff,#12cfff);color:#fff;border-color:transparent;box-shadow:0 18px 44px rgba(7,90,255,.22)}.date-tab.active small{color:#eaf8ff}
+    .event-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px;border-bottom:1px solid var(--line)}.event-toolbar p{margin:0;color:var(--muted);font-weight:850}.legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;font-weight:900}
+    .event-table{display:grid}.event-row{display:grid;grid-template-columns:92px 120px minmax(220px,1fr) 110px 120px 120px 120px;gap:0;align-items:center;border-bottom:1px solid #edf3fb;min-height:76px}.event-row.header{min-height:52px;background:#f5f9ff;color:#5b6f91;font-size:13px;font-weight:950}.event-row>div{padding:14px 16px}.event-time{font-weight:950;color:#12254d}.flag{display:inline-flex;align-items:center;gap:8px;font-weight:950}.event-name b{display:block;color:var(--ink);font-size:16px}.event-name small{display:block;color:var(--muted);margin-top:5px}.pill{display:inline-flex;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:950}.pill.high{background:#fee2e2;color:#b91c1c}.pill.medium{background:#fef3c7;color:#92400e}.pill.low{background:#dcfce7;color:#166534}.value{font-weight:950;color:#243b63}.muted{color:#8a9ab2}.no-results{padding:42px;text-align:center;color:var(--muted);font-weight:900}
+    .market-panel{margin-top:24px;padding:24px}.pulse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.pulse-card{border:1px solid #dce8f7;border-radius:18px;padding:18px;background:linear-gradient(180deg,#fff,#f6fbff)}.pulse-card small{color:var(--muted);font-weight:900}.pulse-card b{display:block;font-size:24px;margin-top:7px}.pulse-card span{color:#087a33;font-weight:950}.risk-note{margin-top:18px;border-radius:18px;background:#f5f8fc;padding:18px;color:#5b6f91;line-height:1.65;font-size:13px}
+    @media(max-width:1180px){.calendar-hero-inner,.calendar-wrap{grid-template-columns:1fr}.filter-panel{position:static}.event-row{grid-template-columns:88px 110px minmax(220px,1fr) 100px 100px 100px 100px;min-width:880px}.event-table{overflow:auto}.pulse-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:720px){.calendar-hero{padding:70px 5% 42px}.calendar-hero h1{font-size:40px}.calendar-hero p{font-size:17px}.calendar-shell{padding:24px 5% 70px}.date-strip{grid-template-columns:repeat(2,1fr)}.event-toolbar{display:grid}.pulse-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="premium-bg"><div class="blue-white-gradient"></div><div class="glass-grid"></div></div>
+<header class="site-header">
+  <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
+  <nav>
+    <a href="products.html">产品</a>
+    <a href="accounts.html">账户点差</a>
+    <a href="platforms.html">MT4/MT5</a>
+    <a href="calculators.html">交易计算器</a>
+    <a href="economic-calendar.html">财经日历</a>
+    <a href="academy.html">交易知识库</a>
+    <a href="partners.html">代理合作</a>
+    <a href="contact.html">联系</a>
+  </nav>
+  <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+</header>
+<main class="calendar-page">
+  <section class="calendar-hero">
+    <div class="calendar-hero-inner">
+      <div>
+        <p class="eyebrow">ECONOMIC CALENDAR</p>
+        <h1>全球<span>财经日历</span><br>掌握关键波动时刻</h1>
+        <p>跟踪主要经济数据、央行讲话、就业、通胀和 GDP 等事件。你可以按日期、国家、重要性和关键词筛选，快速判断当天可能影响外汇、黄金、指数和能源市场的重点消息。</p>
+      </div>
+      <aside class="calendar-clock">
+        <small>当前显示时区</small>
+        <b id="clockTime">--:--</b>
+        <span id="clockZone">Local Time</span>
+      </aside>
+    </div>
+  </section>
+  <section class="calendar-shell">
+    <div class="calendar-wrap">
+      <aside class="filter-panel">
+        <h2>筛选事件</h2>
+        <label class="field">关键词搜索<input id="searchInput" placeholder="例如 CPI、利率、非农"></label>
+        <label class="field">事件类型<select id="typeFilter"><option value="all">全部类型</option><option>通胀</option><option>就业</option><option>央行</option><option>增长</option><option>消费</option><option>能源</option></select></label>
+        <label class="field">重要性<select id="impactSelect"><option value="all">全部重要性</option><option value="high">高影响</option><option value="medium">中影响</option><option value="low">低影响</option></select></label>
+        <div class="field"><span>国家 / 地区</span><div class="country-buttons" id="countryButtons"></div></div>
+      </aside>
+      <div>
+        <section class="event-panel">
+          <div class="date-strip" id="dateStrip"></div>
+          <div class="event-toolbar"><p id="eventCount">正在加载事件</p><div class="legend"><span><i class="impact-dot dot-high"></i>高影响</span><span><i class="impact-dot dot-medium"></i>中影响</span><span><i class="impact-dot dot-low"></i>低影响</span></div></div>
+          <div class="event-table" id="eventTable"></div>
+        </section>
+        <section class="market-panel">
+          <h2>今日市场关注</h2>
+          <div class="pulse-grid"><div class="pulse-card"><small>重点货币</small><b>USD</b><span>通胀 / 就业</span></div><div class="pulse-card"><small>重点商品</small><b>XAUUSD</b><span>利率预期</span></div><div class="pulse-card"><small>重点指数</small><b>US500</b><span>增长数据</span></div><div class="pulse-card"><small>提醒</small><b>高波动</b><span>数据前后注意风险</span></div></div>
+          <p class="risk-note">风险提示：本财经日历为网站前端展示和交易教育用途，事件时间与结果需以交易平台、官方统计机构和实时新闻源为准。重大数据公布前后可能出现点差扩大、滑点和快速波动。</p>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+const countries=[['all','全部'],['US','美国'],['CN','中国'],['EU','欧元区'],['UK','英国'],['JP','日本'],['AU','澳大利亚'],['CA','加拿大']];
+const events=[
+ {d:0,t:'08:30',c:'AU',flag:'🇦🇺',type:'增长',i:'medium',n:'零售销售月率',desc:'衡量消费者支出变化',actual:'--',forecast:'0.3%',previous:'0.2%'},
+ {d:0,t:'09:45',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'财新服务业 PMI',desc:'服务业景气度指标',actual:'--',forecast:'52.4',previous:'52.7'},
+ {d:0,t:'17:00',c:'EU',flag:'🇪🇺',type:'消费',i:'low',n:'零售销售年率',desc:'欧元区消费活动',actual:'--',forecast:'1.8%',previous:'2.3%'},
+ {d:0,t:'22:15',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'ADP 就业人数变化',desc:'美国私营部门就业变化',actual:'--',forecast:'145K',previous:'155K'},
+ {d:0,t:'23:00',c:'US',flag:'🇺🇸',type:'央行',i:'high',n:'美联储官员讲话',desc:'关注利率路径和通胀表述',actual:'--',forecast:'--',previous:'--'},
+ {d:1,t:'02:30',c:'US',flag:'🇺🇸',type:'能源',i:'medium',n:'EIA 原油库存',desc:'影响原油和能源相关资产',actual:'--',forecast:'-1.2M',previous:'-0.8M'},
+ {d:1,t:'09:50',c:'JP',flag:'🇯🇵',type:'央行',i:'medium',n:'日本央行会议纪要',desc:'货币政策讨论细节',actual:'--',forecast:'--',previous:'--'},
+ {d:1,t:'19:00',c:'UK',flag:'🇬🇧',type:'央行',i:'high',n:'英国央行利率决议',desc:'英镑和英国指数重点事件',actual:'--',forecast:'4.25%',previous:'4.25%'},
+ {d:1,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'初请失业金人数',desc:'美国劳动力市场高频数据',actual:'--',forecast:'221K',previous:'219K'},
+ {d:2,t:'10:30',c:'AU',flag:'🇦🇺',type:'通胀',i:'high',n:'澳洲 CPI 年率',desc:'影响澳元和澳洲利率预期',actual:'--',forecast:'3.4%',previous:'3.5%'},
+ {d:2,t:'18:00',c:'EU',flag:'🇪🇺',type:'增长',i:'medium',n:'工业产出月率',desc:'制造业和工业活动变化',actual:'--',forecast:'0.2%',previous:'-0.1%'},
+ {d:2,t:'22:30',c:'US',flag:'🇺🇸',type:'通胀',i:'high',n:'核心 CPI 月率',desc:'剔除食品和能源的通胀指标',actual:'--',forecast:'0.3%',previous:'0.3%'},
+ {d:3,t:'16:00',c:'CN',flag:'🇨🇳',type:'增长',i:'medium',n:'贸易帐',desc:'进出口变化和外需表现',actual:'--',forecast:'$72.0B',previous:'$68.6B'},
+ {d:3,t:'22:30',c:'CA',flag:'🇨🇦',type:'就业',i:'high',n:'加拿大就业人数变化',desc:'影响加元波动',actual:'--',forecast:'18K',previous:'22K'},
+ {d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'非农就业人数变化',desc:'每月最受关注的美国就业数据',actual:'--',forecast:'185K',previous:'177K'},
+ {d:4,t:'22:30',c:'US',flag:'🇺🇸',type:'就业',i:'high',n:'失业率',desc:'美国劳动力市场核心指标',actual:'--',forecast:'3.9%',previous:'3.9%'},
+ {d:5,t:'11:00',c:'CN',flag:'🇨🇳',type:'通胀',i:'medium',n:'CPI 年率',desc:'中国居民消费价格指数',actual:'--',forecast:'0.4%',previous:'0.3%'},
+ {d:6,t:'20:00',c:'EU',flag:'🇪🇺',type:'央行',i:'medium',n:'欧洲央行行长讲话',desc:'关注欧元区货币政策线索',actual:'--',forecast:'--',previous:'--'}
+];
+let selectedDay=0,selectedCountry='all';
+const fmtDate=(offset)=>{const d=new Date();d.setDate(d.getDate()+offset);return d};
+const dateLabel=(d)=>d.toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'});
+const weekLabel=(d)=>d.toLocaleDateString('zh-CN',{weekday:'short'});
+function initDates(){const box=document.getElementById('dateStrip');box.innerHTML='';for(let i=0;i<7;i++){const d=fmtDate(i),btn=document.createElement('button');btn.className='date-tab'+(i===selectedDay?' active':'');btn.innerHTML=`<b>${i===0?'今天':weekLabel(d)}</b><small>${dateLabel(d)}</small>`;btn.onclick=()=>{selectedDay=i;initDates();renderEvents()};box.appendChild(btn)}}
+function initCountries(){const box=document.getElementById('countryButtons');box.innerHTML='';countries.forEach(([code,name])=>{const b=document.createElement('button');b.className='filter-chip'+(code===selectedCountry?' active':'');b.textContent=name;b.onclick=()=>{selectedCountry=code;initCountries();renderEvents()};box.appendChild(b)})}
+function impactText(i){return i==='high'?'高影响':i==='medium'?'中影响':'低影响'}
+function renderEvents(){const search=document.getElementById('searchInput').value.trim().toLowerCase();const type=document.getElementById('typeFilter').value;const impact=document.getElementById('impactSelect').value;const list=events.filter(e=>e.d===selectedDay&&(selectedCountry==='all'||e.c===selectedCountry)&&(type==='all'||e.type===type)&&(impact==='all'||e.i===impact)&&(!search||(e.n+e.desc+e.type+e.c).toLowerCase().includes(search)));document.getElementById('eventCount').textContent=`${dateLabel(fmtDate(selectedDay))} 共 ${list.length} 个事件`;const table=document.getElementById('eventTable');table.innerHTML='<div class="event-row header"><div>时间</div><div>国家</div><div>事件</div><div>重要性</div><div>实际值</div><div>预测值</div><div>前值</div></div>';if(!list.length){table.innerHTML+='<div class="no-results">当前筛选条件下暂无事件</div>';return}list.forEach(e=>{table.innerHTML+=`<div class="event-row"><div class="event-time">${e.t}</div><div><span class="flag">${e.flag} ${e.c}</span></div><div class="event-name"><b>${e.n}</b><small>${e.desc}</small></div><div><span class="pill ${e.i}">${impactText(e.i)}</span></div><div class="value ${e.actual==='--'?'muted':''}">${e.actual}</div><div class="value">${e.forecast}</div><div class="value muted">${e.previous}</div></div>`})}
+function tickClock(){const now=new Date();document.getElementById('clockTime').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('clockZone').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone||'Local Time'}
+['searchInput','typeFilter','impactSelect'].forEach(id=>document.getElementById(id).addEventListener('input',renderEvents));initDates();initCountries();renderEvents();tickClock();setInterval(tickClock,1000);
+</script>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="crm-config.js"></script>
+<script src="crm.js"></script>
+<script>if(typeof trackPageView==='function')trackPageView();</script>
+</body>
+</html>
