@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | 交易知识库</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="premium-bg">
+  <div class="blue-white-gradient"></div>
+  <div class="glass-grid"></div>
+  <div class="kline-scene">
+    <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div><div class="candle c4"></div>
+    <div class="candle c5"></div><div class="candle c6"></div><div class="break-line"></div><div class="break-flare"></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
+  <nav>
+    <a href="products.html">产品</a>
+    <a href="accounts.html">账户点差</a>
+    <a href="platforms.html">MT4/MT5</a>
+    <a href="calculators.html">交易计算器</a>
+    <a href="academy.html">交易知识库</a>
+    <a href="partners.html">代理合作</a>
+    <a href="contact.html">联系</a><a href="lead-form.html">客户登记</a>
+  </nav>
+  <button class="tool-open-top" onclick="openToolPanel('chart')">行情图表</button>
+  <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+</header>
+
+<main class="subpage academy-page">
+  <section class="academy-hero">
+    <div>
+      <p class="eyebrow">TRADEMAX KNOWLEDGE HUB</p>
+      <h1>交易知识库</h1>
+      <p>把交易术语、入门书单和市场新闻入口整理到一个页面，方便客户在开户前后快速补齐基础知识。</p>
+      <div class="academy-hero-actions">
+        <a class="primary-btn" href="#terminology">查看术语</a>
+        <a class="ghost-btn" href="#books">交易书单</a>
+        <a class="ghost-btn" href="#news">市场新闻</a>
+      </div>
+    </div>
+    <div class="academy-hero-panel">
+      <span>267</span>
+      <b>条交易术语</b>
+      <p>覆盖外汇、CFD、股票、债券、期权、交易风控与宏观经济概念。</p>
+    </div>
+  </section>
+
+  <section class="knowledge-section" id="terminology">
+    <div class="knowledge-head">
+      <div>
+        <p class="eyebrow">TERMINOLOGY</p>
+        <h2>交易术语速查</h2>
+      </div>
+      <div class="term-search">
+        <input id="termSearch" placeholder="搜索术语，例如：点差、杠杆、保证金、K线" oninput="renderAcademyTerms()" />
+        <select id="termLetter" onchange="renderAcademyTerms()">
+          <option value="">全部首字母</option>
+        </select>
+      </div>
+    </div>
+    <div class="term-count" id="termCount"></div>
+    <div class="term-grid" id="termGrid"></div>
+  </section>
+
+  <section class="knowledge-section books-section" id="books">
+    <div class="knowledge-head">
+      <div>
+        <p class="eyebrow">READING LIST</p>
+        <h2>交易相关书单</h2>
+      </div>
+      <p>书单用于建立交易框架，不承诺收益，也不替代风险管理。</p>
+    </div>
+    <div class="book-grid">
+      <article><b>技术分析</b><h3>《日本蜡烛图技术》</h3><p>适合学习 K 线形态、趋势反转、支撑阻力和图表阅读。</p></article>
+      <article><b>市场结构</b><h3>《金融市场技术分析》</h3><p>系统理解趋势、形态、均线、震荡指标与交易计划。</p></article>
+      <article><b>交易心理</b><h3>《交易心理分析》</h3><p>帮助客户理解纪律、概率思维、亏损处理和执行一致性。</p></article>
+      <article><b>交易故事</b><h3>《股票作手回忆录》</h3><p>经典交易叙事，适合理解市场情绪、仓位与耐心。</p></article>
+      <article><b>系统交易</b><h3>《海龟交易法则》</h3><p>适合了解趋势跟随、突破、仓位控制和规则化执行。</p></article>
+      <article><b>长期视角</b><h3>《漫步华尔街》</h3><p>帮助客户建立资产类别、风险收益和市场效率的基本认知。</p></article>
+    </div>
+  </section>
+
+  <section class="knowledge-section news-section" id="news">
+    <div class="knowledge-head">
+      <div>
+        <p class="eyebrow">MARKET NEWS</p>
+        <h2>交易新闻与关注清单</h2>
+      </div>
+      <a class="primary-btn" href="https://www.tmgm.com/zh-hans/analysis/market-news" target="_blank">打开市场新闻</a>
+    </div>
+    <div class="news-grid">
+      <article>
+        <span>宏观数据</span>
+        <h3>重点关注 CPI、非农、利率决议</h3>
+        <p>这些事件通常影响美元、黄金、指数和主要货币对波动。</p>
+      </article>
+      <article>
+        <span>央行政策</span>
+        <h3>美联储、澳洲联储、欧洲央行</h3>
+        <p>利率路径和官员讲话会改变市场对汇率和风险资产的预期。</p>
+      </article>
+      <article>
+        <span>商品市场</span>
+        <h3>黄金、原油、天然气</h3>
+        <p>适合结合美元、实际利率、库存数据和地缘风险共同观察。</p>
+      </article>
+      <article>
+        <span>交易提醒</span>
+        <h3>新闻前后控制杠杆和仓位</h3>
+        <p>高波动时段可能出现滑点、点差扩大和快速回撤。</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<div class="right-tool-rail">
+  <button onclick="openToolPanel('chart')"><span>📈</span><b>行情图表</b></button>
+  <button onclick="openToolPanel('chat')"><span>💬</span><b>在线客服</b></button>
+  <a href="calculators.html"><span>🧮</span><b>计算器</b></a>
+</div>
+
+<aside class="tool-panel" id="toolPanel">
+  <div class="tool-panel-header">
+    <div><small>TRADEMAX 工具</small><h3 id="panelTitle">行情图表</h3></div>
+    <button onclick="closeToolPanel()">×</button>
+  </div>
+  <div class="tool-tabs two-tabs">
+    <button id="tabChart" onclick="switchTool('chart')">行情图表</button>
+    <button id="tabChat" onclick="switchTool('chat')">在线客服</button>
+  </div>
+  <div class="tool-content active" id="contentChart">
+    <div class="sidebar-chart-wrap"><div id="sidebarTradingView"></div></div>
+  </div>
+  <div class="tool-content" id="contentChat">
+    <div class="chat-body" id="chatBody">
+      <div class="bot msg">您好，请问您想了解开户、平台、点差，还是交易知识内容？</div>
+      <div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div>
+      <div class="smart-qa"><input id="smartQuestion" placeholder="请输入问题：如保证金、点差、MT4下载..." onkeydown="if(event.key==='Enter'){askSmartQuestion()}"><button onclick="askSmartQuestion()">发送</button></div>
+    </div>
+    <form class="lead-form" onsubmit="sendLead(event)">
+      <input id="leadWechat" placeholder="微信号 / WeChat（必填）" required />
+      <input id="leadEmail" placeholder="注册邮箱 / Email（已开户客户填写）" />
+      <textarea id="leadNote" placeholder="备注：如想领取插件、了解术语、开户失败等"></textarea>
+      <button type="submit">提交给客户经理</button>
+    </form>
+    <p class="tool-note">提交后客户经理会尽快联系您。</p>
+  </div>
+</aside>
+<div class="panel-overlay" id="panelOverlay" onclick="closeToolPanel()"></div>
+
+<footer>
+  <div class="footer-grid">
+    <div><h3>TradeMax Partner Access</h3><p>独立 TMGM 合作伙伴信息页面，提供开户注册、平台、工具和交易知识入口。</p></div>
+    <div><h4>快速入口</h4><a href="accounts.html">活动与奖励</a><a href="platforms.html">MT4/MT5</a><a href="academy.html">交易知识库</a></div>
+    <div><h4>联系</h4><a href="contact.html">客户经理</a><a href="lead-form.html">客户登记</a><a href="partners.html">代理合作</a></div>
+  </div>
+  <p class="disclaimer">本页面信息仅用于一般性学习参考，不构成投资建议。保证金外汇和差价合约交易涉及高风险，请结合自身情况谨慎决策。</p>
+</footer>
+
+<script src="script.js"></script>
+<script src="academy-terms.js"></script>
+<script src="academy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="crm-config.js"></script>
+<script src="crm.js"></script>
+<script>trackPageView();</script>
+</body>
+</html>
+

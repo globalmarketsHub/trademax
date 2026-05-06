@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -34,6 +34,7 @@
     <a href="accounts.html">账户点差</a>
     <a href="platforms.html">MT4/MT5</a>
     <a href="calculators.html">交易计算器</a>
+    <a href="academy.html">交易知识库</a>
     <a href="partners.html">代理合作</a>
     <a href="contact.html">联系</a><a href="lead-form.html">客户登记</a>
   </nav>
@@ -63,7 +64,71 @@
     </div>
     <p class="note">以上点差信息仅用于页面展示，实际交易条件、费用、产品可用性以 TMGM 最新官方规则及交易平台显示为准。</p>
   </section>
+
+  <section class="client-benefits" id="client-benefits">
+    <div class="benefit-heading">
+      <p class="eyebrow center">CLIENT BENEFITS</p>
+      <h2>已开户客户福利中心</h2>
+      <p>专属福利仅面向已开户客户开放。提交联系方式后，客户经理会核实账户并发送兑换码；输入兑换码后即可领取对应工具。</p>
+    </div>
+
+    <div class="benefit-grid">
+      <article class="benefit-card benefit-featured">
+        <div class="benefit-visual">
+          <div class="benefit-chart">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <b>MT4</b>
+        </div>
+        <div class="benefit-copy">
+          <span class="benefit-tag">开户客户免费福利</span>
+          <h3>MTCommander 盈亏统计指标</h3>
+          <p>适用于 MT4 的交易复盘辅助插件，可帮助客户查看账户盈亏统计、交易表现与阶段性结果，适合短线、黄金、EA 和多品种交易客户使用。</p>
+          <ul>
+            <li>免费领取，但需先通过客户经理获取兑换码</li>
+            <li>提交微信与注册邮箱后，方便核实是否为已开户客户</li>
+            <li>后续新增福利也会统一放在这里申请和领取</li>
+          </ul>
+          <div class="benefit-actions">
+            <button class="primary-btn" type="button" onclick="openBenefitModal('MTCommander 盈亏统计指标')">申请兑换码</button>
+            <button class="ghost-btn" type="button" onclick="toggleBenefitCode()">我已有兑换码</button>
+          </div>
+          <div class="benefit-code-box" id="benefitCodeBox" hidden>
+            <input id="benefitCodeInput" placeholder="请输入客户经理提供的兑换码" />
+            <button type="button" onclick="unlockBenefitDownload()">验证并下载</button>
+            <p id="benefitCodeMessage"></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="benefit-card coming-soon">
+        <div>
+          <span class="benefit-tag muted">COMING SOON</span>
+          <h3>更多开户福利</h3>
+          <p>后续可以继续加入 EA 工具、指标模板、交易复盘表、客户活动权益等内容，统一通过兑换码发放。</p>
+        </div>
+      </article>
+    </div>
+  </section>
 </main>
+
+<div class="benefit-modal" id="benefitModal" aria-hidden="true">
+  <div class="benefit-modal-card">
+    <button class="benefit-close" type="button" onclick="closeBenefitModal()">×</button>
+    <p class="eyebrow">BENEFIT CODE</p>
+    <h3>申请福利兑换码</h3>
+    <p>请留下联系方式，客户经理核实开户状态后会发送兑换码。拿到兑换码后回到本页即可下载。</p>
+    <form class="benefit-form" onsubmit="submitBenefitRequest(event)">
+      <input type="hidden" name="benefit" id="benefitName" value="MTCommander 盈亏统计指标" />
+      <label>微信号 / WeChat<input name="wechat" required placeholder="请输入微信号" /></label>
+      <label>注册邮箱 / Email<input name="email" required placeholder="请输入开户注册邮箱" /></label>
+      <label>WhatsApp / 手机<input name="whatsapp" placeholder="可选，方便备用联系" /></label>
+      <label>备注<textarea name="notes" placeholder="例如：已开户，需要 MT4 盈亏统计插件兑换码"></textarea></label>
+      <button class="primary-btn full" type="submit">提交申请</button>
+      <p class="form-message" id="benefitFormMessage"></p>
+    </form>
+  </div>
+</div>
 
 
 <div class="right-tool-rail">
@@ -83,7 +148,6 @@
   </div>
   <div class="tool-content active" id="contentChart">
     <div class="sidebar-chart-wrap"><div id="sidebarTradingView"></div></div>
-    <p class="tool-note">TradingView 图表组件，可切换产品、周期和指标。默认显示黄金 XAUUSD。</p>
   </div>
   <div class="tool-content" id="contentChat">
     <div class="chat-body" id="chatBody">
@@ -156,6 +220,7 @@
       <a href="platforms.html">MetaTrader 5</a>
       <a href="platforms.html">TMGM APP</a>
       <a href="calculators.html">交易计算器</a>
+    <a href="academy.html">交易知识库</a>
     </div>
 
     <div class="footer-col">
@@ -172,6 +237,7 @@
       <a href="products.html">市场新闻</a>
       <a href="products.html">市场洞察</a>
       <a href="platforms.html">交易工具</a>
+      <a href="academy.html">交易知识库</a>
     </div>
 
     <div class="footer-col">
@@ -207,7 +273,6 @@
 
 
 
-<script src="https://s3.tradingview.com/tv.js"></script>
 <script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="crm-config.js"></script>
@@ -215,3 +280,6 @@
 <script>trackPageView();</script>
 </body>
 </html>
+
+
+

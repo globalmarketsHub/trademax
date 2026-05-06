@@ -40,8 +40,22 @@ function closeToolPanel() {
 }
 
 function switchTool(type) {
-  const titles = { chart: "行情图表", chat: "在线客服" };
-  document.getElementById("panelTitle").textContent = titles[type];
+  const title = document.getElementById("panelTitle");
+  if (type === "chart") {
+    const chartLabel = document.getElementById("tabChart")?.textContent || "行情图表";
+    if (title) title.textContent = chartLabel;
+    if (typeof getMainlandDetectionV2 === "function") {
+      getMainlandDetectionV2().then(isChina => {
+        if (title && document.getElementById("contentChart")?.classList.contains("active")) {
+          title.textContent = isChina ? "入金礼物" : "行情图表";
+        }
+        const tab = document.getElementById("tabChart");
+        if (tab) tab.textContent = isChina ? "入金礼物" : "行情图表";
+      });
+    }
+  } else if (title) {
+    title.textContent = "在线客服";
+  }
   ["Chart", "Chat"].forEach(name => {
     document.getElementById("content" + name).classList.remove("active");
     document.getElementById("tab" + name).classList.remove("active");
@@ -231,7 +245,6 @@ function renderGiftShell(container) {
         <div class="gift-fallback-head">
           <span>TMGM CLIENT CAMPAIGN</span>
           <h3>5月回馈客户活动</h3>
-          <p>当前网络环境无法加载行情，为您优先展示中国区客户专属入金活动。</p>
         </div>
 
         <img class="gift-fallback-img" src="assets/may-gift.png" alt="TMGM 5月回馈客户活动">
@@ -274,4 +287,156 @@ async function initSidebarTradingViewFinal() {
 // 兼容旧调用：即使原代码调用 initSidebarTradingView，也会走最终逻辑
 function initSidebarTradingView() {
   return initSidebarTradingViewFinal();
+}
+
+function applyMainlandGiftLabels() {
+  getMainlandDetectionV2().then(isChina => {
+    if (!isChina) return;
+    document.querySelectorAll("[onclick*=\"openToolPanel('chart')\"]").forEach(el => {
+      if (el.classList.contains("tool-open-top")) {
+        el.textContent = "入金礼物";
+        return;
+      }
+      const text = el.querySelector("b");
+      const icon = el.querySelector("span");
+      if (text) text.textContent = "入金礼物";
+      if (icon) icon.textContent = "🎁";
+    });
+    const tab = document.getElementById("tabChart");
+    if (tab) tab.textContent = "入金礼物";
+    const activeChart = document.getElementById("contentChart")?.classList.contains("active");
+    const title = document.getElementById("panelTitle");
+    if (title && activeChart) title.textContent = "入金礼物";
+  });
+}
+
+/* ===== Mainland-first chart routing override ===== */
+let mainlandDetectionPromiseV2;
+
+function readRegionOverrideV2() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("china") === "1" || params.get("gift") === "1") return true;
+  if (params.get("tv") === "1") return false;
+  return null;
+}
+
+async function fetchCountryCodeV2() {
+  const endpoints = ["https://ipapi.co/json/", "https://ipwho.is/"];
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const code = (data.country_code || data.countryCode || "").toUpperCase();
+      if (code) return code;
+    } catch (e) {}
+  }
+  return "";
+}
+
+async function detectChinaUser() {
+  const override = readRegionOverrideV2();
+  if (override !== null) return override;
+
+  const countryCode = await fetchCountryCodeV2();
+  if (countryCode === "CN") return true;
+  if (countryCode && countryCode !== "CN") return false;
+
+  try {
+    const lang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    if (lang.includes("zh-cn") || tz === "Asia/Shanghai") return true;
+  } catch (e) {}
+
+  return false;
+}
+
+function getMainlandDetectionV2() {
+  if (!mainlandDetectionPromiseV2) mainlandDetectionPromiseV2 = detectChinaUser();
+  return mainlandDetectionPromiseV2;
+}
+
+function renderToolRegionLoading(container) {
+  container.innerHTML = `
+    <div class="tool-region-loading">
+      <b>正在为您匹配访问内容</b>
+      <span>请稍候...</span>
+    </div>
+  `;
+}
+
+function renderGiftOnly(container) {
+  container.innerHTML = `
+    <div class="final-tv-gift-wrap">
+      <div id="giftFallback" class="gift-fallback show">
+        <div class="gift-fallback-head">
+          <span>TMGM CLIENT CAMPAIGN</span>
+          <h3>5月回馈客户活动</h3>
+        </div>
+        <img class="gift-fallback-img" src="assets/may-gift.png" alt="TMGM 5月回馈客户活动">
+        <div class="gift-fallback-actions">
+          <a href="lead-form.html" class="gift-primary">立即领取福利</a>
+          <a href="contact.html" class="gift-secondary">联系客户经理</a>
+        </div>
+        <p class="gift-risk">活动详情、资格及最终解释请以客户经理确认为准。交易涉及风险。</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderTradingViewOnly(container) {
+  container.innerHTML = `
+    <div class="final-tv-gift-wrap">
+      <iframe
+        id="tvframe"
+        src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=15&theme=light"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        loading="lazy"
+        style="border-radius:16px;">
+      </iframe>
+    </div>
+  `;
+}
+
+async function initSidebarTradingViewFinal() {
+  const container = document.getElementById("sidebarTradingView");
+  if (!container) return;
+  if (container.dataset.regionReady === "1") return;
+
+  renderToolRegionLoading(container);
+  const isChina = await getMainlandDetectionV2();
+
+  if (isChina) {
+    const title = document.getElementById("panelTitle");
+    if (title) title.textContent = "入金礼物";
+    renderGiftOnly(container);
+    container.dataset.regionReady = "1";
+    return;
+  }
+
+  const title = document.getElementById("panelTitle");
+  if (title) title.textContent = "行情图表";
+  renderTradingViewOnly(container);
+  container.dataset.regionReady = "1";
+
+  setTimeout(() => {
+    try {
+      const iframe = document.getElementById("tvframe");
+      if (!iframe || !iframe.contentWindow) renderGiftOnly(container);
+    } catch (e) {
+      renderGiftOnly(container);
+    }
+  }, 4500);
+}
+
+function initSidebarTradingView() {
+  return initSidebarTradingViewFinal();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", applyMainlandGiftLabels);
+} else {
+  applyMainlandGiftLabels();
 }

@@ -240,6 +240,117 @@ async function sendLead(e) {
   }
 }
 
+function openBenefitModal(benefitName) {
+  const modal = document.getElementById("benefitModal");
+  const input = document.getElementById("benefitName");
+  if (input) input.value = benefitName || "MTCommander 盈亏统计指标";
+  if (modal) {
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+  }
+}
+
+function closeBenefitModal() {
+  const modal = document.getElementById("benefitModal");
+  if (modal) {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+  }
+}
+
+function toggleBenefitCode() {
+  const box = document.getElementById("benefitCodeBox");
+  if (box) box.hidden = !box.hidden;
+}
+
+function unlockBenefitDownload() {
+  const input = document.getElementById("benefitCodeInput");
+  const msg = document.getElementById("benefitCodeMessage");
+  const code = (input?.value || "").trim();
+  const validCode = (CRM_CONFIG.BENEFIT_CODE_MTCOMMANDER || "").trim();
+  if (!code || code !== validCode) {
+    if (msg) {
+      msg.textContent = "兑换码不正确，请联系客户经理确认。";
+      msg.className = "error";
+    }
+    return;
+  }
+  if (msg) {
+    msg.textContent = "验证成功，正在开始下载。";
+    msg.className = "success";
+  }
+  const a = document.createElement("a");
+  a.href = "assets/MTCommander-PnL-MT4-V5.05.ex4";
+  a.download = "MTCommander-PnL-MT4-V5.05.ex4";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+async function submitBenefitRequest(event) {
+  event.preventDefault();
+  const form = event.target;
+  const msg = document.getElementById("benefitFormMessage");
+  if (msg) {
+    msg.textContent = "正在提交申请...";
+    msg.className = "form-message";
+  }
+
+  const benefit = form.benefit?.value || "MTCommander 盈亏统计指标";
+  const ip = await getClientIP();
+  const d = getDeviceInfo();
+  const payload = {
+    visitor_id: getVisitorId(),
+    name: "",
+    wechat: form.wechat?.value?.trim() || "",
+    whatsapp: form.whatsapp?.value?.trim() || "",
+    email: form.email?.value?.trim() || "",
+    registered: "已开户",
+    account_type: "ECN",
+    interest: "开户客户福利",
+    source_page: location.pathname,
+    notes: `申请福利兑换码：${benefit}。${form.notes?.value?.trim() || ""}`,
+    status: "福利申请",
+    ip_address: ip.ip,
+    country: ip.country,
+    country_code: ip.country_code,
+    city: ip.city,
+    region: ip.region,
+    user_agent: d.user_agent,
+    language: d.language,
+    screen_size: d.screen_size,
+    timezone: d.timezone
+  };
+  payload.lead_score = scoreLead(payload);
+
+  const result = await supabaseInsert("leads", payload);
+  if (result.error) {
+    if (msg) {
+      msg.textContent = "提交失败：CRM 数据库未配置或网络异常，请稍后再试。";
+      msg.className = "form-message error";
+    }
+    return;
+  }
+
+  await notifyEmail({
+    subject: "开户客户福利兑换码申请",
+    wechat: payload.wechat,
+    email: payload.email,
+    whatsapp: payload.whatsapp,
+    account_type: payload.account_type,
+    interest: payload.interest,
+    ip: payload.ip_address,
+    country: payload.country,
+    notes: payload.notes
+  });
+
+  if (msg) {
+    msg.textContent = "申请已提交，客户经理核实后会发送兑换码。";
+    msg.className = "form-message success";
+  }
+  form.reset();
+}
+
 async function logQuestion(question, answer) {
   const ip = await getClientIP();
   const d = getDeviceInfo();
