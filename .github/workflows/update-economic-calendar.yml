@@ -2,6 +2,11 @@ name: Update economic calendar
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-economic-calendar.yml'
+      - 'scripts/update-economic-calendar.mjs'
+      - 'economic-calendar-api.js'
   schedule:
     - cron: '7 */3 * * *'
 
