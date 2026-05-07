@@ -1,3 +1,25 @@
+(() => {
+  const applyAssetFixes = () => {
+    if (!document.querySelector('link[href="fix-assets.css"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "fix-assets.css";
+      document.head.appendChild(link);
+    }
+    document.querySelectorAll('img[src="assets/metatrader-4-logo.png"]').forEach(img => {
+      img.src = "assets/metatrader-4-logo.svg";
+    });
+    document.querySelectorAll('img[src="assets/metatrader-5-logo.png"]').forEach(img => {
+      img.src = "assets/metatrader-5-logo.svg";
+    });
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", applyAssetFixes);
+  } else {
+    applyAssetFixes();
+  }
+})();
+
 let chartLoaded = false;
 
 function initSidebarTradingView() {
@@ -247,7 +269,7 @@ function renderGiftShell(container) {
           <h3>5月回馈客户活动</h3>
         </div>
 
-        <img class="gift-fallback-img" src="assets/may-gift.png" alt="TMGM 5月回馈客户活动">
+        <img class="gift-fallback-img" src="assets/may-gift.svg" alt="TMGM 入金礼物活动">
 
         <div class="gift-fallback-actions">
           <a href="lead-form.html" class="gift-primary">立即领取福利</a>
@@ -373,7 +395,7 @@ function renderGiftOnly(container) {
           <span>TMGM CLIENT CAMPAIGN</span>
           <h3>5月回馈客户活动</h3>
         </div>
-        <img class="gift-fallback-img" src="assets/may-gift.png" alt="TMGM 5月回馈客户活动">
+        <img class="gift-fallback-img" src="assets/may-gift.svg" alt="TMGM 入金礼物活动">
         <div class="gift-fallback-actions">
           <a href="lead-form.html" class="gift-primary">立即领取福利</a>
           <a href="contact.html" class="gift-secondary">联系客户经理</a>
