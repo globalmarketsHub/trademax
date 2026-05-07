@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 980" role="img" aria-label="TMGM 入金礼物活动海报">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061d50"/><stop offset=".55" stop-color="#075aff"/><stop offset="1" stop-color="#20dcff"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#eaf6ff"/></linearGradient>
+  </defs>
+  <rect width="720" height="980" rx="42" fill="url(#bg)"/>
+  <path d="M60 170C210 70 420 80 650 160M80 780c150-70 340-80 570 20" fill="none" stroke="#83efff" stroke-opacity=".34" stroke-width="18" stroke-linecap="round"/>
+  <text x="58" y="92" font-family="Arial Black, Arial" font-size="44" font-weight="900" fill="#fff">TMGM</text>
+  <text x="58" y="126" font-family="Arial" font-size="18" font-weight="800" fill="#bdefff" letter-spacing="4">CLIENT REWARD</text>
+  <text x="58" y="230" font-family="Microsoft YaHei, Arial" font-size="72" font-weight="900" fill="#fff">入金礼物</text>
+  <text x="58" y="292" font-family="Microsoft YaHei, Arial" font-size="34" font-weight="800" fill="#dff9ff">开户客户专属福利活动</text>
+  <rect x="58" y="350" width="604" height="420" rx="34" fill="url(#card)" opacity=".98"/>
+  <text x="98" y="420" font-family="Microsoft YaHei, Arial" font-size="30" font-weight="900" fill="#061d50">活动亮点</text>
+  <g font-family="Microsoft YaHei, Arial" font-size="24" font-weight="800" fill="#163766">
+    <text x="104" y="500">完成开户链接注册</text>
+    <text x="104" y="575">联系客户经理确认资格</text>
+    <text x="104" y="650">按活动要求领取礼品</text>
+  </g>
+  <g fill="#075aff">
+    <circle cx="80" cy="491" r="10"/><circle cx="80" cy="566" r="10"/><circle cx="80" cy="641" r="10"/>
+  </g>
+  <rect x="98" y="700" width="280" height="44" rx="22" fill="#075aff"/>
+  <text x="130" y="730" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="900" fill="#fff">详情以客户经理确认为准</text>
+  <g transform="translate(432 462)">
+    <rect x="0" y="80" width="145" height="132" rx="18" fill="#075aff"/>
+    <rect x="-18" y="55" width="181" height="48" rx="16" fill="#20dcff"/>
+    <path d="M72 55c-20-46-74-45-75-5 34 9 55 9 75 5zm0 0c20-46 74-45 75-5-34 9-55 9-75 5z" fill="#fff" opacity=".9"/>
+    <rect x="62" y="55" width="22" height="157" fill="#fff" opacity=".9"/>
+  </g>
+  <text x="58" y="858" font-family="Microsoft YaHei, Arial" font-size="24" font-weight="800" fill="#fff">立即开户注册，领取专属福利</text>
+  <text x="58" y="906" font-family="Microsoft YaHei, Arial" font-size="18" fill="#dff9ff">交易涉及风险。活动资格、奖品及规则以最终确认为准。</text>
+</svg>
