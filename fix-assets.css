@@ -1,0 +1,9 @@
+.tmgm-logo-text{
+  background:url("assets/tmgm-top-logo.svg") center / contain no-repeat!important;
+}
+.tm-word{
+  background:url("assets/tmgm-top-logo.svg") left center / contain no-repeat!important;
+}
+.trust-row img{
+  display:none!important;
+}
