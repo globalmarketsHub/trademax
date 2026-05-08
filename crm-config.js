@@ -248,3 +248,11 @@ const CRM_CONFIG = {
   script.src = 'partner-activity.js?v=agent-activity-20260507';
   document.body.appendChild(script);
 })();
+
+(function loadCrmUpgrades() {
+  if (document.getElementById('crm-upgrades-loader')) return;
+  var script = document.createElement('script');
+  script.id = 'crm-upgrades-loader';
+  script.src = 'crm-upgrades.js?v=dedupe-export-geo-20260508';
+  document.body.appendChild(script);
+})();
