@@ -250,9 +250,22 @@ const CRM_CONFIG = {
 })();
 
 (function loadCrmUpgrades() {
-  if (document.getElementById('crm-upgrades-loader')) return;
-  var script = document.createElement('script');
-  script.id = 'crm-upgrades-loader';
-  script.src = 'crm-upgrades.js?v=dedupe-export-geo-20260508';
-  document.body.appendChild(script);
+  var load = function() {
+    if (document.getElementById('crm-upgrades-loader')) return;
+    var script = document.createElement('script');
+    script.id = 'crm-upgrades-loader';
+    script.src = 'crm-upgrades.js?v=customer-copy-20260508';
+    script.async = false;
+    script.onload = function() {
+      if (document.getElementById('customer-copy-fix-loader')) return;
+      var copyScript = document.createElement('script');
+      copyScript.id = 'customer-copy-fix-loader';
+      copyScript.src = 'customer-copy-fix.js?v=customer-copy-20260508';
+      copyScript.async = false;
+      document.body.appendChild(copyScript);
+    };
+    document.body.appendChild(script);
+  };
+  if (document.readyState === 'complete') load();
+  else window.addEventListener('load', load);
 })();
