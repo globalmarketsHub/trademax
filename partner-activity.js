@@ -66,3 +66,144 @@
   var products = document.getElementById('products');
   if (products && products.parentNode) products.parentNode.insertBefore(section, products);
 })();
+
+(function connectPartnerRegistration(){
+  var page = location.pathname.split('/').pop();
+  if (page !== 'partners.html') return;
+
+  var OPEN_ACCOUNT_URL = 'https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans';
+  var OWNER_EMAIL = (window.CRM_CONFIG && CRM_CONFIG.OWNER_EMAIL) || '1911310053@qq.com';
+  var OWNER_WHATSAPP = (window.CRM_CONFIG && CRM_CONFIG.OWNER_WHATSAPP) || '61424456407';
+
+  function value(id) {
+    var el = document.getElementById(id);
+    return el && el.value ? el.value.trim() : '';
+  }
+
+  function buildPartnerLeadPayload(ip, device) {
+    var name = (value('pfLast') + ' ' + value('pfFirst')).trim();
+    var note = value('pfNote');
+    var source = '代理注册页 / partners.html';
+    return {
+      visitor_id: typeof getVisitorId === 'function' ? getVisitorId() : ('partner_' + Date.now()),
+      name: name,
+      wechat: value('pfWechat'),
+      whatsapp: value('pfPhone'),
+      email: value('pfEmail'),
+      registered: '代理申请',
+      account_type: 'ECN / 代理合作',
+      interest: value('pfInterest') || '成为代理',
+      source_page: source,
+      notes: '代理合作申请。国家/城市：' + value('pfCountry') + ' / ' + value('pfCity') + '。公司/网站：' + (value('pfCompany') || '未填写') + ' / ' + (value('pfWebsite') || '未填写') + '。客户资源规模：' + (value('pfScale') || '未填写') + '。备注：' + (note || '无'),
+      status: '代理申请',
+      ip_address: ip.ip || 'unknown',
+      country: ip.country || value('pfCountry') || 'unknown',
+      country_code: ip.country_code || '',
+      city: ip.city || value('pfCity') || '',
+      region: ip.region || '',
+      user_agent: device.user_agent || navigator.userAgent,
+      language: device.language || navigator.language,
+      screen_size: device.screen_size || (screen.width + 'x' + screen.height),
+      timezone: device.timezone || (Intl.DateTimeFormat().resolvedOptions().timeZone || '')
+    };
+  }
+
+  function leadText(payload) {
+    return [
+      'TradeMax 代理合作申请',
+      '姓名：' + payload.name,
+      '国家/地区：' + payload.country + ' ' + payload.city,
+      '电话：' + payload.whatsapp,
+      '邮箱：' + payload.email,
+      '微信：' + (payload.wechat || '未填写'),
+      '意向：' + payload.interest,
+      'IP：' + payload.ip_address,
+      '备注：' + payload.notes
+    ].join('\n');
+  }
+
+  async function submitToFormSubmit(payload) {
+    try {
+      var res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'TradeMax 代理合作申请',
+          name: payload.name,
+          email: payload.email,
+          phone: payload.whatsapp,
+          wechat: payload.wechat,
+          country: payload.country,
+          city: payload.city,
+          interest: payload.interest,
+          ip: payload.ip_address,
+          message: payload.notes
+        })
+      });
+      return res.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function backupLocally(payload) {
+    try {
+      var list = JSON.parse(localStorage.getItem('tm_partner_leads') || '[]');
+      list.unshift({ created_at: new Date().toISOString(), payload: payload });
+      localStorage.setItem('tm_partner_leads', JSON.stringify(list.slice(0, 50)));
+    } catch (e) {}
+  }
+
+  function renderResult(resultEl, savedToCrm, sentEmail, payload) {
+    var body = encodeURIComponent(leadText(payload));
+    var subject = encodeURIComponent('TradeMax 代理合作申请 - ' + payload.name);
+    var waText = encodeURIComponent(leadText(payload));
+    resultEl.innerHTML = '信息已整理完成。' +
+      (savedToCrm ? '已写入 CRM。' : 'CRM 当前未配置 Supabase，已启用邮件/本地备用记录。') +
+      (sentEmail ? '邮件通知已尝试发送。' : '') +
+      '<br><a class="mini-link" target="_blank" href="' + OPEN_ACCOUNT_URL + '">打开真实 ECN 开户注册入口</a>' +
+      ' · <a class="mini-link" href="mailto:' + OWNER_EMAIL + '?subject=' + subject + '&body=' + body + '">邮件发送给客户经理</a>' +
+      ' · <a class="mini-link" target="_blank" href="https://wa.me/' + OWNER_WHATSAPP + '?text=' + waText + '">WhatsApp 发送给客户经理</a>';
+    resultEl.className = 'form-result show';
+  }
+
+  window.submitPartnerForm = async function(event) {
+    event.preventDefault();
+    var form = event.target;
+    var resultEl = document.getElementById('partnerFormResult');
+    if (resultEl) {
+      resultEl.textContent = '正在提交代理申请...';
+      resultEl.className = 'form-result show';
+    }
+
+    var ip = typeof getClientIP === 'function' ? await getClientIP() : { ip: 'unknown', country: value('pfCountry'), country_code: '', city: value('pfCity'), region: '' };
+    var device = typeof getDeviceInfo === 'function' ? getDeviceInfo() : {};
+    var payload = buildPartnerLeadPayload(ip, device);
+    if (typeof scoreLead === 'function') payload.lead_score = scoreLead(payload);
+
+    var savedToCrm = false;
+    if (typeof isConfigured === 'function' && isConfigured() && typeof supabaseInsert === 'function') {
+      var crmResult = await supabaseInsert('leads', payload);
+      savedToCrm = !crmResult.error;
+    }
+
+    if (typeof notifyEmail === 'function') {
+      await notifyEmail({
+        subject: 'TradeMax 代理合作申请',
+        wechat: payload.wechat,
+        email: payload.email,
+        whatsapp: payload.whatsapp,
+        account_type: payload.account_type,
+        interest: payload.interest,
+        ip: payload.ip_address,
+        country: payload.country,
+        notes: payload.notes
+      });
+    }
+
+    var sentEmail = await submitToFormSubmit(payload);
+    backupLocally(payload);
+    if (resultEl) renderResult(resultEl, savedToCrm, sentEmail, payload);
+    form.reset();
+  };
+})();
