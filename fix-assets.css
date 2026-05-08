@@ -7,3 +7,8 @@
 .trust-row img{
   display:none!important;
 }
+img[src$="metatrader-4-logo.svg"],
+img[src$="metatrader-4-logo.png"]{
+  content:url("https://www.metatrader4.com/i/metatrader-4-logo.png")!important;
+  object-fit:contain!important;
+}
