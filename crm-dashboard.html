@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax CRM 后台</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body{margin:0;background:#f4f7fb;color:#071428;font-family:Inter,"Microsoft YaHei",Arial,sans-serif}
+    .crm-shell{min-height:100vh;padding:28px 4% 54px}
+    .crm-top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+    .crm-top h1{margin:0;font-size:34px;letter-spacing:0}.crm-top p{margin:8px 0 0;color:#637189;font-weight:700}
+    .crm-actions{display:flex;gap:10px;flex-wrap:wrap}.crm-actions button,.crm-actions a{border:0;border-radius:10px;background:#0f63ff;color:#fff;padding:11px 16px;font-weight:900;text-decoration:none;cursor:pointer}.crm-actions .ghost{background:#fff;color:#10203c;border:1px solid #d8e2ef}
+    .stat-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin:22px 0}.stat{background:#fff;border:1px solid #e2e9f3;border-radius:14px;padding:18px;box-shadow:0 12px 36px rgba(7,28,66,.05)}.stat span{display:block;color:#6d7b91;font-size:13px;font-weight:900}.stat b{display:block;font-size:30px;margin-top:8px}
+    .crm-panel{background:#fff;border:1px solid #dfe7f2;border-radius:16px;box-shadow:0 18px 60px rgba(7,28,66,.08);overflow:hidden;margin-top:18px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid #e8eef6}.panel-head h2{font-size:20px;margin:0}.filters{display:flex;gap:10px;flex-wrap:wrap}.filters input,.filters select{border:1px solid #cbd7e8;border-radius:10px;padding:10px 12px;min-height:40px}
+    .table-wrap{overflow:auto;max-height:68vh}table{width:100%;border-collapse:collapse;min-width:1320px}th,td{padding:13px 12px;border-bottom:1px solid #edf2f8;text-align:left;vertical-align:top;font-size:13px}th{position:sticky;top:0;background:#f8fbff;color:#516078;font-size:12px;text-transform:uppercase;letter-spacing:.04em;z-index:1}td b{color:#081428}td span{color:#66758c}.row-hot{background:#fff1f1}.row-mid{background:#fffaf0}.row-low{background:#f8fbff}select.status-select{border:1px solid #cbd7e8;border-radius:9px;padding:8px;background:#fff}.note-cell{max-width:340px;white-space:normal;line-height:1.5}.rank-list,.view-list{display:grid;gap:8px;padding:18px}.rank-row,.view-row{display:flex;justify-content:space-between;gap:16px;border:1px solid #e4ebf5;border-radius:12px;padding:12px;background:#fbfdff}.view-row{display:grid}.china-ip{border-color:#ffb8b8;background:#fff3f3}.au-ip{opacity:.72}.empty{padding:28px;color:#6d7b91;text-align:center}
+    .two-col{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px}@media(max-width:1180px){.stat-grid{grid-template-columns:repeat(3,1fr)}.two-col{grid-template-columns:1fr}}@media(max-width:720px){.crm-shell{padding:20px 14px}.crm-top{display:grid}.stat-grid{grid-template-columns:repeat(2,1fr)}.panel-head{display:grid}}
+  </style>
+</head>
+<body>
+  <main class="crm-shell">
+    <section class="crm-top">
+      <div>
+        <h1>TradeMax CRM 后台</h1>
+        <p>客户线索、访问记录和咨询问题汇总。中国大陆客户会优先标红，澳大利亚访问会降低优先级。</p>
+      </div>
+      <div class="crm-actions">
+        <button type="button" onclick="loadEnterpriseLeads()">刷新线索</button>
+        <button type="button" class="ghost" onclick="loadEnterpriseAnalytics()">刷新访问</button>
+        <button type="button" class="ghost" onclick="adminLogout()">退出</button>
+        <a href="index.html">返回网站</a>
+      </div>
+    </section>
+
+    <section class="stat-grid">
+      <article class="stat"><span>总线索</span><b id="statTotalLeads">0</b></article>
+      <article class="stat"><span>今日线索</span><b id="statTodayLeads">0</b></article>
+      <article class="stat"><span>高意向</span><b id="statHotLeads">0</b></article>
+      <article class="stat"><span>中国客户</span><b id="statChinaLeads">0</b></article>
+      <article class="stat"><span>ECN 意向</span><b id="statECNLeads">0</b></article>
+      <article class="stat"><span>待跟进</span><b id="statPendingLeads">0</b></article>
+    </section>
+
+    <section class="crm-panel">
+      <div class="panel-head">
+        <h2>客户线索表</h2>
+        <div class="filters">
+          <input id="leadSearch" placeholder="搜索微信 / 邮箱 / IP / 备注" oninput="renderEnterpriseTable()" />
+          <select id="leadStatusFilter" onchange="renderEnterpriseTable()">
+            <option value="">全部状态</option>
+            <option>新客户</option>
+            <option>代理申请</option>
+            <option>福利申请</option>
+            <option>已联系</option>
+            <option>已开户</option>
+            <option>已入金</option>
+            <option>已激活</option>
+            <option>无效客户</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>意向度</th><th>时间</th><th>微信</th><th>邮箱</th><th>电话/WhatsApp</th><th>地区/IP</th><th>开户/账户</th><th>兴趣</th><th>访问</th><th>提问</th><th>状态</th><th>备注</th>
+            </tr>
+          </thead>
+          <tbody id="leadTableBody"><tr><td colspan="12" class="empty">正在加载...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="two-col">
+      <div class="crm-panel">
+        <div class="panel-head"><h2>热门页面</h2></div>
+        <div class="rank-list" id="pageRank"><div class="empty">正在加载...</div></div>
+      </div>
+      <div class="crm-panel">
+        <div class="panel-head"><h2>最近访问</h2></div>
+        <div class="view-list" id="recentViews"><div class="empty">正在加载...</div></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="crm-config.js"></script>
+  <script src="crm.js"></script>
+  <script>
+    requireAdminLogin();
+    loadEnterpriseLeads();
+    loadEnterpriseAnalytics();
+  </script>
+</body>
+</html>
