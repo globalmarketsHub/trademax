@@ -257,6 +257,13 @@ const CRM_CONFIG = {
     script.src = 'crm-upgrades.js?v=customer-copy-20260508';
     script.async = false;
     script.onload = function() {
+      if (!document.getElementById('crm-region-fix-loader')) {
+        var regionScript = document.createElement('script');
+        regionScript.id = 'crm-region-fix-loader';
+        regionScript.src = 'crm-region-fix.js?v=region-fix-20260508';
+        regionScript.async = false;
+        document.body.appendChild(regionScript);
+      }
       if (document.getElementById('customer-copy-fix-loader')) return;
       var copyScript = document.createElement('script');
       copyScript.id = 'customer-copy-fix-loader';
