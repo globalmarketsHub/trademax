@@ -85,10 +85,13 @@
 
   <script src="crm-config.js"></script>
   <script src="crm.js"></script>
+  <script src="crm-upgrades.js?v=dedupe-export-geo-20260508"></script>
   <script>
     requireAdminLogin();
-    loadEnterpriseLeads();
-    loadEnterpriseAnalytics();
+    setTimeout(function(){
+      loadEnterpriseLeads();
+      loadEnterpriseAnalytics();
+    }, 100);
   </script>
 </body>
 </html>
