@@ -1,5 +1,14 @@
 (() => {
   const applyAssetFixes = () => {
+    document.querySelectorAll('nav a[href="lead-form.html"]').forEach(link => {
+      const nav = link.closest("nav");
+      if (nav && !nav.querySelector('a[href="ea.html"]')) {
+        const eaLink = document.createElement("a");
+        eaLink.href = "ea.html";
+        eaLink.textContent = "EA技术";
+        nav.insertBefore(eaLink, link);
+      }
+    });
     if (!document.querySelector('link[href="fix-assets.css"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
@@ -173,6 +182,9 @@ function askSmartQuestion() {
 
 function getSmartAnswer(q) {
   const text = q.toLowerCase();
+  if (text.includes("ea") || text.includes("自动化") || text.includes("智能交易") || text.includes("vps")) {
+    return "EA 是运行在 MT4/MT5 上的自动化交易工具。客户完成开户链接注册后，可以联系客户经理免费申请 EA 使用权限；如果需要让 EA 长时间稳定运行，也可以同步咨询免费 VPS 服务器权益。具体开通资格、服务器配置和持续使用条件以客户经理核实为准。";
+  }
   if (text.includes("ecn") || text.includes("裸点") || text.includes("0点差") || text.includes("点差")) {
     return "ECN 裸点账户点差低至 0 pip 起，适合高频、短线、EA 和重视成本的客户。STD 点差参考 0.32，PM 0.27，PRO 0.22。实际交易条件以平台显示为准。您可以点击页面中的 ECN 链接开户注册。";
   }
