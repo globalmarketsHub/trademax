@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeMax | EA技术</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .ea-page{background:#f7fbff;color:#061d50}.ea-hero{min-height:720px;padding:115px 6% 78px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.75fr);gap:54px;align-items:center}.ea-hero-copy h1{font-size:68px;line-height:1.03;margin:18px 0;color:#061d50}.ea-hero-copy p:not(.eyebrow){max-width:850px;font-size:22px;line-height:1.72;color:#2e4a73}.ea-terminal-card{border:1px solid rgba(9,91,225,.16);border-radius:34px;padding:26px;background:rgba(255,255,255,.72);box-shadow:0 35px 100px rgba(30,90,180,.17);backdrop-filter:blur(18px)}.ea-screen{min-height:390px;border-radius:28px;padding:26px;background:linear-gradient(145deg,#061d50,#075aff 62%,#13d3ff);color:#fff;display:grid;align-content:start;gap:16px;overflow:hidden;position:relative}.ea-screen:before{content:"";position:absolute;right:-90px;top:-90px;width:230px;height:230px;border-radius:50%;border:34px solid rgba(255,255,255,.15)}.ea-status-row{position:relative;z-index:1;display:flex;justify-content:space-between;gap:18px;align-items:center;padding:18px;border-radius:18px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);font-weight:950}.ea-status-row span{color:#dff4ff;text-align:right}.ea-pulse-chart{height:150px;margin-top:22px;display:flex;align-items:end;gap:14px;position:relative;z-index:1}.ea-pulse-chart i{flex:1;border-radius:14px 14px 5px 5px;background:linear-gradient(180deg,#fff,#75efff,#0a65ff);box-shadow:0 15px 32px rgba(0,0,0,.18);animation:eaBars 3s ease-in-out infinite}.ea-pulse-chart i:nth-child(1){height:42%}.ea-pulse-chart i:nth-child(2){height:74%;animation-delay:.2s}.ea-pulse-chart i:nth-child(3){height:56%;animation-delay:.4s}.ea-pulse-chart i:nth-child(4){height:88%;animation-delay:.6s}.ea-pulse-chart i:nth-child(5){height:68%;animation-delay:.8s}.ea-pulse-chart i:nth-child(6){height:94%;animation-delay:1s}@keyframes eaBars{50%{transform:scaleY(.76)}}.ea-benefits{padding:88px 6%;background:rgba(255,255,255,.94);border-top:1px solid rgba(7,90,255,.10)}.ea-feature-grid{max-width:1320px;margin:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.ea-feature-grid article{padding:30px;border-radius:26px;background:linear-gradient(180deg,#fff,#f2f8ff);border:1px solid rgba(7,90,255,.13);box-shadow:0 22px 60px rgba(23,96,205,.09)}.ea-feature-grid span{display:inline-flex;border-radius:999px;padding:8px 12px;background:#e6f3ff;color:#075aff;font-weight:950}.ea-feature-grid h3{font-size:25px;margin:18px 0 12px}.ea-feature-grid p{color:#4a6081;line-height:1.7}.ea-vps-section{padding:92px 6%;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:34px;background:linear-gradient(135deg,#061d50,#075aff);color:#fff}.ea-vps-copy h2{font-size:50px;line-height:1.12;margin:12px 0 16px;color:#fff}.ea-vps-copy p,.ea-vps-copy li{font-size:18px;line-height:1.75;color:#e4f2ff}.ea-vps-copy ul{display:grid;gap:12px;margin:24px 0 0;padding:0;list-style:none}.ea-vps-copy li{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}.ea-steps{display:grid;gap:14px}.ea-steps div{display:grid;grid-template-columns:58px 1fr;gap:16px;align-items:center;padding:18px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.20)}.ea-steps b{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#075aff;font-size:22px}.ea-steps span{line-height:1.55;font-weight:850;color:#f2f8ff}.ea-risk-box{padding:72px 6%;background:#fff;text-align:center}.ea-risk-box h2{font-size:42px;margin:0 0 14px}.ea-risk-box p{max-width:980px;margin:0 auto;color:#4a6081;font-size:17px;line-height:1.8}.ea-risk-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:28px}@media(max-width:1080px){.ea-hero,.ea-vps-section{grid-template-columns:1fr}.ea-terminal-card{max-width:620px}.ea-feature-grid{grid-template-columns:1fr}.ea-vps-section{padding-top:72px;padding-bottom:72px}}@media(max-width:720px){.ea-hero{padding:72px 5% 56px}.ea-hero-copy h1{font-size:42px}.ea-hero-copy p:not(.eyebrow){font-size:18px}.ea-terminal-card{border-radius:24px;padding:18px}.ea-screen{min-height:300px}.ea-status-row{display:grid}.ea-vps-copy h2,.ea-risk-box h2{font-size:34px}.ea-vps-section,.ea-benefits,.ea-risk-box{padding-left:5%;padding-right:5%}}
+  </style>
+</head>
+<body>
+
+<div class="premium-bg">
+  <div class="blue-white-gradient"></div>
+  <div class="glass-grid"></div>
+  <div class="kline-scene">
+    <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div><div class="candle c4"></div>
+    <div class="candle c5"></div><div class="candle c6"></div><div class="break-line"></div><div class="break-flare"></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand brand-tmgm" href="index.html"><span class="tmgm-logo-text">TMGM</span><span class="brand-sub">TradeMax Partner Access</span></a>
+  <nav>
+    <a href="products.html">产品</a>
+    <a href="accounts.html">账户点差</a>
+    <a href="platforms.html">MT4/MT5</a>
+    <a href="calculators.html">交易计算器</a>
+    <a href="academy.html">交易知识库</a>
+    <a href="partners.html">代理合作</a>
+    <a href="contact.html">联系</a>
+    <a href="ea.html">EA技术</a>
+    <a href="lead-form.html">客户登记</a>
+  </nav>
+  <button class="tool-open-top" onclick="openToolPanel('chart')">行情图表</button>
+  <a class="primary-btn small" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">开通 ECN</a>
+</header>
+
+<main class="subpage ea-page">
+  <section class="ea-hero">
+    <div class="ea-hero-copy">
+      <p class="eyebrow">EA TECHNOLOGY</p>
+      <h1>EA自动化交易技术</h1>
+      <p>为 MT4 / MT5 客户提供 EA 自动化交易、策略部署、参数说明和运行环境协助。完成平台开户后，可联系客户经理免费申请 EA 使用权限，并同步咨询免费 VPS 服务器支持。</p>
+      <div class="cta-row">
+        <a class="primary-btn" href="https://portal.cnfxhero.com/register?node=MjE4NjI0&language=zh-Hans" target="_blank">先开通账户</a>
+        <a class="ghost-btn" href="lead-form.html">申请 EA / VPS</a>
+        <a class="ghost-btn" href="platforms.html">下载 MT4 / MT5</a>
+      </div>
+    </div>
+    <div class="ea-terminal-card">
+      <div class="terminal-top"><span></span><span></span><span></span><b>EA ACCESS ENGINE</b></div>
+      <div class="ea-screen">
+        <div class="ea-status-row"><b>EA License</b><span>开户后免费申请</span></div>
+        <div class="ea-status-row"><b>VPS Hosting</b><span>符合条件免费开通</span></div>
+        <div class="ea-status-row"><b>Platform</b><span>MT4 / MT5 Ready</span></div>
+        <div class="ea-pulse-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ea-benefits">
+    <div class="benefit-heading">
+      <p class="eyebrow center">CLIENT ACCESS</p>
+      <h2>注册账户后可免费获得 EA 使用权限</h2>
+      <p>EA 是运行在 MetaTrader 平台上的自动化交易程序，可按预设策略执行开仓、平仓、风控和提醒。客户完成开户链接注册后，可由客户经理核实账户并开通对应 EA 使用权限。</p>
+    </div>
+    <div class="ea-feature-grid">
+      <article><span>01</span><h3>自动化执行</h3><p>根据策略规则自动执行交易指令，减少人工盯盘压力，适合希望把交易流程标准化的客户。</p></article>
+      <article><span>02</span><h3>适配低点差账户</h3><p>EA、短线和高频策略更关注点差、执行和服务器环境，建议优先了解 ECN 账户条件。</p></article>
+      <article><span>03</span><h3>客户经理协助</h3><p>可协助说明平台安装、服务器选择、EA 加载方式、基础参数含义和后续使用注意事项。</p></article>
+    </div>
+  </section>
+
+  <section class="ea-vps-section">
+    <div class="ea-vps-copy">
+      <p class="eyebrow">FREE VPS SUPPORT</p>
+      <h2>免费 VPS 服务器支持</h2>
+      <p>EA 需要稳定在线运行。客户开通账户后，可联系客户经理咨询免费 VPS 权益，符合账户与交易条件后可协助申请开通，让 EA 在云端环境持续运行。</p>
+      <ul>
+        <li>适合需要 24 小时运行 EA、减少本地电脑断网或关机影响的客户。</li>
+        <li>可用于部署 MT4 / MT5 终端、加载 EA、保持交易环境在线。</li>
+        <li>具体 VPS 资格、开通周期、服务器配置与持续使用条件，以客户经理确认和平台规则为准。</li>
+      </ul>
+    </div>
+    <div class="ea-steps">
+      <div><b>1</b><span>通过开户链接注册并完成账户开通</span></div>
+      <div><b>2</b><span>提交注册邮箱、微信或 WhatsApp 给客户经理核实</span></div>
+      <div><b>3</b><span>申请免费 EA 使用权限，并按条件咨询免费 VPS</span></div>
+      <div><b>4</b><span>安装平台、加载 EA，并在 VPS 环境中保持运行</span></div>
+    </div>
+  </section>
+
+  <section class="ea-risk-box">
+    <h2>EA 使用提示</h2>
+    <p>EA 仅是交易工具，不代表收益承诺，也不能消除市场风险。自动化策略可能受到行情跳空、滑点、点差扩大、网络延迟、参数设置和市场环境变化影响。使用前请充分了解策略逻辑，控制仓位和风险，并以自身财务状况谨慎决策。</p>
+    <div class="ea-risk-actions"><a class="primary-btn" href="lead-form.html">提交申请</a><a class="ghost-btn" href="contact.html">联系客户经理</a></div>
+  </section>
+</main>
+
+<div class="right-tool-rail">
+  <button onclick="openToolPanel('chart')"><span>📈</span><b>行情图表</b></button>
+  <button onclick="openToolPanel('chat')"><span>💬</span><b>在线客服</b></button>
+  <a href="calculators.html"><span>🧮</span><b>计算器</b></a>
+</div>
+
+<aside class="tool-panel" id="toolPanel">
+  <div class="tool-panel-header"><div><small>TRADEMAX 工具</small><h3 id="panelTitle">行情图表</h3></div><button onclick="closeToolPanel()">×</button></div>
+  <div class="tool-tabs two-tabs"><button id="tabChart" onclick="switchTool('chart')">行情图表</button><button id="tabChat" onclick="switchTool('chat')">在线客服</button></div>
+  <div class="tool-content active" id="contentChart"><div class="sidebar-chart-wrap"><div id="sidebarTradingView"></div></div></div>
+  <div class="tool-content" id="contentChat">
+    <div class="chat-body" id="chatBody">
+      <div class="bot msg">您好，请问您想咨询 EA 使用权限、免费 VPS，还是开户注册流程？</div>
+      <div class="quick-actions"><button onclick="alreadyRegistered()">我已开户</button><button onclick="notRegistered()">还未开户</button></div>
+      <div class="smart-qa"><input id="smartQuestion" placeholder="请输入问题：如EA、VPS、ECN点差、MT4下载..." onkeydown="if(event.key==='Enter'){askSmartQuestion()}"><button onclick="askSmartQuestion()">发送</button></div>
+    </div>
+    <form class="lead-form" onsubmit="sendLead(event)">
+      <input id="leadWechat" placeholder="微信号 / WeChat（必填）" required />
+      <input id="leadEmail" placeholder="注册邮箱 / Email（已开户客户填写）" />
+      <textarea id="leadNote" placeholder="备注：如需要EA使用权限、免费VPS、MT4/MT5配置等"></textarea>
+      <button type="submit">提交给客户经理</button>
+    </form>
+    <p class="tool-note">提交后会自动打开 WhatsApp 发送信息；静态网站不会单独存储客户资料。</p>
+  </div>
+</aside>
+<div class="panel-overlay" id="panelOverlay" onclick="closeToolPanel()"></div>
+
+<footer class="footer-premium">
+  <div class="footer-brand-row"><div class="footer-brand-logo"><span class="tm-word">TMGM</span></div><p>TradeMax Partner Access · Independent TMGM Partner Information Portal</p></div>
+  <div class="footer-risk-card"><p>本网站所提供的信息仅为一般性参考信息，并不构成任何个人财务建议。保证金外汇和差价合约交易涉及高风险，请在交易前充分了解相关风险。</p><p>本网站由 TMGM 独立合作伙伴运营，并非 TMGM 官方网站。产品条件、账户可用性、活动条款及合规要求以 TMGM 最新官方规则和交易平台显示为准。</p></div>
+</footer>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="crm-config.js"></script>
+<script src="crm.js"></script>
+<script>trackPageView();</script>
+</body>
+</html>
